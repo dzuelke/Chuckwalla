@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<configurations>
+<configurations xmlns:xi="http://www.w3.org/2001/XInclude">
 
 	<configuration context="web">
 		<output_types default="html">
@@ -14,6 +14,7 @@
 							<parameter name="user">us</parameter>
 							<parameter name="translation_manager">tm</parameter>
 						</parameter>
+						<parameter name="var_name">t</parameter>
 					</renderer>
 				</renderers>
 				<layouts default="standard">
@@ -30,17 +31,7 @@
 			</output_type>
 
 			<output_type name="json">
-				<renderers default="php">
-					<renderer name="php" class="AgaviPhpRenderer">
-						<parameter name="assigns">
-							<parameter name="routing">ro</parameter>
-							<parameter name="request">rq</parameter>
-							<parameter name="controller">ct</parameter>
-							<parameter name="user">us</parameter>
-							<parameter name="translation_manager">tm</parameter>
-						</parameter>
-					</renderer>
-				</renderers>
+				<xi:include href="#xpointer(//configurations/configuration[@context='web']/output_types/output_type[@name='html']/renderers)" />
 				<layouts default="standard">
 					<layout name="standard">
 						<layers>
@@ -59,17 +50,7 @@
 		<output_types default="irc">
 
 			<output_type name="irc">
-				<renderers default="php">
-					<renderer name="php" class="AgaviPhpRenderer">
-						<parameter name="assigns">
-							<parameter name="routing">ro</parameter>
-							<parameter name="request">rq</parameter>
-							<parameter name="controller">ct</parameter>
-							<parameter name="user">us</parameter>
-							<parameter name="translation_manager">tm</parameter>
-						</parameter>
-					</renderer>
-				</renderers>
+				<xi:include href="#xpointer(//configurations/configuration[@context='web']/output_types/output_type[@name='html']/renderers)" />
 				<layouts default="standard">
 					<layout name="standard">
 						<layers>
