@@ -10,7 +10,7 @@ class ChuckwallaBaseSecurityUser extends AgaviSecurityUser
 		$c->add(ChuckwallaUserPeer::PASSWORD, md5($password));
 		$user = $this->context->getModel('ChuckwallaUserPeer')->doSelectOne($c);
 		if($user) {
-			$this->setAttributes($user->toArray());
+			$this->setAttributes($user->toArray(BasePeer::TYPE_FIELDNAME));
 			$this->setAuthenticated(true);
 		} else {
 			throw new AgaviSecurityException('Login failed.');
