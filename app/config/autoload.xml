@@ -14,6 +14,7 @@
 			
 			<autoload name="Net_SmartIRC">%core.libs_dir%/Net_SmartIRC.loader.php</autoload>
 			
+			<autoload name="ChuckwallaWebUser">%core.lib_dir%/response/ChuckwallaWebUser.class.php</autoload>
 			<autoload name="ChuckwallaWebResponse">%core.lib_dir%/response/ChuckwallaWebResponse.class.php</autoload>
 			
 		</autoloads>
