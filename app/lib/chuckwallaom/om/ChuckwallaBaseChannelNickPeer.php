@@ -1,6 +1,6 @@
 <?php
 
-abstract class BaseChannelNickPeer implements AgaviISingletonModel {
+abstract class ChuckwallaBaseChannelNickPeer implements AgaviISingletonModel {
 	
 	protected $context = null;
 	
@@ -21,7 +21,7 @@ abstract class BaseChannelNickPeer implements AgaviISingletonModel {
 	const TABLE_NAME = 'channel_nick';
 
 	/** A class that can be returned by this peer. */
-	const CLASS_DEFAULT = 'chuckwallaom.ChannelNick';
+	const CLASS_DEFAULT = 'chuckwallaom.ChuckwallaChannelNick';
 
 	/** The total number of columns. */
 	const NUM_COLUMNS = 2;
@@ -37,10 +37,10 @@ abstract class BaseChannelNickPeer implements AgaviISingletonModel {
 	const NICK_ID = 'channel_nick.NICK_ID';
 
 	/**
-	 * An identiy map to hold any loaded instances of ChannelNick objects.
+	 * An identiy map to hold any loaded instances of ChuckwallaChannelNick objects.
 	 * This must be public so that other peer classes can access this when hydrating from JOIN
 	 * queries.
-	 * @var        array ChannelNick[]
+	 * @var        array ChuckwallaChannelNick[]
 	 */
 	public static $instances = array();
 
@@ -83,8 +83,8 @@ abstract class BaseChannelNickPeer implements AgaviISingletonModel {
 	public static function getMapBuilder()
 	{
 		if (self::$mapBuilder === null) {
-			require 'chuckwallaom/map/ChannelNickMapBuilder.php';
-			self::$mapBuilder = new ChannelNickMapBuilder();
+			require 'chuckwallaom/map/ChuckwallaChannelNickMapBuilder.php';
+			self::$mapBuilder = new ChuckwallaChannelNickMapBuilder();
 		}
 		return self::$mapBuilder;
 	}
@@ -133,12 +133,12 @@ abstract class BaseChannelNickPeer implements AgaviISingletonModel {
 	 *		$c->addJoin(TablePeer::alias("alias1", TablePeer::PRIMARY_KEY_COLUMN), TablePeer::PRIMARY_KEY_COLUMN);
 	 * </code>
 	 * @param      string $alias The alias for the current table.
-	 * @param      string $column The column name for current table. (i.e. ChannelNickPeer::COLUMN_NAME).
+	 * @param      string $column The column name for current table. (i.e. ChuckwallaChannelNickPeer::COLUMN_NAME).
 	 * @return     string
 	 */
 	public static function alias($alias, $column)
 	{
-		return str_replace(ChannelNickPeer::TABLE_NAME.'.', $alias.'.', $column);
+		return str_replace(ChuckwallaChannelNickPeer::TABLE_NAME.'.', $alias.'.', $column);
 	}
 
 	/**
@@ -155,9 +155,9 @@ abstract class BaseChannelNickPeer implements AgaviISingletonModel {
 	public static function addSelectColumns(Criteria $criteria)
 	{
 
-		$criteria->addSelectColumn(ChannelNickPeer::CHANNEL_ID);
+		$criteria->addSelectColumn(ChuckwallaChannelNickPeer::CHANNEL_ID);
 
-		$criteria->addSelectColumn(ChannelNickPeer::NICK_ID);
+		$criteria->addSelectColumn(ChuckwallaChannelNickPeer::NICK_ID);
 
 	}
 
@@ -180,9 +180,9 @@ abstract class BaseChannelNickPeer implements AgaviISingletonModel {
 		// clear out anything that might confuse the ORDER BY clause
 		$criteria->clearSelectColumns()->clearOrderByColumns();
 		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->addSelectColumn(ChannelNickPeer::COUNT_DISTINCT);
+			$criteria->addSelectColumn(ChuckwallaChannelNickPeer::COUNT_DISTINCT);
 		} else {
-			$criteria->addSelectColumn(ChannelNickPeer::COUNT);
+			$criteria->addSelectColumn(ChuckwallaChannelNickPeer::COUNT);
 		}
 
 		// just in case we're grouping: add those columns to the select statement
@@ -191,7 +191,7 @@ abstract class BaseChannelNickPeer implements AgaviISingletonModel {
 			$criteria->addSelectColumn($column);
 		}
 
-		$stmt = ChannelNickPeer::doSelectStmt($criteria, $con);
+		$stmt = ChuckwallaChannelNickPeer::doSelectStmt($criteria, $con);
 		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
 			return (int) $row[0];
 		} else {
@@ -204,7 +204,7 @@ abstract class BaseChannelNickPeer implements AgaviISingletonModel {
 	 *
 	 * @param      Criteria $criteria object used to create the SELECT statement.
 	 * @param      PDO $con
-	 * @return     ChannelNick
+	 * @return     ChuckwallaChannelNick
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
@@ -212,7 +212,7 @@ abstract class BaseChannelNickPeer implements AgaviISingletonModel {
 	{
 		$critcopy = clone $criteria;
 		$critcopy->setLimit(1);
-		$objects = ChannelNickPeer::doSelect($critcopy, $con);
+		$objects = ChuckwallaChannelNickPeer::doSelect($critcopy, $con);
 		if ($objects) {
 			return $objects[0];
 		}
@@ -229,7 +229,7 @@ abstract class BaseChannelNickPeer implements AgaviISingletonModel {
 	 */
 	public static function doSelect(Criteria $criteria, PDO $con = null)
 	{
-		return ChannelNickPeer::populateObjects(ChannelNickPeer::doSelectStmt($criteria, $con));
+		return ChuckwallaChannelNickPeer::populateObjects(ChuckwallaChannelNickPeer::doSelectStmt($criteria, $con));
 	}
 	/**
 	 * Prepares the Criteria object and uses the parent doSelect() method to execute a PDOStatement.
@@ -252,7 +252,7 @@ abstract class BaseChannelNickPeer implements AgaviISingletonModel {
 
 		if (!$criteria->getSelectColumns()) {
 			$criteria = clone $criteria;
-			ChannelNickPeer::addSelectColumns($criteria);
+			ChuckwallaChannelNickPeer::addSelectColumns($criteria);
 		}
 
 		// Set the correct dbName
@@ -270,9 +270,9 @@ abstract class BaseChannelNickPeer implements AgaviISingletonModel {
 	 * to the cache in order to ensure that the same objects are always returned by doSelect*()
 	 * and retrieveByPK*() calls.
 	 *
-	 * @param      ChannelNick $value A ChannelNick object.
+	 * @param      ChuckwallaChannelNick $value A ChuckwallaChannelNick object.
 	 */
-	public static function addInstanceToPool(ChannelNick $obj)
+	public static function addInstanceToPool(ChuckwallaChannelNick $obj)
 	{
 		// print "+Adding (by addInstanceToPool()) " . get_class($obj) . " " . var_export($obj->getPrimaryKey(),true) . " to instance pool.\n";
 	
@@ -288,21 +288,21 @@ abstract class BaseChannelNickPeer implements AgaviISingletonModel {
 	 * methods in your stub classes -- you may need to explicitly remove objects
 	 * from the cache in order to prevent returning objects that no longer exist.
 	 *
-	 * @param      mixed $value A ChannelNick object or a primary key value.
+	 * @param      mixed $value A ChuckwallaChannelNick object or a primary key value.
 	 */
 	public static function removeInstanceFromPool($value)
 	{
-		if (is_object($value) && $value instanceof ChannelNick) {
+		if (is_object($value) && $value instanceof ChuckwallaChannelNick) {
 			// print "-Removing " . get_class($value) . " " . var_export($value->getPrimaryKey(),true) . " from instance pool.\n";
 		
 			$key = serialize($value->getPrimaryKey());
 		} elseif (is_array($value)) {
-			// print "-Removing pk: " . var_export($value,true) . " class: ChannelNick from instance pool.\n";
+			// print "-Removing pk: " . var_export($value,true) . " class: ChuckwallaChannelNick from instance pool.\n";
 			// assume we've been passed a primary key
 			$key = serialize($value);
 		} else {
 
-			$e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or ChannelNick object: " . var_export($value,true));
+			$e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or ChuckwallaChannelNick object: " . var_export($value,true));
 			print $e;
 			throw $e;
 		}
@@ -324,7 +324,7 @@ abstract class BaseChannelNickPeer implements AgaviISingletonModel {
 	public static function getInstanceFromPool($key)
 	{
 		if (isset(self::$instances[$key])) {
-			//print "  <-Found ChannelNick " . self::$instances[$key] . " in instance pool.\n";
+			//print "  <-Found ChuckwallaChannelNick " . self::$instances[$key] . " in instance pool.\n";
 			return self::$instances[$key];
 		} else {
 			return null; // just to be explicit
@@ -343,7 +343,7 @@ abstract class BaseChannelNickPeer implements AgaviISingletonModel {
 	 */
 	public static function clearInstancePool()
 	{
-		//print "\tClearing ChannelNickPeer instance pool.\n";
+		//print "\tClearing ChuckwallaChannelNickPeer instance pool.\n";
 		self::$instances = array();
 	}
 	
@@ -374,11 +374,11 @@ abstract class BaseChannelNickPeer implements AgaviISingletonModel {
 		$results = array();
 	
 		// set the class once to avoid overhead in the loop
-		$cls = ChannelNickPeer::getOMClass();
+		$cls = ChuckwallaChannelNickPeer::getOMClass();
 		$cls = substr($cls, strrpos($cls, '.') + 1);
 		// populate the object(s)
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key = ChannelNickPeer::getPrimaryKeyHashFromRow($row, 0);
+			$key = ChuckwallaChannelNickPeer::getPrimaryKeyHashFromRow($row, 0);
 			if (isset(self::$instances[$key])) {
 				// print "  <-Found " . get_class(self::$instances[$key]) . " " . self::$instances[$key] . " in instance pool.\n";
 				$results[] = self::$instances[$key];
@@ -412,9 +412,9 @@ $obj->initialize($this->context);
 		// clear out anything that might confuse the ORDER BY clause
 		$criteria->clearSelectColumns()->clearOrderByColumns();
 		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->addSelectColumn(ChannelNickPeer::COUNT_DISTINCT);
+			$criteria->addSelectColumn(ChuckwallaChannelNickPeer::COUNT_DISTINCT);
 		} else {
-			$criteria->addSelectColumn(ChannelNickPeer::COUNT);
+			$criteria->addSelectColumn(ChuckwallaChannelNickPeer::COUNT);
 		}
 
 		// just in case we're grouping: add those columns to the select statement
@@ -423,9 +423,9 @@ $obj->initialize($this->context);
 			$criteria->addSelectColumn($column);
 		}
 
-		$criteria->addJoin(ChannelNickPeer::CHANNEL_ID, ChannelPeer::ID);
+		$criteria->addJoin(ChuckwallaChannelNickPeer::CHANNEL_ID, ChuckwallaChannelPeer::ID);
 
-		$stmt = ChannelNickPeer::doSelectStmt($criteria, $con);
+		$stmt = ChuckwallaChannelNickPeer::doSelectStmt($criteria, $con);
 		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
 			return (int) $row[0];
 		} else {
@@ -451,9 +451,9 @@ $obj->initialize($this->context);
 		// clear out anything that might confuse the ORDER BY clause
 		$criteria->clearSelectColumns()->clearOrderByColumns();
 		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->addSelectColumn(ChannelNickPeer::COUNT_DISTINCT);
+			$criteria->addSelectColumn(ChuckwallaChannelNickPeer::COUNT_DISTINCT);
 		} else {
-			$criteria->addSelectColumn(ChannelNickPeer::COUNT);
+			$criteria->addSelectColumn(ChuckwallaChannelNickPeer::COUNT);
 		}
 
 		// just in case we're grouping: add those columns to the select statement
@@ -462,9 +462,9 @@ $obj->initialize($this->context);
 			$criteria->addSelectColumn($column);
 		}
 
-		$criteria->addJoin(ChannelNickPeer::NICK_ID, NickPeer::ID);
+		$criteria->addJoin(ChuckwallaChannelNickPeer::NICK_ID, ChuckwallaNickPeer::ID);
 
-		$stmt = ChannelNickPeer::doSelectStmt($criteria, $con);
+		$stmt = ChuckwallaChannelNickPeer::doSelectStmt($criteria, $con);
 		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
 			return (int) $row[0];
 		} else {
@@ -475,9 +475,9 @@ $obj->initialize($this->context);
 
 
 	/**
-	 * Selects a collection of ChannelNick objects pre-filled with their Channel objects.
+	 * Selects a collection of ChuckwallaChannelNick objects pre-filled with their ChuckwallaChannel objects.
 	 *
-	 * @return     array Array of ChannelNick objects.
+	 * @return     array Array of ChuckwallaChannelNick objects.
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
@@ -490,22 +490,22 @@ $obj->initialize($this->context);
 			$c->setDbName(self::DATABASE_NAME);
 		}
 
-		ChannelNickPeer::addSelectColumns($c);
-		$startcol = (ChannelNickPeer::NUM_COLUMNS - ChannelNickPeer::NUM_LAZY_LOAD_COLUMNS);
-		ChannelPeer::addSelectColumns($c);
+		ChuckwallaChannelNickPeer::addSelectColumns($c);
+		$startcol = (ChuckwallaChannelNickPeer::NUM_COLUMNS - ChuckwallaChannelNickPeer::NUM_LAZY_LOAD_COLUMNS);
+		ChuckwallaChannelPeer::addSelectColumns($c);
 
-		$c->addJoin(ChannelNickPeer::CHANNEL_ID, ChannelPeer::ID);
+		$c->addJoin(ChuckwallaChannelNickPeer::CHANNEL_ID, ChuckwallaChannelPeer::ID);
 		$stmt = BasePeer::doSelect($c, $con);
 		$results = array();
 
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = ChannelNickPeer::getPrimaryKeyHashFromRow($row, 0);
+			$key1 = ChuckwallaChannelNickPeer::getPrimaryKeyHashFromRow($row, 0);
 			if (isset(self::$instances[$key1])) {
 				$obj1 = self::$instances[$key1];
 				// print "  <-Found " . get_class($obj1) . " " . $obj1 . " into instance pool.\n";
 			} else {
 
-				$omClass = ChannelNickPeer::getOMClass();
+				$omClass = ChuckwallaChannelNickPeer::getOMClass();
 
 				$cls = substr($omClass, strrpos($omClass, '.') + 1);
 				$obj1 = new $cls();
@@ -516,21 +516,21 @@ $obj1->initialize($this->context);
 				self::$instances[$key1] = $obj1;
 			} // if $obj1 already loaded
 
-			$key2 = ChannelPeer::getPrimaryKeyHashFromRow($row, $startcol);
-			$obj2 = ChannelPeer::getInstanceFromPool($key2);
+			$key2 = ChuckwallaChannelPeer::getPrimaryKeyHashFromRow($row, $startcol);
+			$obj2 = ChuckwallaChannelPeer::getInstanceFromPool($key2);
 			if (!$obj2) {
 
-				$omClass = ChannelPeer::getOMClass();
+				$omClass = ChuckwallaChannelPeer::getOMClass();
 
 				$cls = substr($omClass, strrpos($omClass, '.') + 1);
 				$obj2 = new $cls();
 $obj2->initialize($this->context);
 
 				$obj2->hydrate($row, $startcol);
-				ChannelPeer::addInstanceToPool($obj2); // FIXME, we should optimize this since we already calculated the key above
+				ChuckwallaChannelPeer::addInstanceToPool($obj2); // FIXME, we should optimize this since we already calculated the key above
 			} // if obj2 already loaded
 
-			// Add the $obj1 (ChannelNick) to the collection in $obj2 (Channel)
+			// Add the $obj1 (ChuckwallaChannelNick) to the collection in $obj2 (ChuckwallaChannel)
 			$obj2->addChannelNick($obj1);
 
 			$results[] = $obj1;
@@ -540,9 +540,9 @@ $obj2->initialize($this->context);
 
 
 	/**
-	 * Selects a collection of ChannelNick objects pre-filled with their Nick objects.
+	 * Selects a collection of ChuckwallaChannelNick objects pre-filled with their ChuckwallaNick objects.
 	 *
-	 * @return     array Array of ChannelNick objects.
+	 * @return     array Array of ChuckwallaChannelNick objects.
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
@@ -555,22 +555,22 @@ $obj2->initialize($this->context);
 			$c->setDbName(self::DATABASE_NAME);
 		}
 
-		ChannelNickPeer::addSelectColumns($c);
-		$startcol = (ChannelNickPeer::NUM_COLUMNS - ChannelNickPeer::NUM_LAZY_LOAD_COLUMNS);
-		NickPeer::addSelectColumns($c);
+		ChuckwallaChannelNickPeer::addSelectColumns($c);
+		$startcol = (ChuckwallaChannelNickPeer::NUM_COLUMNS - ChuckwallaChannelNickPeer::NUM_LAZY_LOAD_COLUMNS);
+		ChuckwallaNickPeer::addSelectColumns($c);
 
-		$c->addJoin(ChannelNickPeer::NICK_ID, NickPeer::ID);
+		$c->addJoin(ChuckwallaChannelNickPeer::NICK_ID, ChuckwallaNickPeer::ID);
 		$stmt = BasePeer::doSelect($c, $con);
 		$results = array();
 
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = ChannelNickPeer::getPrimaryKeyHashFromRow($row, 0);
+			$key1 = ChuckwallaChannelNickPeer::getPrimaryKeyHashFromRow($row, 0);
 			if (isset(self::$instances[$key1])) {
 				$obj1 = self::$instances[$key1];
 				// print "  <-Found " . get_class($obj1) . " " . $obj1 . " into instance pool.\n";
 			} else {
 
-				$omClass = ChannelNickPeer::getOMClass();
+				$omClass = ChuckwallaChannelNickPeer::getOMClass();
 
 				$cls = substr($omClass, strrpos($omClass, '.') + 1);
 				$obj1 = new $cls();
@@ -581,21 +581,21 @@ $obj1->initialize($this->context);
 				self::$instances[$key1] = $obj1;
 			} // if $obj1 already loaded
 
-			$key2 = NickPeer::getPrimaryKeyHashFromRow($row, $startcol);
-			$obj2 = NickPeer::getInstanceFromPool($key2);
+			$key2 = ChuckwallaNickPeer::getPrimaryKeyHashFromRow($row, $startcol);
+			$obj2 = ChuckwallaNickPeer::getInstanceFromPool($key2);
 			if (!$obj2) {
 
-				$omClass = NickPeer::getOMClass();
+				$omClass = ChuckwallaNickPeer::getOMClass();
 
 				$cls = substr($omClass, strrpos($omClass, '.') + 1);
 				$obj2 = new $cls();
 $obj2->initialize($this->context);
 
 				$obj2->hydrate($row, $startcol);
-				NickPeer::addInstanceToPool($obj2); // FIXME, we should optimize this since we already calculated the key above
+				ChuckwallaNickPeer::addInstanceToPool($obj2); // FIXME, we should optimize this since we already calculated the key above
 			} // if obj2 already loaded
 
-			// Add the $obj1 (ChannelNick) to the collection in $obj2 (Nick)
+			// Add the $obj1 (ChuckwallaChannelNick) to the collection in $obj2 (ChuckwallaNick)
 			$obj2->addChannelNick($obj1);
 
 			$results[] = $obj1;
@@ -619,9 +619,9 @@ $obj2->initialize($this->context);
 		// clear out anything that might confuse the ORDER BY clause
 		$criteria->clearSelectColumns()->clearOrderByColumns();
 		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->addSelectColumn(ChannelNickPeer::COUNT_DISTINCT);
+			$criteria->addSelectColumn(ChuckwallaChannelNickPeer::COUNT_DISTINCT);
 		} else {
-			$criteria->addSelectColumn(ChannelNickPeer::COUNT);
+			$criteria->addSelectColumn(ChuckwallaChannelNickPeer::COUNT);
 		}
 
 		// just in case we're grouping: add those columns to the select statement
@@ -630,11 +630,11 @@ $obj2->initialize($this->context);
 			$criteria->addSelectColumn($column);
 		}
 
-		$criteria->addJoin(ChannelNickPeer::CHANNEL_ID, ChannelPeer::ID);
+		$criteria->addJoin(ChuckwallaChannelNickPeer::CHANNEL_ID, ChuckwallaChannelPeer::ID);
 
-		$criteria->addJoin(ChannelNickPeer::NICK_ID, NickPeer::ID);
+		$criteria->addJoin(ChuckwallaChannelNickPeer::NICK_ID, ChuckwallaNickPeer::ID);
 
-		$stmt = ChannelNickPeer::doSelectStmt($criteria, $con);
+		$stmt = ChuckwallaChannelNickPeer::doSelectStmt($criteria, $con);
 		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
 			return (int) $row[0];
 		} else {
@@ -645,9 +645,9 @@ $obj2->initialize($this->context);
 
 
 	/**
-	 * Selects a collection of ChannelNick objects pre-filled with all related objects.
+	 * Selects a collection of ChuckwallaChannelNick objects pre-filled with all related objects.
 	 *
-	 * @return     array Array of ChannelNick objects.
+	 * @return     array Array of ChuckwallaChannelNick objects.
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
@@ -660,30 +660,30 @@ $obj2->initialize($this->context);
 			$c->setDbName(self::DATABASE_NAME);
 		}
 
-		ChannelNickPeer::addSelectColumns($c);
-		$startcol2 = (ChannelNickPeer::NUM_COLUMNS - ChannelNickPeer::NUM_LAZY_LOAD_COLUMNS);
+		ChuckwallaChannelNickPeer::addSelectColumns($c);
+		$startcol2 = (ChuckwallaChannelNickPeer::NUM_COLUMNS - ChuckwallaChannelNickPeer::NUM_LAZY_LOAD_COLUMNS);
 
-		ChannelPeer::addSelectColumns($c);
-		$startcol3 = $startcol2 + ChannelPeer::NUM_COLUMNS;
+		ChuckwallaChannelPeer::addSelectColumns($c);
+		$startcol3 = $startcol2 + ChuckwallaChannelPeer::NUM_COLUMNS;
 
-		NickPeer::addSelectColumns($c);
-		$startcol4 = $startcol3 + NickPeer::NUM_COLUMNS;
+		ChuckwallaNickPeer::addSelectColumns($c);
+		$startcol4 = $startcol3 + ChuckwallaNickPeer::NUM_COLUMNS;
 
-		$c->addJoin(ChannelNickPeer::CHANNEL_ID, ChannelPeer::ID);
+		$c->addJoin(ChuckwallaChannelNickPeer::CHANNEL_ID, ChuckwallaChannelPeer::ID);
 
-		$c->addJoin(ChannelNickPeer::NICK_ID, NickPeer::ID);
+		$c->addJoin(ChuckwallaChannelNickPeer::NICK_ID, ChuckwallaNickPeer::ID);
 
 		$stmt = BasePeer::doSelect($c, $con);
 		$results = array();
 
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = ChannelNickPeer::getPrimaryKeyHashFromRow($row, 0);
+			$key1 = ChuckwallaChannelNickPeer::getPrimaryKeyHashFromRow($row, 0);
 			if (isset(self::$instances[$key1])) {
 				$obj1 = self::$instances[$key1];
 				// print "  <-Found " . get_class($obj1) . " " . $obj1 . " in instance pool.\n";
 			} else {
 
-				$omClass = ChannelNickPeer::getOMClass();
+				$omClass = ChuckwallaChannelNickPeer::getOMClass();
 
 				$cls = substr($omClass, strrpos($omClass, '.') + 1);
 				$obj1 = new $cls();
@@ -694,14 +694,14 @@ $obj1->initialize($this->context);
 				self::$instances[$key1] = $obj1;
 			} // if obj1 already loaded
 
-			// Add objects for joined Nick rows
+			// Add objects for joined ChuckwallaNick rows
 
-			$key2 = NickPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+			$key2 = ChuckwallaNickPeer::getPrimaryKeyHashFromRow($row, $startcol2);
 
-			$obj2 = NickPeer::getInstanceFromPool($key2);
+			$obj2 = ChuckwallaNickPeer::getInstanceFromPool($key2);
 			if (!$obj2) {
 
-				$omClass = NickPeer::getOMClass();
+				$omClass = ChuckwallaNickPeer::getOMClass();
 
 
 				$cls = substr($omClass, strrpos($omClass, '.') + 1);
@@ -709,20 +709,20 @@ $obj1->initialize($this->context);
 $obj2->initialize($this->context);
 
 				$obj2->hydrate($row, $startcol2);
-				NickPeer::addInstanceToPool($obj2); // FIXME - Optimize: we already know the key
+				ChuckwallaNickPeer::addInstanceToPool($obj2); // FIXME - Optimize: we already know the key
 			} // if obj2 loaded
 
-			// Add the $obj1 (ChannelNick) to the collection in $obj2 (Nick)
+			// Add the $obj1 (ChuckwallaChannelNick) to the collection in $obj2 (ChuckwallaNick)
 			$obj2->addChannelNick($obj1);
 
-			// Add objects for joined Channel rows
+			// Add objects for joined ChuckwallaChannel rows
 
-			$key3 = ChannelPeer::getPrimaryKeyHashFromRow($row, $startcol3);
+			$key3 = ChuckwallaChannelPeer::getPrimaryKeyHashFromRow($row, $startcol3);
 
-			$obj3 = ChannelPeer::getInstanceFromPool($key3);
+			$obj3 = ChuckwallaChannelPeer::getInstanceFromPool($key3);
 			if (!$obj3) {
 
-				$omClass = ChannelPeer::getOMClass();
+				$omClass = ChuckwallaChannelPeer::getOMClass();
 
 
 				$cls = substr($omClass, strrpos($omClass, '.') + 1);
@@ -730,10 +730,10 @@ $obj2->initialize($this->context);
 $obj3->initialize($this->context);
 
 				$obj3->hydrate($row, $startcol3);
-				ChannelPeer::addInstanceToPool($obj3); // FIXME - Optimize: we already know the key
+				ChuckwallaChannelPeer::addInstanceToPool($obj3); // FIXME - Optimize: we already know the key
 			} // if obj3 loaded
 
-			// Add the $obj1 (ChannelNick) to the collection in $obj3 (Channel)
+			// Add the $obj1 (ChuckwallaChannelNick) to the collection in $obj3 (ChuckwallaChannel)
 			$obj3->addChannelNick($obj1);
 
 			$results[] = $obj1;
@@ -758,9 +758,9 @@ $obj3->initialize($this->context);
 		// clear out anything that might confuse the ORDER BY clause
 		$criteria->clearSelectColumns()->clearOrderByColumns();
 		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->addSelectColumn(ChannelNickPeer::COUNT_DISTINCT);
+			$criteria->addSelectColumn(ChuckwallaChannelNickPeer::COUNT_DISTINCT);
 		} else {
-			$criteria->addSelectColumn(ChannelNickPeer::COUNT);
+			$criteria->addSelectColumn(ChuckwallaChannelNickPeer::COUNT);
 		}
 
 		// just in case we're grouping: add those columns to the select statement
@@ -769,9 +769,9 @@ $obj3->initialize($this->context);
 			$criteria->addSelectColumn($column);
 		}
 
-		$criteria->addJoin(ChannelNickPeer::NICK_ID, NickPeer::ID);
+		$criteria->addJoin(ChuckwallaChannelNickPeer::NICK_ID, ChuckwallaNickPeer::ID);
 
-		$stmt = ChannelNickPeer::doSelectStmt($criteria, $con);
+		$stmt = ChuckwallaChannelNickPeer::doSelectStmt($criteria, $con);
 		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
 			return (int) $row[0];
 		} else {
@@ -797,9 +797,9 @@ $obj3->initialize($this->context);
 		// clear out anything that might confuse the ORDER BY clause
 		$criteria->clearSelectColumns()->clearOrderByColumns();
 		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->addSelectColumn(ChannelNickPeer::COUNT_DISTINCT);
+			$criteria->addSelectColumn(ChuckwallaChannelNickPeer::COUNT_DISTINCT);
 		} else {
-			$criteria->addSelectColumn(ChannelNickPeer::COUNT);
+			$criteria->addSelectColumn(ChuckwallaChannelNickPeer::COUNT);
 		}
 
 		// just in case we're grouping: add those columns to the select statement
@@ -808,9 +808,9 @@ $obj3->initialize($this->context);
 			$criteria->addSelectColumn($column);
 		}
 
-		$criteria->addJoin(ChannelNickPeer::CHANNEL_ID, ChannelPeer::ID);
+		$criteria->addJoin(ChuckwallaChannelNickPeer::CHANNEL_ID, ChuckwallaChannelPeer::ID);
 
-		$stmt = ChannelNickPeer::doSelectStmt($criteria, $con);
+		$stmt = ChuckwallaChannelNickPeer::doSelectStmt($criteria, $con);
 		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
 			return (int) $row[0];
 		} else {
@@ -821,9 +821,9 @@ $obj3->initialize($this->context);
 
 
 	/**
-	 * Selects a collection of ChannelNick objects pre-filled with all related objects except Channel.
+	 * Selects a collection of ChuckwallaChannelNick objects pre-filled with all related objects except Channel.
 	 *
-	 * @return     array Array of ChannelNick objects.
+	 * @return     array Array of ChuckwallaChannelNick objects.
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
@@ -838,26 +838,26 @@ $obj3->initialize($this->context);
 			$c->setDbName(self::DATABASE_NAME);
 		}
 
-		ChannelNickPeer::addSelectColumns($c);
-		$startcol2 = (ChannelNickPeer::NUM_COLUMNS - ChannelNickPeer::NUM_LAZY_LOAD_COLUMNS);
+		ChuckwallaChannelNickPeer::addSelectColumns($c);
+		$startcol2 = (ChuckwallaChannelNickPeer::NUM_COLUMNS - ChuckwallaChannelNickPeer::NUM_LAZY_LOAD_COLUMNS);
 
-		NickPeer::addSelectColumns($c);
-		$startcol3 = $startcol2 + NickPeer::NUM_COLUMNS;
+		ChuckwallaNickPeer::addSelectColumns($c);
+		$startcol3 = $startcol2 + ChuckwallaNickPeer::NUM_COLUMNS;
 
-		$c->addJoin(ChannelNickPeer::NICK_ID, NickPeer::ID);
+		$c->addJoin(ChuckwallaChannelNickPeer::NICK_ID, ChuckwallaNickPeer::ID);
 
 
 		$stmt = BasePeer::doSelect($c, $con);
 		$results = array();
 
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = ChannelNickPeer::getPrimaryKeyHashFromRow($row, 0);
+			$key1 = ChuckwallaChannelNickPeer::getPrimaryKeyHashFromRow($row, 0);
 			if (isset(self::$instances[$key1])) {
 				$obj1 = self::$instances[$key1];
 				// print "  <-Found " . get_class($obj1) . " " . $obj1 . " in instance pool.\n";
 			} else {
 
-				$omClass = ChannelNickPeer::getOMClass();
+				$omClass = ChuckwallaChannelNickPeer::getOMClass();
 
 				$cls = substr($omClass, strrpos($omClass, '.') + 1);
 				$obj1 = new $cls();
@@ -868,13 +868,13 @@ $obj1->initialize($this->context);
 				self::$instances[$key1] = $obj1;
 			} // if obj1 already loaded
 
-				// Add objects for joined Nick rows
+				// Add objects for joined ChuckwallaNick rows
 
-				$key2 = NickPeer::getPrimaryKeyHashFromRow($row, $startcol2);
-				$obj2 = NickPeer::getInstanceFromPool($key2);
+				$key2 = ChuckwallaNickPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+				$obj2 = ChuckwallaNickPeer::getInstanceFromPool($key2);
 				if (!2) {
 	
-					$omClass = NickPeer::getOMClass();
+					$omClass = ChuckwallaNickPeer::getOMClass();
 
 
 				$cls = substr($omClass, strrpos($omClass, '.') + 1);
@@ -882,10 +882,10 @@ $obj1->initialize($this->context);
 $obj2->initialize($this->context);
 
 				$obj2->hydrate($row, $startcol2);
-				NickPeer::addInstanceToPool($obj2); // FIXME - Optimize: we already calculated the key
+				ChuckwallaNickPeer::addInstanceToPool($obj2); // FIXME - Optimize: we already calculated the key
 			} // if $obj2 already loaded
 
-			// Add the $obj1 (ChannelNick) to the collection in $obj2 (Nick)
+			// Add the $obj1 (ChuckwallaChannelNick) to the collection in $obj2 (ChuckwallaNick)
 			$obj2->addChannelNick($obj1);
 
 			$results[] = $obj1;
@@ -895,9 +895,9 @@ $obj2->initialize($this->context);
 
 
 	/**
-	 * Selects a collection of ChannelNick objects pre-filled with all related objects except Nick.
+	 * Selects a collection of ChuckwallaChannelNick objects pre-filled with all related objects except Nick.
 	 *
-	 * @return     array Array of ChannelNick objects.
+	 * @return     array Array of ChuckwallaChannelNick objects.
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
@@ -912,26 +912,26 @@ $obj2->initialize($this->context);
 			$c->setDbName(self::DATABASE_NAME);
 		}
 
-		ChannelNickPeer::addSelectColumns($c);
-		$startcol2 = (ChannelNickPeer::NUM_COLUMNS - ChannelNickPeer::NUM_LAZY_LOAD_COLUMNS);
+		ChuckwallaChannelNickPeer::addSelectColumns($c);
+		$startcol2 = (ChuckwallaChannelNickPeer::NUM_COLUMNS - ChuckwallaChannelNickPeer::NUM_LAZY_LOAD_COLUMNS);
 
-		ChannelPeer::addSelectColumns($c);
-		$startcol3 = $startcol2 + ChannelPeer::NUM_COLUMNS;
+		ChuckwallaChannelPeer::addSelectColumns($c);
+		$startcol3 = $startcol2 + ChuckwallaChannelPeer::NUM_COLUMNS;
 
-		$c->addJoin(ChannelNickPeer::CHANNEL_ID, ChannelPeer::ID);
+		$c->addJoin(ChuckwallaChannelNickPeer::CHANNEL_ID, ChuckwallaChannelPeer::ID);
 
 
 		$stmt = BasePeer::doSelect($c, $con);
 		$results = array();
 
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = ChannelNickPeer::getPrimaryKeyHashFromRow($row, 0);
+			$key1 = ChuckwallaChannelNickPeer::getPrimaryKeyHashFromRow($row, 0);
 			if (isset(self::$instances[$key1])) {
 				$obj1 = self::$instances[$key1];
 				// print "  <-Found " . get_class($obj1) . " " . $obj1 . " in instance pool.\n";
 			} else {
 
-				$omClass = ChannelNickPeer::getOMClass();
+				$omClass = ChuckwallaChannelNickPeer::getOMClass();
 
 				$cls = substr($omClass, strrpos($omClass, '.') + 1);
 				$obj1 = new $cls();
@@ -942,13 +942,13 @@ $obj1->initialize($this->context);
 				self::$instances[$key1] = $obj1;
 			} // if obj1 already loaded
 
-				// Add objects for joined Channel rows
+				// Add objects for joined ChuckwallaChannel rows
 
-				$key2 = ChannelPeer::getPrimaryKeyHashFromRow($row, $startcol2);
-				$obj2 = ChannelPeer::getInstanceFromPool($key2);
+				$key2 = ChuckwallaChannelPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+				$obj2 = ChuckwallaChannelPeer::getInstanceFromPool($key2);
 				if (!2) {
 	
-					$omClass = ChannelPeer::getOMClass();
+					$omClass = ChuckwallaChannelPeer::getOMClass();
 
 
 				$cls = substr($omClass, strrpos($omClass, '.') + 1);
@@ -956,10 +956,10 @@ $obj1->initialize($this->context);
 $obj2->initialize($this->context);
 
 				$obj2->hydrate($row, $startcol2);
-				ChannelPeer::addInstanceToPool($obj2); // FIXME - Optimize: we already calculated the key
+				ChuckwallaChannelPeer::addInstanceToPool($obj2); // FIXME - Optimize: we already calculated the key
 			} // if $obj2 already loaded
 
-			// Add the $obj1 (ChannelNick) to the collection in $obj2 (Channel)
+			// Add the $obj1 (ChuckwallaChannelNick) to the collection in $obj2 (ChuckwallaChannel)
 			$obj2->addChannelNick($obj1);
 
 			$results[] = $obj1;
@@ -990,13 +990,13 @@ $obj2->initialize($this->context);
 	 */
 	public static function getOMClass()
 	{
-		return ChannelNickPeer::CLASS_DEFAULT;
+		return ChuckwallaChannelNickPeer::CLASS_DEFAULT;
 	}
 
 	/**
-	 * Method perform an INSERT on the database, given a ChannelNick or Criteria object.
+	 * Method perform an INSERT on the database, given a ChuckwallaChannelNick or Criteria object.
 	 *
-	 * @param      mixed $values Criteria or ChannelNick object containing data that is used to create the INSERT statement.
+	 * @param      mixed $values Criteria or ChuckwallaChannelNick object containing data that is used to create the INSERT statement.
 	 * @param      PDO $con the PDO connection to use
 	 * @return     mixed The new primary key.
 	 * @throws     PropelException Any exceptions caught during processing will be
@@ -1011,7 +1011,7 @@ $obj2->initialize($this->context);
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
 		} else {
-			$criteria = $values->buildCriteria(); // build Criteria from ChannelNick object
+			$criteria = $values->buildCriteria(); // build Criteria from ChuckwallaChannelNick object
 		}
 
 
@@ -1033,9 +1033,9 @@ $obj2->initialize($this->context);
 	}
 
 	/**
-	 * Method perform an UPDATE on the database, given a ChannelNick or Criteria object.
+	 * Method perform an UPDATE on the database, given a ChuckwallaChannelNick or Criteria object.
 	 *
-	 * @param      mixed $values Criteria or ChannelNick object containing data that is used to create the UPDATE statement.
+	 * @param      mixed $values Criteria or ChuckwallaChannelNick object containing data that is used to create the UPDATE statement.
 	 * @param      PDO $con The connection to use (specify PDO connection object to exert more control over transactions).
 	 * @return     int The number of affected rows (if supported by underlying database driver).
 	 * @throws     PropelException Any exceptions caught during processing will be
@@ -1052,13 +1052,13 @@ $obj2->initialize($this->context);
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
 
-			$comparison = $criteria->getComparison(ChannelNickPeer::CHANNEL_ID);
-			$selectCriteria->add(ChannelNickPeer::CHANNEL_ID, $criteria->remove(ChannelNickPeer::CHANNEL_ID), $comparison);
+			$comparison = $criteria->getComparison(ChuckwallaChannelNickPeer::CHANNEL_ID);
+			$selectCriteria->add(ChuckwallaChannelNickPeer::CHANNEL_ID, $criteria->remove(ChuckwallaChannelNickPeer::CHANNEL_ID), $comparison);
 
-			$comparison = $criteria->getComparison(ChannelNickPeer::NICK_ID);
-			$selectCriteria->add(ChannelNickPeer::NICK_ID, $criteria->remove(ChannelNickPeer::NICK_ID), $comparison);
+			$comparison = $criteria->getComparison(ChuckwallaChannelNickPeer::NICK_ID);
+			$selectCriteria->add(ChuckwallaChannelNickPeer::NICK_ID, $criteria->remove(ChuckwallaChannelNickPeer::NICK_ID), $comparison);
 
-		} else { // $values is ChannelNick object
+		} else { // $values is ChuckwallaChannelNick object
 			$criteria = $values->buildCriteria(); // gets full criteria
 			$selectCriteria = $values->buildPkeyCriteria(); // gets criteria w/ primary key(s)
 		}
@@ -1084,7 +1084,7 @@ $obj2->initialize($this->context);
 			// use transaction because $criteria could contain info
 			// for more than one table or we could emulating ON DELETE CASCADE, etc.
 			$con->beginTransaction();
-			$affectedRows += BasePeer::doDeleteAll(ChannelNickPeer::TABLE_NAME, $con);
+			$affectedRows += BasePeer::doDeleteAll(ChuckwallaChannelNickPeer::TABLE_NAME, $con);
 			$con->commit();
 			return $affectedRows;
 		} catch (PropelException $e) {
@@ -1094,9 +1094,9 @@ $obj2->initialize($this->context);
 	}
 
 	/**
-	 * Method perform a DELETE on the database, given a ChannelNick or Criteria object OR a primary key value.
+	 * Method perform a DELETE on the database, given a ChuckwallaChannelNick or Criteria object OR a primary key value.
 	 *
-	 * @param      mixed $values Criteria or ChannelNick object or primary key or array of primary keys
+	 * @param      mixed $values Criteria or ChuckwallaChannelNick object or primary key or array of primary keys
 	 *              which is used to create the DELETE statement
 	 * @param      PDO $con the connection to use
 	 * @return     int 	The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -1107,27 +1107,27 @@ $obj2->initialize($this->context);
 	 public static function doDelete($values, PDO $con = null)
 	 {
 		if ($con === null) {
-			$con = Propel::getConnection(ChannelNickPeer::DATABASE_NAME);
+			$con = Propel::getConnection(ChuckwallaChannelNickPeer::DATABASE_NAME);
 		}
 
 		if ($values instanceof Criteria) {
 			// invalidate the cache for all objects of this type, since we have no
 			// way of knowing (without running a query) what objects should be invalidated
 			// from the cache based on this Criteria.
-			ChannelNickPeer::clearInstancePool();
+			ChuckwallaChannelNickPeer::clearInstancePool();
 
 			// rename for clarity
 			$criteria = clone $values;
-		} elseif ($values instanceof ChannelNick) {
+		} elseif ($values instanceof ChuckwallaChannelNick) {
 			// invalidate the cache for this single object
-			ChannelNickPeer::removeInstanceFromPool($values);
+			ChuckwallaChannelNickPeer::removeInstanceFromPool($values);
 			// create criteria based on pk values
 			$criteria = $values->buildPkeyCriteria();
 		} else {
 			// it must be the primary key
 
 			// we can invalidate the cache for this single object
-			ChannelNickPeer::removeInstanceFromPool($values);
+			ChuckwallaChannelNickPeer::removeInstanceFromPool($values);
 
 			$criteria = new Criteria(self::DATABASE_NAME);
 			// primary key is composite; we therefore, expect
@@ -1146,8 +1146,8 @@ $obj2->initialize($this->context);
 				$vals[1][] = $value[1];
 			}
 
-			$criteria->add(ChannelNickPeer::CHANNEL_ID, $vals[0], Criteria::IN);
-			$criteria->add(ChannelNickPeer::NICK_ID, $vals[1], Criteria::IN);
+			$criteria->add(ChuckwallaChannelNickPeer::CHANNEL_ID, $vals[0], Criteria::IN);
+			$criteria->add(ChuckwallaChannelNickPeer::NICK_ID, $vals[1], Criteria::IN);
 		}
 
 		// Set the correct dbName
@@ -1171,24 +1171,24 @@ $obj2->initialize($this->context);
 	}
 
 	/**
-	 * Validates all modified columns of given ChannelNick object.
+	 * Validates all modified columns of given ChuckwallaChannelNick object.
 	 * If parameter $columns is either a single column name or an array of column names
 	 * than only those columns are validated.
 	 *
 	 * NOTICE: This does not apply to primary or foreign keys for now.
 	 *
-	 * @param      ChannelNick $obj The object to validate.
+	 * @param      ChuckwallaChannelNick $obj The object to validate.
 	 * @param      mixed $cols Column name or array of column names.
 	 *
 	 * @return     mixed TRUE if all columns are valid or the error message of the first invalid column.
 	 */
-	public static function doValidate(ChannelNick $obj, $cols = null)
+	public static function doValidate(ChuckwallaChannelNick $obj, $cols = null)
 	{
 		$columns = array();
 
 		if ($cols) {
-			$dbMap = Propel::getDatabaseMap(ChannelNickPeer::DATABASE_NAME);
-			$tableMap = $dbMap->getTable(ChannelNickPeer::TABLE_NAME);
+			$dbMap = Propel::getDatabaseMap(ChuckwallaChannelNickPeer::DATABASE_NAME);
+			$tableMap = $dbMap->getTable(ChuckwallaChannelNickPeer::TABLE_NAME);
 
 			if (! is_array($cols)) {
 				$cols = array($cols);
@@ -1204,7 +1204,7 @@ $obj2->initialize($this->context);
 
 		}
 
-		return BasePeer::doValidate(ChannelNickPeer::DATABASE_NAME, ChannelNickPeer::TABLE_NAME, $columns);
+		return BasePeer::doValidate(ChuckwallaChannelNickPeer::DATABASE_NAME, ChuckwallaChannelNickPeer::TABLE_NAME, $columns);
 	}
 
 	/**
@@ -1213,29 +1213,29 @@ $obj2->initialize($this->context);
 	   @param int $nick_id
 	   
 	 * @param      PDO $con
-	 * @return     ChannelNick
+	 * @return     ChuckwallaChannelNick
 	 */
 	public static function retrieveByPK( $channel_id, $nick_id, PDO $con = null) {
 		if ($con === null) {
 			$con = Propel::getConnection(self::DATABASE_NAME);
 		}
 		$criteria = new Criteria();
-		$criteria->add(ChannelNickPeer::CHANNEL_ID, $channel_id);
-		$criteria->add(ChannelNickPeer::NICK_ID, $nick_id);
-		$v = ChannelNickPeer::doSelect($criteria, $con);
+		$criteria->add(ChuckwallaChannelNickPeer::CHANNEL_ID, $channel_id);
+		$criteria->add(ChuckwallaChannelNickPeer::NICK_ID, $nick_id);
+		$v = ChuckwallaChannelNickPeer::doSelect($criteria, $con);
 
 		return !empty($v) ? $v[0] : null;
 	}
-} // BaseChannelNickPeer
+} // ChuckwallaBaseChannelNickPeer
 
 // This is the static code needed to register the MapBuilder for this table with the main Propel class.
 //
-// NOTE: This static code cannot call methods on the ChannelNickPeer class, because it is not defined yet.
-// If you need to use overridden methods, you can add this code to the bottom of the ChannelNickPeer class:
+// NOTE: This static code cannot call methods on the ChuckwallaChannelNickPeer class, because it is not defined yet.
+// If you need to use overridden methods, you can add this code to the bottom of the ChuckwallaChannelNickPeer class:
 //
-// Propel::getDatabaseMap(ChannelNickPeer::DATABASE_NAME)->addTableBuilder(ChannelNickPeer::TABLE_NAME, ChannelNickPeer::getMapBuilder());
+// Propel::getDatabaseMap(ChuckwallaChannelNickPeer::DATABASE_NAME)->addTableBuilder(ChuckwallaChannelNickPeer::TABLE_NAME, ChuckwallaChannelNickPeer::getMapBuilder());
 //
 // Doing so will effectively overwrite the registration below.
 
-Propel::getDatabaseMap(BaseChannelNickPeer::DATABASE_NAME)->addTableBuilder(BaseChannelNickPeer::TABLE_NAME, BaseChannelNickPeer::getMapBuilder());
+Propel::getDatabaseMap(ChuckwallaBaseChannelNickPeer::DATABASE_NAME)->addTableBuilder(ChuckwallaBaseChannelNickPeer::TABLE_NAME, ChuckwallaBaseChannelNickPeer::getMapBuilder());
 

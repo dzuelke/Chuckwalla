@@ -1,6 +1,6 @@
 <?php
 
-abstract class BaseChannel extends BaseObject implements Persistent, AgaviIModel {
+abstract class ChuckwallaBaseIrcIdentity extends BaseObject implements Persistent, AgaviIModel {
 	
 	protected $context = null;
 
@@ -18,7 +18,7 @@ abstract class BaseChannel extends BaseObject implements Persistent, AgaviIModel
 	 * The Peer class.
 	 * Instance provides a convenient way of calling static methods on a class
 	 * that calling code may not be able to identify.
-	 * @var        ChannelPeer
+	 * @var        ChuckwallaIrcIdentityPeer
 	 */
 	protected static $peer;
 
@@ -31,27 +31,25 @@ abstract class BaseChannel extends BaseObject implements Persistent, AgaviIModel
 
 
 	/**
-	 * The value for the name field.
-	 * @var        string
+	 * The value for the user_id field.
+	 * @var        int
 	 */
-	protected $name;
-
-
-	/**
-	 * The value for the topic field.
-	 * @var        string
-	 */
-	protected $topic;
+	protected $user_id;
 
 	/**
-	 * @var        array ChannelNick[] Collection to store aggregation of ChannelNick objects.
+	 * @var        User
 	 */
-	protected $collChannelNicks;
+	protected $aUser;
 
 	/**
-	 * @var        Criteria The criteria used to select the current contents of collChannelNicks.
+	 * @var        array ChuckwallaNick[] Collection to store aggregation of ChuckwallaNick objects.
 	 */
-	private $lastChannelNickCriteria = null;
+	protected $collNicks;
+
+	/**
+	 * @var        Criteria The criteria used to select the current contents of collNicks.
+	 */
+	private $lastNickCriteria = null;
 
 	/**
 	 * Flag to prevent endless save loop, if this object is referenced
@@ -79,25 +77,14 @@ abstract class BaseChannel extends BaseObject implements Persistent, AgaviIModel
 	}
 
 	/**
-	 * Get the [name] column value.
+	 * Get the [user_id] column value.
 	 * 
-	 * @return     string
+	 * @return     int
 	 */
-	public function getName()
+	public function getUserId()
 	{
 
-		return $this->name;
-	}
-
-	/**
-	 * Get the [topic] column value.
-	 * 
-	 * @return     string
-	 */
-	public function getTopic()
-	{
-
-		return $this->topic;
+		return $this->user_id;
 	}
 
 	/**
@@ -111,42 +98,30 @@ abstract class BaseChannel extends BaseObject implements Persistent, AgaviIModel
 
 		if ($this->id !== $v) {
 			$this->id = $v;
-			$this->modifiedColumns[] = ChannelPeer::ID;
+			$this->modifiedColumns[] = ChuckwallaIrcIdentityPeer::ID;
 		}
 
 	} // setId()
 
 	/**
-	 * Set the value of [name] column.
+	 * Set the value of [user_id] column.
 	 * 
-	 * @param      string $v new value
+	 * @param      int $v new value
 	 * @return     void
 	 */
-	public function setName($v)
+	public function setUserId($v)
 	{
 
-		if ($this->name !== $v) {
-			$this->name = $v;
-			$this->modifiedColumns[] = ChannelPeer::NAME;
+		if ($this->user_id !== $v) {
+			$this->user_id = $v;
+			$this->modifiedColumns[] = ChuckwallaIrcIdentityPeer::USER_ID;
 		}
 
-	} // setName()
-
-	/**
-	 * Set the value of [topic] column.
-	 * 
-	 * @param      string $v new value
-	 * @return     void
-	 */
-	public function setTopic($v)
-	{
-
-		if ($this->topic !== $v) {
-			$this->topic = $v;
-			$this->modifiedColumns[] = ChannelPeer::TOPIC;
+		if ($this->aUser !== null && $this->aUser->getId() !== $v) {
+			$this->aUser = null;
 		}
 
-	} // setTopic()
+	} // setUserId()
 
 	/**
 	 * Hydrates (populates) the object variables with values from the database resultset.
@@ -166,17 +141,16 @@ abstract class BaseChannel extends BaseObject implements Persistent, AgaviIModel
 		try {
 
 			$this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
-			$this->name = $row[$startcol + 1];
-			$this->topic = $row[$startcol + 2];
+			$this->user_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 3; // 3 = ChannelPeer::NUM_COLUMNS - ChannelPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 2; // 2 = ChuckwallaIrcIdentityPeer::NUM_COLUMNS - ChuckwallaIrcIdentityPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
-			throw new PropelException("Error populating Channel object", $e);
+			throw new PropelException("Error populating IrcIdentity object", $e);
 		}
 	}
 
@@ -196,12 +170,12 @@ abstract class BaseChannel extends BaseObject implements Persistent, AgaviIModel
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(ChannelPeer::DATABASE_NAME);
+			$con = Propel::getConnection(ChuckwallaIrcIdentityPeer::DATABASE_NAME);
 		}
 
 		try {
 			$con->beginTransaction();
-			ChannelPeer::doDelete($this, $con);
+			ChuckwallaIrcIdentityPeer::doDelete($this, $con);
 			$this->setDeleted(true);
 			$con->commit();
 		} catch (PropelException $e) {
@@ -227,14 +201,14 @@ abstract class BaseChannel extends BaseObject implements Persistent, AgaviIModel
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(ChannelPeer::DATABASE_NAME);
+			$con = Propel::getConnection(ChuckwallaIrcIdentityPeer::DATABASE_NAME);
 		}
 
 		try {
 			$con->beginTransaction();
 			$affectedRows = $this->doSave($con);
 			$con->commit();
-			ChannelPeer::addInstanceToPool($this);
+			ChuckwallaIrcIdentityPeer::addInstanceToPool($this);
 			return $affectedRows;
 		} catch (PropelException $e) {
 			$con->rollback();
@@ -260,10 +234,23 @@ abstract class BaseChannel extends BaseObject implements Persistent, AgaviIModel
 			$this->alreadyInSave = true;
 
 
+			// We call the save method on the following object(s) if they
+			// were passed to this object by their coresponding set
+			// method.  This object relates to these object(s) by a
+			// foreign key reference.
+
+			if ($this->aUser !== null) {
+				if ($this->aUser->isModified() || $this->aUser->isNew()) {
+					$affectedRows += $this->aUser->save($con);
+				}
+				$this->setUser($this->aUser);
+			}
+
+
 			// If this object has been modified, then save it to the database.
 			if ($this->isModified()) {
 				if ($this->isNew()) {
-					$pk = ChannelPeer::doInsert($this, $con);
+					$pk = ChuckwallaIrcIdentityPeer::doInsert($this, $con);
 					$affectedRows += 1; // we are assuming that there is only 1 row per doInsert() which
 										 // should always be true here (even though technically
 										 // BasePeer::doInsert() can insert multiple rows).
@@ -272,13 +259,13 @@ abstract class BaseChannel extends BaseObject implements Persistent, AgaviIModel
 
 					$this->setNew(false);
 				} else {
-					$affectedRows += ChannelPeer::doUpdate($this, $con);
+					$affectedRows += ChuckwallaIrcIdentityPeer::doUpdate($this, $con);
 				}
 				$this->resetModified(); // [HL] After being saved an object is no longer 'modified'
 			}
 
-			if ($this->collChannelNicks !== null) {
-				foreach ($this->collChannelNicks as $referrerFK) {
+			if ($this->collNicks !== null) {
+				foreach ($this->collNicks as $referrerFK) {
 					if (!$referrerFK->isDeleted()) {
 						$affectedRows += $referrerFK->save($con);
 					}
@@ -350,13 +337,25 @@ abstract class BaseChannel extends BaseObject implements Persistent, AgaviIModel
 			$failureMap = array();
 
 
-			if (($retval = ChannelPeer::doValidate($this, $columns)) !== true) {
+			// We call the validate method on the following object(s) if they
+			// were passed to this object by their coresponding set
+			// method.  This object relates to these object(s) by a
+			// foreign key reference.
+
+			if ($this->aUser !== null) {
+				if (!$this->aUser->validate($columns)) {
+					$failureMap = array_merge($failureMap, $this->aUser->getValidationFailures());
+				}
+			}
+
+
+			if (($retval = ChuckwallaIrcIdentityPeer::doValidate($this, $columns)) !== true) {
 				$failureMap = array_merge($failureMap, $retval);
 			}
 
 
-				if ($this->collChannelNicks !== null) {
-					foreach ($this->collChannelNicks as $referrerFK) {
+				if ($this->collNicks !== null) {
+					foreach ($this->collNicks as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -381,7 +380,7 @@ abstract class BaseChannel extends BaseObject implements Persistent, AgaviIModel
 	 */
 	public function getByName($name, $type = BasePeer::TYPE_PHPNAME)
 	{
-		$pos = ChannelPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+		$pos = ChuckwallaIrcIdentityPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
 		return $this->getByPosition($pos);
 	}
 
@@ -399,10 +398,7 @@ abstract class BaseChannel extends BaseObject implements Persistent, AgaviIModel
 				return $this->getId();
 				break;
 			case 1:
-				return $this->getName();
-				break;
-			case 2:
-				return $this->getTopic();
+				return $this->getUserId();
 				break;
 			default:
 				return null;
@@ -422,11 +418,10 @@ abstract class BaseChannel extends BaseObject implements Persistent, AgaviIModel
 	 */
 	public function toArray($keyType = BasePeer::TYPE_PHPNAME)
 	{
-		$keys = ChannelPeer::getFieldNames($keyType);
+		$keys = ChuckwallaIrcIdentityPeer::getFieldNames($keyType);
 		$result = array(
 			$keys[0] => $this->getId(),
-			$keys[1] => $this->getName(),
-			$keys[2] => $this->getTopic(),
+			$keys[1] => $this->getUserId(),
 		);
 		return $result;
 	}
@@ -443,7 +438,7 @@ abstract class BaseChannel extends BaseObject implements Persistent, AgaviIModel
 	 */
 	public function setByName($name, $value, $type = BasePeer::TYPE_PHPNAME)
 	{
-		$pos = ChannelPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+		$pos = ChuckwallaIrcIdentityPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
 		return $this->setByPosition($pos, $value);
 	}
 
@@ -462,10 +457,7 @@ abstract class BaseChannel extends BaseObject implements Persistent, AgaviIModel
 				$this->setId($value);
 				break;
 			case 1:
-				$this->setName($value);
-				break;
-			case 2:
-				$this->setTopic($value);
+				$this->setUserId($value);
 				break;
 		} // switch()
 	}
@@ -488,11 +480,10 @@ abstract class BaseChannel extends BaseObject implements Persistent, AgaviIModel
 	 */
 	public function fromArray($arr, $keyType = BasePeer::TYPE_PHPNAME)
 	{
-		$keys = ChannelPeer::getFieldNames($keyType);
+		$keys = ChuckwallaIrcIdentityPeer::getFieldNames($keyType);
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
-		if (array_key_exists($keys[1], $arr)) $this->setName($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setTopic($arr[$keys[2]]);
+		if (array_key_exists($keys[1], $arr)) $this->setUserId($arr[$keys[1]]);
 	}
 
 	/**
@@ -502,11 +493,10 @@ abstract class BaseChannel extends BaseObject implements Persistent, AgaviIModel
 	 */
 	public function buildCriteria()
 	{
-		$criteria = new Criteria(ChannelPeer::DATABASE_NAME);
+		$criteria = new Criteria(ChuckwallaIrcIdentityPeer::DATABASE_NAME);
 
-		if ($this->isColumnModified(ChannelPeer::ID)) $criteria->add(ChannelPeer::ID, $this->id);
-		if ($this->isColumnModified(ChannelPeer::NAME)) $criteria->add(ChannelPeer::NAME, $this->name);
-		if ($this->isColumnModified(ChannelPeer::TOPIC)) $criteria->add(ChannelPeer::TOPIC, $this->topic);
+		if ($this->isColumnModified(ChuckwallaIrcIdentityPeer::ID)) $criteria->add(ChuckwallaIrcIdentityPeer::ID, $this->id);
+		if ($this->isColumnModified(ChuckwallaIrcIdentityPeer::USER_ID)) $criteria->add(ChuckwallaIrcIdentityPeer::USER_ID, $this->user_id);
 
 		return $criteria;
 	}
@@ -521,9 +511,9 @@ abstract class BaseChannel extends BaseObject implements Persistent, AgaviIModel
 	 */
 	public function buildPkeyCriteria()
 	{
-		$criteria = new Criteria(ChannelPeer::DATABASE_NAME);
+		$criteria = new Criteria(ChuckwallaIrcIdentityPeer::DATABASE_NAME);
 
-		$criteria->add(ChannelPeer::ID, $this->id);
+		$criteria->add(ChuckwallaIrcIdentityPeer::ID, $this->id);
 
 		return $criteria;
 	}
@@ -554,16 +544,14 @@ abstract class BaseChannel extends BaseObject implements Persistent, AgaviIModel
 	 * If desired, this method can also make copies of all associated (fkey referrers)
 	 * objects.
 	 *
-	 * @param      object $copyObj An object of Channel (or compatible) type.
+	 * @param      object $copyObj An object of ChuckwallaIrcIdentity (or compatible) type.
 	 * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
 	 * @throws     PropelException
 	 */
 	public function copyInto($copyObj, $deepCopy = false)
 	{
 
-		$copyObj->setName($this->name);
-
-		$copyObj->setTopic($this->topic);
+		$copyObj->setUserId($this->user_id);
 
 
 		if ($deepCopy) {
@@ -571,9 +559,9 @@ abstract class BaseChannel extends BaseObject implements Persistent, AgaviIModel
 			// the getter/setter methods for fkey referrer objects.
 			$copyObj->setNew(false);
 
-			foreach ($this->getChannelNicks() as $relObj) {
+			foreach ($this->getNicks() as $relObj) {
 				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
-				$copyObj->addChannelNick($relObj->copy($deepCopy));
+				$copyObj->addNick($relObj->copy($deepCopy));
 			}
 			}
 
@@ -595,7 +583,7 @@ abstract class BaseChannel extends BaseObject implements Persistent, AgaviIModel
 	 * objects.
 	 *
 	 * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-	 * @return     Channel Clone of current object.
+	 * @return     ChuckwallaIrcIdentity Clone of current object.
 	 * @throws     PropelException
 	 */
 	public function copy($deepCopy = false)
@@ -616,12 +604,12 @@ abstract class BaseChannel extends BaseObject implements Persistent, AgaviIModel
 	 * same instance for all member of this class. The method could therefore
 	 * be static, but this would prevent one from overriding the behavior.
 	 *
-	 * @return     ChannelPeer
+	 * @return     ChuckwallaIrcIdentityPeer
 	 */
 	public function getPeer()
 	{
 		if (self::$peer === null) {
-			self::$peer = new ChannelPeer();
+			self::$peer = new ChuckwallaIrcIdentityPeer();
 ($this->context);
 
 		}
@@ -629,19 +617,62 @@ abstract class BaseChannel extends BaseObject implements Persistent, AgaviIModel
 	}
 
 	/**
-	 * Temporary storage of collChannelNicks to save a possible db hit in
+	 * Declares an association between this object and a ChuckwallaUser object.
+	 *
+	 * @param      ChuckwallaUser $v
+	 * @return     void
+	 * @throws     PropelException
+	 */
+	public function setUser(ChuckwallaUser $v = null)
+	{
+		if ($v === null) {
+			$this->setUserId(NULL);
+		} else {
+			$this->setUserId($v->getId());
+		}
+
+		$this->aUser = $v;
+
+
+	}
+
+
+	/**
+	 * Get the associated User object
+	 *
+	 * @param      PDO Optional Connection object.
+	 * @return     User The associated User object.
+	 * @throws     PropelException
+	 */
+	public function getUser(PDO $con = null)
+	{
+		if ($this->aUser === null && ($this->user_id !== null)) {
+			$this->aUser = ChuckwallaUserPeer::retrieveByPK($this->user_id, $con);
+			/* The following can be used additionally to
+			   guarantee the related object contains a reference
+			   to this object.  This level of coupling may, however, be
+			   undesirable since it could result in an only partially populated collection
+			   in the referenced object.
+			   $this->aUser->addIrcIdentitys($this);
+			 */
+		}
+		return $this->aUser;
+	}
+
+	/**
+	 * Temporary storage of collNicks to save a possible db hit in
 	 * the event objects are add to the collection, but the
 	 * complete collection is never requested.
 	 *
 	 * @return     void
 	 * @deprecated - This method will be removed in 2.0 since arrays
-	 *				are automatically initialized in the addChannelNicks() method.
-	 * @see        addChannelNicks()
+	 *				are automatically initialized in the addNicks() method.
+	 * @see        addNicks()
 	 */
-	public function initChannelNicks()
+	public function initNicks()
 	{
-		if ($this->collChannelNicks === null) {
-			$this->collChannelNicks = array();
+		if ($this->collNicks === null) {
+			$this->collNicks = array();
 		}
 	}
 
@@ -649,8 +680,8 @@ abstract class BaseChannel extends BaseObject implements Persistent, AgaviIModel
 	 * Gets an array of  objects which contain a foreign key that references this object.
 	 *
 	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
-	 * Otherwise if this Channel has previously been saved, it will retrieve
-	 * related ChannelNicks from storage. If this Channel is new, it will return
+	 * Otherwise if this ChuckwallaIrcIdentity has previously been saved, it will retrieve
+	 * related Nicks from storage. If this ChuckwallaIrcIdentity is new, it will return
 	 * an empty collection or the current collection, the criteria is ignored on a new object.
 	 *
 	 * @param      PDO $con
@@ -658,7 +689,7 @@ abstract class BaseChannel extends BaseObject implements Persistent, AgaviIModel
 	 * @return     array []
 	 * @throws     PropelException
 	 */
-	public function getChannelNicks($criteria = null, PDO $con = null)
+	public function getNicks($criteria = null, PDO $con = null)
 	{
 		
 		if ($criteria === null) {
@@ -669,15 +700,15 @@ abstract class BaseChannel extends BaseObject implements Persistent, AgaviIModel
 			$criteria = clone $criteria;
 		}
 
-		if ($this->collChannelNicks === null) {
+		if ($this->collNicks === null) {
 			if ($this->isNew()) {
-			   $this->collChannelNicks = array();
+			   $this->collNicks = array();
 			} else {
 
-				$criteria->add(ChannelNickPeer::CHANNEL_ID, $this->getId());
+				$criteria->add(ChuckwallaNickPeer::IRC_IDENTITY_ID, $this->getId());
 
-				ChannelNickPeer::addSelectColumns($criteria);
-				$this->collChannelNicks = ChannelNickPeer::doSelect($criteria, $con);
+				ChuckwallaNickPeer::addSelectColumns($criteria);
+				$this->collNicks = ChuckwallaNickPeer::doSelect($criteria, $con);
 			}
 		} else {
 			// criteria has no effect for a new object
@@ -687,27 +718,27 @@ abstract class BaseChannel extends BaseObject implements Persistent, AgaviIModel
 				// one, just return the collection.
 
 
-				$criteria->add(ChannelNickPeer::CHANNEL_ID, $this->getId());
+				$criteria->add(ChuckwallaNickPeer::IRC_IDENTITY_ID, $this->getId());
 
-				ChannelNickPeer::addSelectColumns($criteria);
-				if (!isset($this->lastChannelNickCriteria) || !$this->lastChannelNickCriteria->equals($criteria)) {
-					$this->collChannelNicks = ChannelNickPeer::doSelect($criteria, $con);
+				ChuckwallaNickPeer::addSelectColumns($criteria);
+				if (!isset($this->lastNickCriteria) || !$this->lastNickCriteria->equals($criteria)) {
+					$this->collNicks = ChuckwallaNickPeer::doSelect($criteria, $con);
 				}
 			}
 		}
-		$this->lastChannelNickCriteria = $criteria;
-		return $this->collChannelNicks;
+		$this->lastNickCriteria = $criteria;
+		return $this->collNicks;
 	}
 
 	/**
-	 * Returns the number of related ChannelNicks.
+	 * Returns the number of related Nicks.
 	 *
 	 * @param      Criteria $criteria
 	 * @param      boolean $distinct
 	 * @param      PDO $con
 	 * @throws     PropelException
 	 */
-	public function countChannelNicks($criteria = null, $distinct = false, PDO $con = null)
+	public function countNicks($criteria = null, $distinct = false, PDO $con = null)
 	{
 		
 		if ($criteria === null) {
@@ -718,72 +749,24 @@ abstract class BaseChannel extends BaseObject implements Persistent, AgaviIModel
 			$criteria = clone $criteria;
 		}
 
-		$criteria->add(ChannelNickPeer::CHANNEL_ID, $this->getId());
+		$criteria->add(ChuckwallaNickPeer::IRC_IDENTITY_ID, $this->getId());
 
-		return ChannelNickPeer::doCount($criteria, $distinct, $con);
+		return ChuckwallaNickPeer::doCount($criteria, $distinct, $con);
 	}
 
 	/**
-	 * Method called to associate a ChannelNick object to this object
-	 * through the ChannelNick foreign key attribute.
+	 * Method called to associate a ChuckwallaNick object to this object
+	 * through the ChuckwallaNick foreign key attribute.
 	 *
-	 * @param      ChannelNick $l ChannelNick
+	 * @param      ChuckwallaNick $l ChuckwallaNick
 	 * @return     void
 	 * @throws     PropelException
 	 */
-	public function addChannelNick(ChannelNick $l)
+	public function addNick(ChuckwallaNick $l)
 	{
-		$this->collChannelNicks = (array) $this->collChannelNicks;
-		array_push($this->collChannelNicks, $l);
-		$l->setChannel($this);
+		$this->collNicks = (array) $this->collNicks;
+		array_push($this->collNicks, $l);
+		$l->setIrcIdentity($this);
 	}
 
-
-	/**
-	 * If this collection has already been initialized with
-	 * an identical criteria, it returns the collection.
-	 * Otherwise if this Channel is new, it will return
-	 * an empty collection; or if this Channel has previously
-	 * been saved, it will retrieve related ChannelNicks from storage.
-	 *
-	 * This method is protected by default in order to keep the public
-	 * api reasonable.  You can provide public methods for those you
-	 * actually need in Channel.
-	 */
-	public function getChannelNicksJoinNick($criteria = null, $con = null)
-	{
-		
-		if ($criteria === null) {
-			$criteria = new Criteria();
-		}
-		elseif ($criteria instanceof Criteria)
-		{
-			$criteria = clone $criteria;
-		}
-
-		if ($this->collChannelNicks === null) {
-			if ($this->isNew()) {
-				$this->collChannelNicks = array();
-			} else {
-
-				$criteria->add(ChannelNickPeer::CHANNEL_ID, $this->getId());
-
-				$this->collChannelNicks = ChannelNickPeer::doSelectJoinNick($criteria, $con);
-			}
-		} else {
-			// the following code is to determine if a new query is
-			// called for.  If the criteria is the same as the last
-			// one, just return the collection.
-
-			$criteria->add(ChannelNickPeer::CHANNEL_ID, $this->getId());
-
-			if (!isset($this->lastChannelNickCriteria) || !$this->lastChannelNickCriteria->equals($criteria)) {
-				$this->collChannelNicks = ChannelNickPeer::doSelectJoinNick($criteria, $con);
-			}
-		}
-		$this->lastChannelNickCriteria = $criteria;
-
-		return $this->collChannelNicks;
-	}
-
-} // BaseChannel
+} // ChuckwallaBaseIrcIdentity

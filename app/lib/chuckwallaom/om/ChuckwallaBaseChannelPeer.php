@@ -1,6 +1,6 @@
 <?php
 
-abstract class BaseUserPeer implements AgaviISingletonModel {
+abstract class ChuckwallaBaseChannelPeer implements AgaviISingletonModel {
 	
 	protected $context = null;
 	
@@ -18,47 +18,32 @@ abstract class BaseUserPeer implements AgaviISingletonModel {
 	const DATABASE_NAME = 'chuckwalla';
 
 	/** the table name for this class */
-	const TABLE_NAME = 'user';
+	const TABLE_NAME = 'channel';
 
 	/** A class that can be returned by this peer. */
-	const CLASS_DEFAULT = 'chuckwallaom.User';
+	const CLASS_DEFAULT = 'chuckwallaom.ChuckwallaChannel';
 
 	/** The total number of columns. */
-	const NUM_COLUMNS = 8;
+	const NUM_COLUMNS = 3;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
 
 
 	/** the column name for the ID field */
-	const ID = 'user.ID';
+	const ID = 'channel.ID';
 
-	/** the column name for the EMAIL field */
-	const EMAIL = 'user.EMAIL';
+	/** the column name for the NAME field */
+	const NAME = 'channel.NAME';
 
-	/** the column name for the PASSWORD field */
-	const PASSWORD = 'user.PASSWORD';
-
-	/** the column name for the IS_ACTIVE field */
-	const IS_ACTIVE = 'user.IS_ACTIVE';
-
-	/** the column name for the IS_ADMIN field */
-	const IS_ADMIN = 'user.IS_ADMIN';
-
-	/** the column name for the TS_REGISTERED field */
-	const TS_REGISTERED = 'user.TS_REGISTERED';
-
-	/** the column name for the TS_LASTLOGIN field */
-	const TS_LASTLOGIN = 'user.TS_LASTLOGIN';
-
-	/** the column name for the LOCALE field */
-	const LOCALE = 'user.LOCALE';
+	/** the column name for the TOPIC field */
+	const TOPIC = 'channel.TOPIC';
 
 	/**
-	 * An identiy map to hold any loaded instances of User objects.
+	 * An identiy map to hold any loaded instances of ChuckwallaChannel objects.
 	 * This must be public so that other peer classes can access this when hydrating from JOIN
 	 * queries.
-	 * @var        array User[]
+	 * @var        array ChuckwallaChannel[]
 	 */
 	public static $instances = array();
 
@@ -75,10 +60,10 @@ abstract class BaseUserPeer implements AgaviISingletonModel {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Email', 'Password', 'IsActive', 'IsAdmin', 'TsRegistered', 'TsLastlogin', 'Locale', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::EMAIL, self::PASSWORD, self::IS_ACTIVE, self::IS_ADMIN, self::TS_REGISTERED, self::TS_LASTLOGIN, self::LOCALE, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'email', 'password', 'is_active', 'is_admin', 'ts_registered', 'ts_lastlogin', 'locale', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'Name', 'Topic', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::NAME, self::TOPIC, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'name', 'topic', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, )
 	);
 
 	/**
@@ -88,10 +73,10 @@ abstract class BaseUserPeer implements AgaviISingletonModel {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Email' => 1, 'Password' => 2, 'IsActive' => 3, 'IsAdmin' => 4, 'TsRegistered' => 5, 'TsLastlogin' => 6, 'Locale' => 7, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::EMAIL => 1, self::PASSWORD => 2, self::IS_ACTIVE => 3, self::IS_ADMIN => 4, self::TS_REGISTERED => 5, self::TS_LASTLOGIN => 6, self::LOCALE => 7, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'email' => 1, 'password' => 2, 'is_active' => 3, 'is_admin' => 4, 'ts_registered' => 5, 'ts_lastlogin' => 6, 'locale' => 7, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Name' => 1, 'Topic' => 2, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::NAME => 1, self::TOPIC => 2, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'name' => 1, 'topic' => 2, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, )
 	);
 
 	/**
@@ -101,8 +86,8 @@ abstract class BaseUserPeer implements AgaviISingletonModel {
 	public static function getMapBuilder()
 	{
 		if (self::$mapBuilder === null) {
-			require 'chuckwallaom/map/UserMapBuilder.php';
-			self::$mapBuilder = new UserMapBuilder();
+			require 'chuckwallaom/map/ChuckwallaChannelMapBuilder.php';
+			self::$mapBuilder = new ChuckwallaChannelMapBuilder();
 		}
 		return self::$mapBuilder;
 	}
@@ -151,12 +136,12 @@ abstract class BaseUserPeer implements AgaviISingletonModel {
 	 *		$c->addJoin(TablePeer::alias("alias1", TablePeer::PRIMARY_KEY_COLUMN), TablePeer::PRIMARY_KEY_COLUMN);
 	 * </code>
 	 * @param      string $alias The alias for the current table.
-	 * @param      string $column The column name for current table. (i.e. UserPeer::COLUMN_NAME).
+	 * @param      string $column The column name for current table. (i.e. ChuckwallaChannelPeer::COLUMN_NAME).
 	 * @return     string
 	 */
 	public static function alias($alias, $column)
 	{
-		return str_replace(UserPeer::TABLE_NAME.'.', $alias.'.', $column);
+		return str_replace(ChuckwallaChannelPeer::TABLE_NAME.'.', $alias.'.', $column);
 	}
 
 	/**
@@ -173,26 +158,16 @@ abstract class BaseUserPeer implements AgaviISingletonModel {
 	public static function addSelectColumns(Criteria $criteria)
 	{
 
-		$criteria->addSelectColumn(UserPeer::ID);
+		$criteria->addSelectColumn(ChuckwallaChannelPeer::ID);
 
-		$criteria->addSelectColumn(UserPeer::EMAIL);
+		$criteria->addSelectColumn(ChuckwallaChannelPeer::NAME);
 
-		$criteria->addSelectColumn(UserPeer::PASSWORD);
-
-		$criteria->addSelectColumn(UserPeer::IS_ACTIVE);
-
-		$criteria->addSelectColumn(UserPeer::IS_ADMIN);
-
-		$criteria->addSelectColumn(UserPeer::TS_REGISTERED);
-
-		$criteria->addSelectColumn(UserPeer::TS_LASTLOGIN);
-
-		$criteria->addSelectColumn(UserPeer::LOCALE);
+		$criteria->addSelectColumn(ChuckwallaChannelPeer::TOPIC);
 
 	}
 
-	const COUNT = 'COUNT(user.ID)';
-	const COUNT_DISTINCT = 'COUNT(DISTINCT user.ID)';
+	const COUNT = 'COUNT(channel.ID)';
+	const COUNT_DISTINCT = 'COUNT(DISTINCT channel.ID)';
 
 	/**
 	 * Returns the number of rows matching criteria.
@@ -210,9 +185,9 @@ abstract class BaseUserPeer implements AgaviISingletonModel {
 		// clear out anything that might confuse the ORDER BY clause
 		$criteria->clearSelectColumns()->clearOrderByColumns();
 		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->addSelectColumn(UserPeer::COUNT_DISTINCT);
+			$criteria->addSelectColumn(ChuckwallaChannelPeer::COUNT_DISTINCT);
 		} else {
-			$criteria->addSelectColumn(UserPeer::COUNT);
+			$criteria->addSelectColumn(ChuckwallaChannelPeer::COUNT);
 		}
 
 		// just in case we're grouping: add those columns to the select statement
@@ -221,7 +196,7 @@ abstract class BaseUserPeer implements AgaviISingletonModel {
 			$criteria->addSelectColumn($column);
 		}
 
-		$stmt = UserPeer::doSelectStmt($criteria, $con);
+		$stmt = ChuckwallaChannelPeer::doSelectStmt($criteria, $con);
 		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
 			return (int) $row[0];
 		} else {
@@ -234,7 +209,7 @@ abstract class BaseUserPeer implements AgaviISingletonModel {
 	 *
 	 * @param      Criteria $criteria object used to create the SELECT statement.
 	 * @param      PDO $con
-	 * @return     User
+	 * @return     ChuckwallaChannel
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
@@ -242,7 +217,7 @@ abstract class BaseUserPeer implements AgaviISingletonModel {
 	{
 		$critcopy = clone $criteria;
 		$critcopy->setLimit(1);
-		$objects = UserPeer::doSelect($critcopy, $con);
+		$objects = ChuckwallaChannelPeer::doSelect($critcopy, $con);
 		if ($objects) {
 			return $objects[0];
 		}
@@ -259,7 +234,7 @@ abstract class BaseUserPeer implements AgaviISingletonModel {
 	 */
 	public static function doSelect(Criteria $criteria, PDO $con = null)
 	{
-		return UserPeer::populateObjects(UserPeer::doSelectStmt($criteria, $con));
+		return ChuckwallaChannelPeer::populateObjects(ChuckwallaChannelPeer::doSelectStmt($criteria, $con));
 	}
 	/**
 	 * Prepares the Criteria object and uses the parent doSelect() method to execute a PDOStatement.
@@ -282,7 +257,7 @@ abstract class BaseUserPeer implements AgaviISingletonModel {
 
 		if (!$criteria->getSelectColumns()) {
 			$criteria = clone $criteria;
-			UserPeer::addSelectColumns($criteria);
+			ChuckwallaChannelPeer::addSelectColumns($criteria);
 		}
 
 		// Set the correct dbName
@@ -300,9 +275,9 @@ abstract class BaseUserPeer implements AgaviISingletonModel {
 	 * to the cache in order to ensure that the same objects are always returned by doSelect*()
 	 * and retrieveByPK*() calls.
 	 *
-	 * @param      User $value A User object.
+	 * @param      ChuckwallaChannel $value A ChuckwallaChannel object.
 	 */
-	public static function addInstanceToPool(User $obj)
+	public static function addInstanceToPool(ChuckwallaChannel $obj)
 	{
 		// print "+Adding (by addInstanceToPool()) " . get_class($obj) . " " . var_export($obj->getPrimaryKey(),true) . " to instance pool.\n";
 	
@@ -318,21 +293,21 @@ abstract class BaseUserPeer implements AgaviISingletonModel {
 	 * methods in your stub classes -- you may need to explicitly remove objects
 	 * from the cache in order to prevent returning objects that no longer exist.
 	 *
-	 * @param      mixed $value A User object or a primary key value.
+	 * @param      mixed $value A ChuckwallaChannel object or a primary key value.
 	 */
 	public static function removeInstanceFromPool($value)
 	{
-		if (is_object($value) && $value instanceof User) {
+		if (is_object($value) && $value instanceof ChuckwallaChannel) {
 			// print "-Removing " . get_class($value) . " " . var_export($value->getPrimaryKey(),true) . " from instance pool.\n";
 		
 			$key = (string) $value->getPrimaryKey();
 		} elseif (is_scalar($value)) {
-			// print "-Removing pk: " . var_export($value,true) . " class: User from instance pool.\n";
+			// print "-Removing pk: " . var_export($value,true) . " class: ChuckwallaChannel from instance pool.\n";
 			// assume we've been passed a primary key
 			$key = serialize($value);
 		} else {
 
-			$e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or User object: " . var_export($value,true));
+			$e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or ChuckwallaChannel object: " . var_export($value,true));
 			print $e;
 			throw $e;
 		}
@@ -354,7 +329,7 @@ abstract class BaseUserPeer implements AgaviISingletonModel {
 	public static function getInstanceFromPool($key)
 	{
 		if (isset(self::$instances[$key])) {
-			//print "  <-Found User " . self::$instances[$key] . " in instance pool.\n";
+			//print "  <-Found ChuckwallaChannel " . self::$instances[$key] . " in instance pool.\n";
 			return self::$instances[$key];
 		} else {
 			return null; // just to be explicit
@@ -373,7 +348,7 @@ abstract class BaseUserPeer implements AgaviISingletonModel {
 	 */
 	public static function clearInstancePool()
 	{
-		//print "\tClearing UserPeer instance pool.\n";
+		//print "\tClearing ChuckwallaChannelPeer instance pool.\n";
 		self::$instances = array();
 	}
 	
@@ -404,11 +379,11 @@ abstract class BaseUserPeer implements AgaviISingletonModel {
 		$results = array();
 	
 		// set the class once to avoid overhead in the loop
-		$cls = UserPeer::getOMClass();
+		$cls = ChuckwallaChannelPeer::getOMClass();
 		$cls = substr($cls, strrpos($cls, '.') + 1);
 		// populate the object(s)
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key = UserPeer::getPrimaryKeyHashFromRow($row, 0);
+			$key = ChuckwallaChannelPeer::getPrimaryKeyHashFromRow($row, 0);
 			if (isset(self::$instances[$key])) {
 				// print "  <-Found " . get_class(self::$instances[$key]) . " " . self::$instances[$key] . " in instance pool.\n";
 				$results[] = self::$instances[$key];
@@ -448,13 +423,13 @@ $obj->initialize($this->context);
 	 */
 	public static function getOMClass()
 	{
-		return UserPeer::CLASS_DEFAULT;
+		return ChuckwallaChannelPeer::CLASS_DEFAULT;
 	}
 
 	/**
-	 * Method perform an INSERT on the database, given a User or Criteria object.
+	 * Method perform an INSERT on the database, given a ChuckwallaChannel or Criteria object.
 	 *
-	 * @param      mixed $values Criteria or User object containing data that is used to create the INSERT statement.
+	 * @param      mixed $values Criteria or ChuckwallaChannel object containing data that is used to create the INSERT statement.
 	 * @param      PDO $con the PDO connection to use
 	 * @return     mixed The new primary key.
 	 * @throws     PropelException Any exceptions caught during processing will be
@@ -469,10 +444,10 @@ $obj->initialize($this->context);
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
 		} else {
-			$criteria = $values->buildCriteria(); // build Criteria from User object
+			$criteria = $values->buildCriteria(); // build Criteria from ChuckwallaChannel object
 		}
 
-		$criteria->remove(UserPeer::ID); // remove pkey col since this table uses auto-increment
+		$criteria->remove(ChuckwallaChannelPeer::ID); // remove pkey col since this table uses auto-increment
 
 
 		// Set the correct dbName
@@ -493,9 +468,9 @@ $obj->initialize($this->context);
 	}
 
 	/**
-	 * Method perform an UPDATE on the database, given a User or Criteria object.
+	 * Method perform an UPDATE on the database, given a ChuckwallaChannel or Criteria object.
 	 *
-	 * @param      mixed $values Criteria or User object containing data that is used to create the UPDATE statement.
+	 * @param      mixed $values Criteria or ChuckwallaChannel object containing data that is used to create the UPDATE statement.
 	 * @param      PDO $con The connection to use (specify PDO connection object to exert more control over transactions).
 	 * @return     int The number of affected rows (if supported by underlying database driver).
 	 * @throws     PropelException Any exceptions caught during processing will be
@@ -512,10 +487,10 @@ $obj->initialize($this->context);
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
 
-			$comparison = $criteria->getComparison(UserPeer::ID);
-			$selectCriteria->add(UserPeer::ID, $criteria->remove(UserPeer::ID), $comparison);
+			$comparison = $criteria->getComparison(ChuckwallaChannelPeer::ID);
+			$selectCriteria->add(ChuckwallaChannelPeer::ID, $criteria->remove(ChuckwallaChannelPeer::ID), $comparison);
 
-		} else { // $values is User object
+		} else { // $values is ChuckwallaChannel object
 			$criteria = $values->buildCriteria(); // gets full criteria
 			$selectCriteria = $values->buildPkeyCriteria(); // gets criteria w/ primary key(s)
 		}
@@ -527,7 +502,7 @@ $obj->initialize($this->context);
 	}
 
 	/**
-	 * Method to DELETE all rows from the user table.
+	 * Method to DELETE all rows from the channel table.
 	 *
 	 * @return     int The number of affected rows (if supported by underlying database driver).
 	 */
@@ -541,7 +516,7 @@ $obj->initialize($this->context);
 			// use transaction because $criteria could contain info
 			// for more than one table or we could emulating ON DELETE CASCADE, etc.
 			$con->beginTransaction();
-			$affectedRows += BasePeer::doDeleteAll(UserPeer::TABLE_NAME, $con);
+			$affectedRows += BasePeer::doDeleteAll(ChuckwallaChannelPeer::TABLE_NAME, $con);
 			$con->commit();
 			return $affectedRows;
 		} catch (PropelException $e) {
@@ -551,9 +526,9 @@ $obj->initialize($this->context);
 	}
 
 	/**
-	 * Method perform a DELETE on the database, given a User or Criteria object OR a primary key value.
+	 * Method perform a DELETE on the database, given a ChuckwallaChannel or Criteria object OR a primary key value.
 	 *
-	 * @param      mixed $values Criteria or User object or primary key or array of primary keys
+	 * @param      mixed $values Criteria or ChuckwallaChannel object or primary key or array of primary keys
 	 *              which is used to create the DELETE statement
 	 * @param      PDO $con the connection to use
 	 * @return     int 	The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -564,30 +539,30 @@ $obj->initialize($this->context);
 	 public static function doDelete($values, PDO $con = null)
 	 {
 		if ($con === null) {
-			$con = Propel::getConnection(UserPeer::DATABASE_NAME);
+			$con = Propel::getConnection(ChuckwallaChannelPeer::DATABASE_NAME);
 		}
 
 		if ($values instanceof Criteria) {
 			// invalidate the cache for all objects of this type, since we have no
 			// way of knowing (without running a query) what objects should be invalidated
 			// from the cache based on this Criteria.
-			UserPeer::clearInstancePool();
+			ChuckwallaChannelPeer::clearInstancePool();
 
 			// rename for clarity
 			$criteria = clone $values;
-		} elseif ($values instanceof User) {
+		} elseif ($values instanceof ChuckwallaChannel) {
 			// invalidate the cache for this single object
-			UserPeer::removeInstanceFromPool($values);
+			ChuckwallaChannelPeer::removeInstanceFromPool($values);
 			// create criteria based on pk values
 			$criteria = $values->buildPkeyCriteria();
 		} else {
 			// it must be the primary key
 
 			// we can invalidate the cache for this single object
-			UserPeer::removeInstanceFromPool($values);
+			ChuckwallaChannelPeer::removeInstanceFromPool($values);
 
 			$criteria = new Criteria(self::DATABASE_NAME);
-			$criteria->add(UserPeer::ID, (array) $values, Criteria::IN);
+			$criteria->add(ChuckwallaChannelPeer::ID, (array) $values, Criteria::IN);
 		}
 
 		// Set the correct dbName
@@ -602,8 +577,8 @@ $obj->initialize($this->context);
 			
 			$affectedRows += BasePeer::doDelete($criteria, $con);
 
-			// invalidate objects in IrcIdentityPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
-			IrcIdentityPeer::clearInstancePool();
+			// invalidate objects in ChuckwallaChannelNickPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
+			ChuckwallaChannelNickPeer::clearInstancePool();
 
 			$con->commit();
 			return $affectedRows;
@@ -614,24 +589,24 @@ $obj->initialize($this->context);
 	}
 
 	/**
-	 * Validates all modified columns of given User object.
+	 * Validates all modified columns of given ChuckwallaChannel object.
 	 * If parameter $columns is either a single column name or an array of column names
 	 * than only those columns are validated.
 	 *
 	 * NOTICE: This does not apply to primary or foreign keys for now.
 	 *
-	 * @param      User $obj The object to validate.
+	 * @param      ChuckwallaChannel $obj The object to validate.
 	 * @param      mixed $cols Column name or array of column names.
 	 *
 	 * @return     mixed TRUE if all columns are valid or the error message of the first invalid column.
 	 */
-	public static function doValidate(User $obj, $cols = null)
+	public static function doValidate(ChuckwallaChannel $obj, $cols = null)
 	{
 		$columns = array();
 
 		if ($cols) {
-			$dbMap = Propel::getDatabaseMap(UserPeer::DATABASE_NAME);
-			$tableMap = $dbMap->getTable(UserPeer::TABLE_NAME);
+			$dbMap = Propel::getDatabaseMap(ChuckwallaChannelPeer::DATABASE_NAME);
+			$tableMap = $dbMap->getTable(ChuckwallaChannelPeer::TABLE_NAME);
 
 			if (! is_array($cols)) {
 				$cols = array($cols);
@@ -647,7 +622,7 @@ $obj->initialize($this->context);
 
 		}
 
-		return BasePeer::doValidate(UserPeer::DATABASE_NAME, UserPeer::TABLE_NAME, $columns);
+		return BasePeer::doValidate(ChuckwallaChannelPeer::DATABASE_NAME, ChuckwallaChannelPeer::TABLE_NAME, $columns);
 	}
 
 	/**
@@ -655,7 +630,7 @@ $obj->initialize($this->context);
 	 *
 	 * @param      mixed $pk the primary key.
 	 * @param      PDO $con the connection to use
-	 * @return     User
+	 * @return     ChuckwallaChannel
 	 */
 	public static function retrieveByPK($pk, PDO $con = null)
 	{
@@ -663,12 +638,12 @@ $obj->initialize($this->context);
 			$con = Propel::getConnection(self::DATABASE_NAME);
 		}
 
-		$criteria = new Criteria(UserPeer::DATABASE_NAME);
+		$criteria = new Criteria(ChuckwallaChannelPeer::DATABASE_NAME);
 
-		$criteria->add(UserPeer::ID, $pk);
+		$criteria->add(ChuckwallaChannelPeer::ID, $pk);
 
 
-		$v = UserPeer::doSelect($criteria, $con);
+		$v = ChuckwallaChannelPeer::doSelect($criteria, $con);
 
 		return !empty($v) > 0 ? $v[0] : null;
 	}
@@ -692,22 +667,22 @@ $obj->initialize($this->context);
 			$objs = array();
 		} else {
 			$criteria = new Criteria();
-			$criteria->add(UserPeer::ID, $pks, Criteria::IN);
-			$objs = UserPeer::doSelect($criteria, $con);
+			$criteria->add(ChuckwallaChannelPeer::ID, $pks, Criteria::IN);
+			$objs = ChuckwallaChannelPeer::doSelect($criteria, $con);
 		}
 		return $objs;
 	}
 
-} // BaseUserPeer
+} // ChuckwallaBaseChannelPeer
 
 // This is the static code needed to register the MapBuilder for this table with the main Propel class.
 //
-// NOTE: This static code cannot call methods on the UserPeer class, because it is not defined yet.
-// If you need to use overridden methods, you can add this code to the bottom of the UserPeer class:
+// NOTE: This static code cannot call methods on the ChuckwallaChannelPeer class, because it is not defined yet.
+// If you need to use overridden methods, you can add this code to the bottom of the ChuckwallaChannelPeer class:
 //
-// Propel::getDatabaseMap(UserPeer::DATABASE_NAME)->addTableBuilder(UserPeer::TABLE_NAME, UserPeer::getMapBuilder());
+// Propel::getDatabaseMap(ChuckwallaChannelPeer::DATABASE_NAME)->addTableBuilder(ChuckwallaChannelPeer::TABLE_NAME, ChuckwallaChannelPeer::getMapBuilder());
 //
 // Doing so will effectively overwrite the registration below.
 
-Propel::getDatabaseMap(BaseUserPeer::DATABASE_NAME)->addTableBuilder(BaseUserPeer::TABLE_NAME, BaseUserPeer::getMapBuilder());
+Propel::getDatabaseMap(ChuckwallaBaseChannelPeer::DATABASE_NAME)->addTableBuilder(ChuckwallaBaseChannelPeer::TABLE_NAME, ChuckwallaBaseChannelPeer::getMapBuilder());
 

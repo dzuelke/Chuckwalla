@@ -1,6 +1,6 @@
 <?php
 
-abstract class BaseNickPeer implements AgaviISingletonModel {
+abstract class ChuckwallaBaseUserPeer implements AgaviISingletonModel {
 	
 	protected $context = null;
 	
@@ -18,32 +18,47 @@ abstract class BaseNickPeer implements AgaviISingletonModel {
 	const DATABASE_NAME = 'chuckwalla';
 
 	/** the table name for this class */
-	const TABLE_NAME = 'nick';
+	const TABLE_NAME = 'user';
 
 	/** A class that can be returned by this peer. */
-	const CLASS_DEFAULT = 'chuckwallaom.Nick';
+	const CLASS_DEFAULT = 'chuckwallaom.ChuckwallaUser';
 
 	/** The total number of columns. */
-	const NUM_COLUMNS = 3;
+	const NUM_COLUMNS = 8;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
 
 
 	/** the column name for the ID field */
-	const ID = 'nick.ID';
+	const ID = 'user.ID';
 
-	/** the column name for the NICK field */
-	const NICK = 'nick.NICK';
+	/** the column name for the EMAIL field */
+	const EMAIL = 'user.EMAIL';
 
-	/** the column name for the IRC_IDENTITY_ID field */
-	const IRC_IDENTITY_ID = 'nick.IRC_IDENTITY_ID';
+	/** the column name for the PASSWORD field */
+	const PASSWORD = 'user.PASSWORD';
+
+	/** the column name for the IS_ACTIVE field */
+	const IS_ACTIVE = 'user.IS_ACTIVE';
+
+	/** the column name for the IS_ADMIN field */
+	const IS_ADMIN = 'user.IS_ADMIN';
+
+	/** the column name for the TS_REGISTERED field */
+	const TS_REGISTERED = 'user.TS_REGISTERED';
+
+	/** the column name for the TS_LASTLOGIN field */
+	const TS_LASTLOGIN = 'user.TS_LASTLOGIN';
+
+	/** the column name for the LOCALE field */
+	const LOCALE = 'user.LOCALE';
 
 	/**
-	 * An identiy map to hold any loaded instances of Nick objects.
+	 * An identiy map to hold any loaded instances of ChuckwallaUser objects.
 	 * This must be public so that other peer classes can access this when hydrating from JOIN
 	 * queries.
-	 * @var        array Nick[]
+	 * @var        array ChuckwallaUser[]
 	 */
 	public static $instances = array();
 
@@ -60,10 +75,10 @@ abstract class BaseNickPeer implements AgaviISingletonModel {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Nick', 'IrcIdentityId', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::NICK, self::IRC_IDENTITY_ID, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'nick', 'irc_identity_id', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'Email', 'Password', 'IsActive', 'IsAdmin', 'TsRegistered', 'TsLastlogin', 'Locale', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::EMAIL, self::PASSWORD, self::IS_ACTIVE, self::IS_ADMIN, self::TS_REGISTERED, self::TS_LASTLOGIN, self::LOCALE, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'email', 'password', 'is_active', 'is_admin', 'ts_registered', 'ts_lastlogin', 'locale', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, )
 	);
 
 	/**
@@ -73,10 +88,10 @@ abstract class BaseNickPeer implements AgaviISingletonModel {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Nick' => 1, 'IrcIdentityId' => 2, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::NICK => 1, self::IRC_IDENTITY_ID => 2, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'nick' => 1, 'irc_identity_id' => 2, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Email' => 1, 'Password' => 2, 'IsActive' => 3, 'IsAdmin' => 4, 'TsRegistered' => 5, 'TsLastlogin' => 6, 'Locale' => 7, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::EMAIL => 1, self::PASSWORD => 2, self::IS_ACTIVE => 3, self::IS_ADMIN => 4, self::TS_REGISTERED => 5, self::TS_LASTLOGIN => 6, self::LOCALE => 7, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'email' => 1, 'password' => 2, 'is_active' => 3, 'is_admin' => 4, 'ts_registered' => 5, 'ts_lastlogin' => 6, 'locale' => 7, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, )
 	);
 
 	/**
@@ -86,8 +101,8 @@ abstract class BaseNickPeer implements AgaviISingletonModel {
 	public static function getMapBuilder()
 	{
 		if (self::$mapBuilder === null) {
-			require 'chuckwallaom/map/NickMapBuilder.php';
-			self::$mapBuilder = new NickMapBuilder();
+			require 'chuckwallaom/map/ChuckwallaUserMapBuilder.php';
+			self::$mapBuilder = new ChuckwallaUserMapBuilder();
 		}
 		return self::$mapBuilder;
 	}
@@ -136,12 +151,12 @@ abstract class BaseNickPeer implements AgaviISingletonModel {
 	 *		$c->addJoin(TablePeer::alias("alias1", TablePeer::PRIMARY_KEY_COLUMN), TablePeer::PRIMARY_KEY_COLUMN);
 	 * </code>
 	 * @param      string $alias The alias for the current table.
-	 * @param      string $column The column name for current table. (i.e. NickPeer::COLUMN_NAME).
+	 * @param      string $column The column name for current table. (i.e. ChuckwallaUserPeer::COLUMN_NAME).
 	 * @return     string
 	 */
 	public static function alias($alias, $column)
 	{
-		return str_replace(NickPeer::TABLE_NAME.'.', $alias.'.', $column);
+		return str_replace(ChuckwallaUserPeer::TABLE_NAME.'.', $alias.'.', $column);
 	}
 
 	/**
@@ -158,16 +173,26 @@ abstract class BaseNickPeer implements AgaviISingletonModel {
 	public static function addSelectColumns(Criteria $criteria)
 	{
 
-		$criteria->addSelectColumn(NickPeer::ID);
+		$criteria->addSelectColumn(ChuckwallaUserPeer::ID);
 
-		$criteria->addSelectColumn(NickPeer::NICK);
+		$criteria->addSelectColumn(ChuckwallaUserPeer::EMAIL);
 
-		$criteria->addSelectColumn(NickPeer::IRC_IDENTITY_ID);
+		$criteria->addSelectColumn(ChuckwallaUserPeer::PASSWORD);
+
+		$criteria->addSelectColumn(ChuckwallaUserPeer::IS_ACTIVE);
+
+		$criteria->addSelectColumn(ChuckwallaUserPeer::IS_ADMIN);
+
+		$criteria->addSelectColumn(ChuckwallaUserPeer::TS_REGISTERED);
+
+		$criteria->addSelectColumn(ChuckwallaUserPeer::TS_LASTLOGIN);
+
+		$criteria->addSelectColumn(ChuckwallaUserPeer::LOCALE);
 
 	}
 
-	const COUNT = 'COUNT(nick.ID)';
-	const COUNT_DISTINCT = 'COUNT(DISTINCT nick.ID)';
+	const COUNT = 'COUNT(user.ID)';
+	const COUNT_DISTINCT = 'COUNT(DISTINCT user.ID)';
 
 	/**
 	 * Returns the number of rows matching criteria.
@@ -185,9 +210,9 @@ abstract class BaseNickPeer implements AgaviISingletonModel {
 		// clear out anything that might confuse the ORDER BY clause
 		$criteria->clearSelectColumns()->clearOrderByColumns();
 		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->addSelectColumn(NickPeer::COUNT_DISTINCT);
+			$criteria->addSelectColumn(ChuckwallaUserPeer::COUNT_DISTINCT);
 		} else {
-			$criteria->addSelectColumn(NickPeer::COUNT);
+			$criteria->addSelectColumn(ChuckwallaUserPeer::COUNT);
 		}
 
 		// just in case we're grouping: add those columns to the select statement
@@ -196,7 +221,7 @@ abstract class BaseNickPeer implements AgaviISingletonModel {
 			$criteria->addSelectColumn($column);
 		}
 
-		$stmt = NickPeer::doSelectStmt($criteria, $con);
+		$stmt = ChuckwallaUserPeer::doSelectStmt($criteria, $con);
 		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
 			return (int) $row[0];
 		} else {
@@ -209,7 +234,7 @@ abstract class BaseNickPeer implements AgaviISingletonModel {
 	 *
 	 * @param      Criteria $criteria object used to create the SELECT statement.
 	 * @param      PDO $con
-	 * @return     Nick
+	 * @return     ChuckwallaUser
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
@@ -217,7 +242,7 @@ abstract class BaseNickPeer implements AgaviISingletonModel {
 	{
 		$critcopy = clone $criteria;
 		$critcopy->setLimit(1);
-		$objects = NickPeer::doSelect($critcopy, $con);
+		$objects = ChuckwallaUserPeer::doSelect($critcopy, $con);
 		if ($objects) {
 			return $objects[0];
 		}
@@ -234,7 +259,7 @@ abstract class BaseNickPeer implements AgaviISingletonModel {
 	 */
 	public static function doSelect(Criteria $criteria, PDO $con = null)
 	{
-		return NickPeer::populateObjects(NickPeer::doSelectStmt($criteria, $con));
+		return ChuckwallaUserPeer::populateObjects(ChuckwallaUserPeer::doSelectStmt($criteria, $con));
 	}
 	/**
 	 * Prepares the Criteria object and uses the parent doSelect() method to execute a PDOStatement.
@@ -257,7 +282,7 @@ abstract class BaseNickPeer implements AgaviISingletonModel {
 
 		if (!$criteria->getSelectColumns()) {
 			$criteria = clone $criteria;
-			NickPeer::addSelectColumns($criteria);
+			ChuckwallaUserPeer::addSelectColumns($criteria);
 		}
 
 		// Set the correct dbName
@@ -275,9 +300,9 @@ abstract class BaseNickPeer implements AgaviISingletonModel {
 	 * to the cache in order to ensure that the same objects are always returned by doSelect*()
 	 * and retrieveByPK*() calls.
 	 *
-	 * @param      Nick $value A Nick object.
+	 * @param      ChuckwallaUser $value A ChuckwallaUser object.
 	 */
-	public static function addInstanceToPool(Nick $obj)
+	public static function addInstanceToPool(ChuckwallaUser $obj)
 	{
 		// print "+Adding (by addInstanceToPool()) " . get_class($obj) . " " . var_export($obj->getPrimaryKey(),true) . " to instance pool.\n";
 	
@@ -293,21 +318,21 @@ abstract class BaseNickPeer implements AgaviISingletonModel {
 	 * methods in your stub classes -- you may need to explicitly remove objects
 	 * from the cache in order to prevent returning objects that no longer exist.
 	 *
-	 * @param      mixed $value A Nick object or a primary key value.
+	 * @param      mixed $value A ChuckwallaUser object or a primary key value.
 	 */
 	public static function removeInstanceFromPool($value)
 	{
-		if (is_object($value) && $value instanceof Nick) {
+		if (is_object($value) && $value instanceof ChuckwallaUser) {
 			// print "-Removing " . get_class($value) . " " . var_export($value->getPrimaryKey(),true) . " from instance pool.\n";
 		
 			$key = (string) $value->getPrimaryKey();
 		} elseif (is_scalar($value)) {
-			// print "-Removing pk: " . var_export($value,true) . " class: Nick from instance pool.\n";
+			// print "-Removing pk: " . var_export($value,true) . " class: ChuckwallaUser from instance pool.\n";
 			// assume we've been passed a primary key
 			$key = serialize($value);
 		} else {
 
-			$e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or Nick object: " . var_export($value,true));
+			$e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or ChuckwallaUser object: " . var_export($value,true));
 			print $e;
 			throw $e;
 		}
@@ -329,7 +354,7 @@ abstract class BaseNickPeer implements AgaviISingletonModel {
 	public static function getInstanceFromPool($key)
 	{
 		if (isset(self::$instances[$key])) {
-			//print "  <-Found Nick " . self::$instances[$key] . " in instance pool.\n";
+			//print "  <-Found ChuckwallaUser " . self::$instances[$key] . " in instance pool.\n";
 			return self::$instances[$key];
 		} else {
 			return null; // just to be explicit
@@ -348,7 +373,7 @@ abstract class BaseNickPeer implements AgaviISingletonModel {
 	 */
 	public static function clearInstancePool()
 	{
-		//print "\tClearing NickPeer instance pool.\n";
+		//print "\tClearing ChuckwallaUserPeer instance pool.\n";
 		self::$instances = array();
 	}
 	
@@ -379,11 +404,11 @@ abstract class BaseNickPeer implements AgaviISingletonModel {
 		$results = array();
 	
 		// set the class once to avoid overhead in the loop
-		$cls = NickPeer::getOMClass();
+		$cls = ChuckwallaUserPeer::getOMClass();
 		$cls = substr($cls, strrpos($cls, '.') + 1);
 		// populate the object(s)
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key = NickPeer::getPrimaryKeyHashFromRow($row, 0);
+			$key = ChuckwallaUserPeer::getPrimaryKeyHashFromRow($row, 0);
 			if (isset(self::$instances[$key])) {
 				// print "  <-Found " . get_class(self::$instances[$key]) . " " . self::$instances[$key] . " in instance pool.\n";
 				$results[] = self::$instances[$key];
@@ -400,220 +425,6 @@ $obj->initialize($this->context);
 		}
 		return $results;
 	}
-
-	/**
-	 * Returns the number of rows matching criteria, joining the related IrcIdentity table
-	 *
-	 * @param      Criteria $c
-	 * @param      boolean $distinct Whether to select only distinct columns (You can also set DISTINCT modifier in Criteria).
-	 * @param      PDO $con
-	 * @return     int Number of matching rows.
-	 */
-	public static function doCountJoinIrcIdentity(Criteria $criteria, $distinct = false, PDO $con = null)
-	{
-		// we're going to modify criteria, so copy it first
-		$criteria = clone $criteria;
-
-		// clear out anything that might confuse the ORDER BY clause
-		$criteria->clearSelectColumns()->clearOrderByColumns();
-		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->addSelectColumn(NickPeer::COUNT_DISTINCT);
-		} else {
-			$criteria->addSelectColumn(NickPeer::COUNT);
-		}
-
-		// just in case we're grouping: add those columns to the select statement
-		foreach ($criteria->getGroupByColumns() as $column)
-		{
-			$criteria->addSelectColumn($column);
-		}
-
-		$criteria->addJoin(NickPeer::IRC_IDENTITY_ID, IrcIdentityPeer::ID);
-
-		$stmt = NickPeer::doSelectStmt($criteria, $con);
-		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			return (int) $row[0];
-		} else {
-			// no rows returned; we infer that means 0 matches.
-			return 0;
-		}
-	}
-
-
-	/**
-	 * Selects a collection of Nick objects pre-filled with their IrcIdentity objects.
-	 *
-	 * @return     array Array of Nick objects.
-	 * @throws     PropelException Any exceptions caught during processing will be
-	 *		 rethrown wrapped into a PropelException.
-	 */
-	public static function doSelectJoinIrcIdentity(Criteria $c, $con = null)
-	{
-		$c = clone $c;
-
-		// Set the correct dbName if it has not been overridden
-		if ($c->getDbName() == Propel::getDefaultDB()) {
-			$c->setDbName(self::DATABASE_NAME);
-		}
-
-		NickPeer::addSelectColumns($c);
-		$startcol = (NickPeer::NUM_COLUMNS - NickPeer::NUM_LAZY_LOAD_COLUMNS);
-		IrcIdentityPeer::addSelectColumns($c);
-
-		$c->addJoin(NickPeer::IRC_IDENTITY_ID, IrcIdentityPeer::ID);
-		$stmt = BasePeer::doSelect($c, $con);
-		$results = array();
-
-		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = NickPeer::getPrimaryKeyHashFromRow($row, 0);
-			if (isset(self::$instances[$key1])) {
-				$obj1 = self::$instances[$key1];
-				// print "  <-Found " . get_class($obj1) . " " . $obj1 . " into instance pool.\n";
-			} else {
-
-				$omClass = NickPeer::getOMClass();
-
-				$cls = substr($omClass, strrpos($omClass, '.') + 1);
-				$obj1 = new $cls();
-$obj1->initialize($this->context);
-
-				$obj1->hydrate($row);
-				// print "->Adding " . get_class($obj1) . " " . $obj1 . " into instance pool.\n";
-				self::$instances[$key1] = $obj1;
-			} // if $obj1 already loaded
-
-			$key2 = IrcIdentityPeer::getPrimaryKeyHashFromRow($row, $startcol);
-			$obj2 = IrcIdentityPeer::getInstanceFromPool($key2);
-			if (!$obj2) {
-
-				$omClass = IrcIdentityPeer::getOMClass();
-
-				$cls = substr($omClass, strrpos($omClass, '.') + 1);
-				$obj2 = new $cls();
-$obj2->initialize($this->context);
-
-				$obj2->hydrate($row, $startcol);
-				IrcIdentityPeer::addInstanceToPool($obj2); // FIXME, we should optimize this since we already calculated the key above
-			} // if obj2 already loaded
-
-			// Add the $obj1 (Nick) to the collection in $obj2 (IrcIdentity)
-			$obj2->addNick($obj1);
-
-			$results[] = $obj1;
-		}
-		return $results;
-	}
-
-
-	/**
-	 * Returns the number of rows matching criteria, joining all related tables
-	 *
-	 * @param      Criteria $c
-	 * @param      boolean $distinct Whether to select only distinct columns (You can also set DISTINCT modifier in Criteria).
-	 * @param      PDO $con
-	 * @return     int Number of matching rows.
-	 */
-	public static function doCountJoinAll(Criteria $criteria, $distinct = false, PDO $con = null)
-	{
-		$criteria = clone $criteria;
-
-		// clear out anything that might confuse the ORDER BY clause
-		$criteria->clearSelectColumns()->clearOrderByColumns();
-		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->addSelectColumn(NickPeer::COUNT_DISTINCT);
-		} else {
-			$criteria->addSelectColumn(NickPeer::COUNT);
-		}
-
-		// just in case we're grouping: add those columns to the select statement
-		foreach ($criteria->getGroupByColumns() as $column)
-		{
-			$criteria->addSelectColumn($column);
-		}
-
-		$criteria->addJoin(NickPeer::IRC_IDENTITY_ID, IrcIdentityPeer::ID);
-
-		$stmt = NickPeer::doSelectStmt($criteria, $con);
-		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			return (int) $row[0];
-		} else {
-			// no rows returned; we infer that means 0 matches.
-			return 0;
-		}
-	}
-
-
-	/**
-	 * Selects a collection of Nick objects pre-filled with all related objects.
-	 *
-	 * @return     array Array of Nick objects.
-	 * @throws     PropelException Any exceptions caught during processing will be
-	 *		 rethrown wrapped into a PropelException.
-	 */
-	public static function doSelectJoinAll(Criteria $c, $con = null)
-	{
-		$c = clone $c;
-
-		// Set the correct dbName if it has not been overridden
-		if ($c->getDbName() == Propel::getDefaultDB()) {
-			$c->setDbName(self::DATABASE_NAME);
-		}
-
-		NickPeer::addSelectColumns($c);
-		$startcol2 = (NickPeer::NUM_COLUMNS - NickPeer::NUM_LAZY_LOAD_COLUMNS);
-
-		IrcIdentityPeer::addSelectColumns($c);
-		$startcol3 = $startcol2 + IrcIdentityPeer::NUM_COLUMNS;
-
-		$c->addJoin(NickPeer::IRC_IDENTITY_ID, IrcIdentityPeer::ID);
-
-		$stmt = BasePeer::doSelect($c, $con);
-		$results = array();
-
-		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = NickPeer::getPrimaryKeyHashFromRow($row, 0);
-			if (isset(self::$instances[$key1])) {
-				$obj1 = self::$instances[$key1];
-				// print "  <-Found " . get_class($obj1) . " " . $obj1 . " in instance pool.\n";
-			} else {
-
-				$omClass = NickPeer::getOMClass();
-
-				$cls = substr($omClass, strrpos($omClass, '.') + 1);
-				$obj1 = new $cls();
-$obj1->initialize($this->context);
-
-				$obj1->hydrate($row);
-				// print "->Adding " . get_class($obj1) . " " . $obj1 . " into instance pool.\n";
-				self::$instances[$key1] = $obj1;
-			} // if obj1 already loaded
-
-			// Add objects for joined IrcIdentity rows
-
-			$key2 = IrcIdentityPeer::getPrimaryKeyHashFromRow($row, $startcol2);
-
-			$obj2 = IrcIdentityPeer::getInstanceFromPool($key2);
-			if (!$obj2) {
-
-				$omClass = IrcIdentityPeer::getOMClass();
-
-
-				$cls = substr($omClass, strrpos($omClass, '.') + 1);
-				$obj2 = new $cls();
-$obj2->initialize($this->context);
-
-				$obj2->hydrate($row, $startcol2);
-				IrcIdentityPeer::addInstanceToPool($obj2); // FIXME - Optimize: we already know the key
-			} // if obj2 loaded
-
-			// Add the $obj1 (Nick) to the collection in $obj2 (IrcIdentity)
-			$obj2->addNick($obj1);
-
-			$results[] = $obj1;
-		}
-		return $results;
-	}
-
 	/**
 	 * Returns the TableMap related to this peer.
 	 * This method is not needed for general use but a specific application could have a need.
@@ -637,13 +448,13 @@ $obj2->initialize($this->context);
 	 */
 	public static function getOMClass()
 	{
-		return NickPeer::CLASS_DEFAULT;
+		return ChuckwallaUserPeer::CLASS_DEFAULT;
 	}
 
 	/**
-	 * Method perform an INSERT on the database, given a Nick or Criteria object.
+	 * Method perform an INSERT on the database, given a ChuckwallaUser or Criteria object.
 	 *
-	 * @param      mixed $values Criteria or Nick object containing data that is used to create the INSERT statement.
+	 * @param      mixed $values Criteria or ChuckwallaUser object containing data that is used to create the INSERT statement.
 	 * @param      PDO $con the PDO connection to use
 	 * @return     mixed The new primary key.
 	 * @throws     PropelException Any exceptions caught during processing will be
@@ -658,10 +469,10 @@ $obj2->initialize($this->context);
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
 		} else {
-			$criteria = $values->buildCriteria(); // build Criteria from Nick object
+			$criteria = $values->buildCriteria(); // build Criteria from ChuckwallaUser object
 		}
 
-		$criteria->remove(NickPeer::ID); // remove pkey col since this table uses auto-increment
+		$criteria->remove(ChuckwallaUserPeer::ID); // remove pkey col since this table uses auto-increment
 
 
 		// Set the correct dbName
@@ -682,9 +493,9 @@ $obj2->initialize($this->context);
 	}
 
 	/**
-	 * Method perform an UPDATE on the database, given a Nick or Criteria object.
+	 * Method perform an UPDATE on the database, given a ChuckwallaUser or Criteria object.
 	 *
-	 * @param      mixed $values Criteria or Nick object containing data that is used to create the UPDATE statement.
+	 * @param      mixed $values Criteria or ChuckwallaUser object containing data that is used to create the UPDATE statement.
 	 * @param      PDO $con The connection to use (specify PDO connection object to exert more control over transactions).
 	 * @return     int The number of affected rows (if supported by underlying database driver).
 	 * @throws     PropelException Any exceptions caught during processing will be
@@ -701,10 +512,10 @@ $obj2->initialize($this->context);
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
 
-			$comparison = $criteria->getComparison(NickPeer::ID);
-			$selectCriteria->add(NickPeer::ID, $criteria->remove(NickPeer::ID), $comparison);
+			$comparison = $criteria->getComparison(ChuckwallaUserPeer::ID);
+			$selectCriteria->add(ChuckwallaUserPeer::ID, $criteria->remove(ChuckwallaUserPeer::ID), $comparison);
 
-		} else { // $values is Nick object
+		} else { // $values is ChuckwallaUser object
 			$criteria = $values->buildCriteria(); // gets full criteria
 			$selectCriteria = $values->buildPkeyCriteria(); // gets criteria w/ primary key(s)
 		}
@@ -716,7 +527,7 @@ $obj2->initialize($this->context);
 	}
 
 	/**
-	 * Method to DELETE all rows from the nick table.
+	 * Method to DELETE all rows from the user table.
 	 *
 	 * @return     int The number of affected rows (if supported by underlying database driver).
 	 */
@@ -730,7 +541,7 @@ $obj2->initialize($this->context);
 			// use transaction because $criteria could contain info
 			// for more than one table or we could emulating ON DELETE CASCADE, etc.
 			$con->beginTransaction();
-			$affectedRows += BasePeer::doDeleteAll(NickPeer::TABLE_NAME, $con);
+			$affectedRows += BasePeer::doDeleteAll(ChuckwallaUserPeer::TABLE_NAME, $con);
 			$con->commit();
 			return $affectedRows;
 		} catch (PropelException $e) {
@@ -740,9 +551,9 @@ $obj2->initialize($this->context);
 	}
 
 	/**
-	 * Method perform a DELETE on the database, given a Nick or Criteria object OR a primary key value.
+	 * Method perform a DELETE on the database, given a ChuckwallaUser or Criteria object OR a primary key value.
 	 *
-	 * @param      mixed $values Criteria or Nick object or primary key or array of primary keys
+	 * @param      mixed $values Criteria or ChuckwallaUser object or primary key or array of primary keys
 	 *              which is used to create the DELETE statement
 	 * @param      PDO $con the connection to use
 	 * @return     int 	The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -753,30 +564,30 @@ $obj2->initialize($this->context);
 	 public static function doDelete($values, PDO $con = null)
 	 {
 		if ($con === null) {
-			$con = Propel::getConnection(NickPeer::DATABASE_NAME);
+			$con = Propel::getConnection(ChuckwallaUserPeer::DATABASE_NAME);
 		}
 
 		if ($values instanceof Criteria) {
 			// invalidate the cache for all objects of this type, since we have no
 			// way of knowing (without running a query) what objects should be invalidated
 			// from the cache based on this Criteria.
-			NickPeer::clearInstancePool();
+			ChuckwallaUserPeer::clearInstancePool();
 
 			// rename for clarity
 			$criteria = clone $values;
-		} elseif ($values instanceof Nick) {
+		} elseif ($values instanceof ChuckwallaUser) {
 			// invalidate the cache for this single object
-			NickPeer::removeInstanceFromPool($values);
+			ChuckwallaUserPeer::removeInstanceFromPool($values);
 			// create criteria based on pk values
 			$criteria = $values->buildPkeyCriteria();
 		} else {
 			// it must be the primary key
 
 			// we can invalidate the cache for this single object
-			NickPeer::removeInstanceFromPool($values);
+			ChuckwallaUserPeer::removeInstanceFromPool($values);
 
 			$criteria = new Criteria(self::DATABASE_NAME);
-			$criteria->add(NickPeer::ID, (array) $values, Criteria::IN);
+			$criteria->add(ChuckwallaUserPeer::ID, (array) $values, Criteria::IN);
 		}
 
 		// Set the correct dbName
@@ -791,8 +602,8 @@ $obj2->initialize($this->context);
 			
 			$affectedRows += BasePeer::doDelete($criteria, $con);
 
-			// invalidate objects in ChannelNickPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
-			ChannelNickPeer::clearInstancePool();
+			// invalidate objects in ChuckwallaIrcIdentityPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
+			ChuckwallaIrcIdentityPeer::clearInstancePool();
 
 			$con->commit();
 			return $affectedRows;
@@ -803,24 +614,24 @@ $obj2->initialize($this->context);
 	}
 
 	/**
-	 * Validates all modified columns of given Nick object.
+	 * Validates all modified columns of given ChuckwallaUser object.
 	 * If parameter $columns is either a single column name or an array of column names
 	 * than only those columns are validated.
 	 *
 	 * NOTICE: This does not apply to primary or foreign keys for now.
 	 *
-	 * @param      Nick $obj The object to validate.
+	 * @param      ChuckwallaUser $obj The object to validate.
 	 * @param      mixed $cols Column name or array of column names.
 	 *
 	 * @return     mixed TRUE if all columns are valid or the error message of the first invalid column.
 	 */
-	public static function doValidate(Nick $obj, $cols = null)
+	public static function doValidate(ChuckwallaUser $obj, $cols = null)
 	{
 		$columns = array();
 
 		if ($cols) {
-			$dbMap = Propel::getDatabaseMap(NickPeer::DATABASE_NAME);
-			$tableMap = $dbMap->getTable(NickPeer::TABLE_NAME);
+			$dbMap = Propel::getDatabaseMap(ChuckwallaUserPeer::DATABASE_NAME);
+			$tableMap = $dbMap->getTable(ChuckwallaUserPeer::TABLE_NAME);
 
 			if (! is_array($cols)) {
 				$cols = array($cols);
@@ -836,7 +647,7 @@ $obj2->initialize($this->context);
 
 		}
 
-		return BasePeer::doValidate(NickPeer::DATABASE_NAME, NickPeer::TABLE_NAME, $columns);
+		return BasePeer::doValidate(ChuckwallaUserPeer::DATABASE_NAME, ChuckwallaUserPeer::TABLE_NAME, $columns);
 	}
 
 	/**
@@ -844,7 +655,7 @@ $obj2->initialize($this->context);
 	 *
 	 * @param      mixed $pk the primary key.
 	 * @param      PDO $con the connection to use
-	 * @return     Nick
+	 * @return     ChuckwallaUser
 	 */
 	public static function retrieveByPK($pk, PDO $con = null)
 	{
@@ -852,12 +663,12 @@ $obj2->initialize($this->context);
 			$con = Propel::getConnection(self::DATABASE_NAME);
 		}
 
-		$criteria = new Criteria(NickPeer::DATABASE_NAME);
+		$criteria = new Criteria(ChuckwallaUserPeer::DATABASE_NAME);
 
-		$criteria->add(NickPeer::ID, $pk);
+		$criteria->add(ChuckwallaUserPeer::ID, $pk);
 
 
-		$v = NickPeer::doSelect($criteria, $con);
+		$v = ChuckwallaUserPeer::doSelect($criteria, $con);
 
 		return !empty($v) > 0 ? $v[0] : null;
 	}
@@ -881,22 +692,22 @@ $obj2->initialize($this->context);
 			$objs = array();
 		} else {
 			$criteria = new Criteria();
-			$criteria->add(NickPeer::ID, $pks, Criteria::IN);
-			$objs = NickPeer::doSelect($criteria, $con);
+			$criteria->add(ChuckwallaUserPeer::ID, $pks, Criteria::IN);
+			$objs = ChuckwallaUserPeer::doSelect($criteria, $con);
 		}
 		return $objs;
 	}
 
-} // BaseNickPeer
+} // ChuckwallaBaseUserPeer
 
 // This is the static code needed to register the MapBuilder for this table with the main Propel class.
 //
-// NOTE: This static code cannot call methods on the NickPeer class, because it is not defined yet.
-// If you need to use overridden methods, you can add this code to the bottom of the NickPeer class:
+// NOTE: This static code cannot call methods on the ChuckwallaUserPeer class, because it is not defined yet.
+// If you need to use overridden methods, you can add this code to the bottom of the ChuckwallaUserPeer class:
 //
-// Propel::getDatabaseMap(NickPeer::DATABASE_NAME)->addTableBuilder(NickPeer::TABLE_NAME, NickPeer::getMapBuilder());
+// Propel::getDatabaseMap(ChuckwallaUserPeer::DATABASE_NAME)->addTableBuilder(ChuckwallaUserPeer::TABLE_NAME, ChuckwallaUserPeer::getMapBuilder());
 //
 // Doing so will effectively overwrite the registration below.
 
-Propel::getDatabaseMap(BaseNickPeer::DATABASE_NAME)->addTableBuilder(BaseNickPeer::TABLE_NAME, BaseNickPeer::getMapBuilder());
+Propel::getDatabaseMap(ChuckwallaBaseUserPeer::DATABASE_NAME)->addTableBuilder(ChuckwallaBaseUserPeer::TABLE_NAME, ChuckwallaBaseUserPeer::getMapBuilder());
 

@@ -1,6 +1,6 @@
 <?php
 
-abstract class BaseUser extends BaseObject implements Persistent, AgaviIModel {
+abstract class ChuckwallaBaseUser extends BaseObject implements Persistent, AgaviIModel {
 	
 	protected $context = null;
 
@@ -18,7 +18,7 @@ abstract class BaseUser extends BaseObject implements Persistent, AgaviIModel {
 	 * The Peer class.
 	 * Instance provides a convenient way of calling static methods on a class
 	 * that calling code may not be able to identify.
-	 * @var        UserPeer
+	 * @var        ChuckwallaUserPeer
 	 */
 	protected static $peer;
 
@@ -79,7 +79,7 @@ abstract class BaseUser extends BaseObject implements Persistent, AgaviIModel {
 	protected $locale = 'en@locale=Europe/London';
 
 	/**
-	 * @var        array IrcIdentity[] Collection to store aggregation of IrcIdentity objects.
+	 * @var        array ChuckwallaIrcIdentity[] Collection to store aggregation of ChuckwallaIrcIdentity objects.
 	 */
 	protected $collIrcIdentitys;
 
@@ -241,7 +241,7 @@ abstract class BaseUser extends BaseObject implements Persistent, AgaviIModel {
 
 		if ($this->id !== $v) {
 			$this->id = $v;
-			$this->modifiedColumns[] = UserPeer::ID;
+			$this->modifiedColumns[] = ChuckwallaUserPeer::ID;
 		}
 
 	} // setId()
@@ -257,7 +257,7 @@ abstract class BaseUser extends BaseObject implements Persistent, AgaviIModel {
 
 		if ($this->email !== $v) {
 			$this->email = $v;
-			$this->modifiedColumns[] = UserPeer::EMAIL;
+			$this->modifiedColumns[] = ChuckwallaUserPeer::EMAIL;
 		}
 
 	} // setEmail()
@@ -273,7 +273,7 @@ abstract class BaseUser extends BaseObject implements Persistent, AgaviIModel {
 
 		if ($this->password !== $v) {
 			$this->password = $v;
-			$this->modifiedColumns[] = UserPeer::PASSWORD;
+			$this->modifiedColumns[] = ChuckwallaUserPeer::PASSWORD;
 		}
 
 	} // setPassword()
@@ -289,7 +289,7 @@ abstract class BaseUser extends BaseObject implements Persistent, AgaviIModel {
 
 		if ($this->is_active !== $v) {
 			$this->is_active = $v;
-			$this->modifiedColumns[] = UserPeer::IS_ACTIVE;
+			$this->modifiedColumns[] = ChuckwallaUserPeer::IS_ACTIVE;
 		}
 
 	} // setIsActive()
@@ -305,7 +305,7 @@ abstract class BaseUser extends BaseObject implements Persistent, AgaviIModel {
 
 		if ($this->is_admin !== $v) {
 			$this->is_admin = $v;
-			$this->modifiedColumns[] = UserPeer::IS_ADMIN;
+			$this->modifiedColumns[] = ChuckwallaUserPeer::IS_ADMIN;
 		}
 
 	} // setIsAdmin()
@@ -329,7 +329,7 @@ abstract class BaseUser extends BaseObject implements Persistent, AgaviIModel {
 		}
 		if ($this->ts_registered !== $ts) {
 			$this->ts_registered = $ts;
-			$this->modifiedColumns[] = UserPeer::TS_REGISTERED;
+			$this->modifiedColumns[] = ChuckwallaUserPeer::TS_REGISTERED;
 		}
 
 	} // setTsRegistered()
@@ -353,7 +353,7 @@ abstract class BaseUser extends BaseObject implements Persistent, AgaviIModel {
 		}
 		if ($this->ts_lastlogin !== $ts) {
 			$this->ts_lastlogin = $ts;
-			$this->modifiedColumns[] = UserPeer::TS_LASTLOGIN;
+			$this->modifiedColumns[] = ChuckwallaUserPeer::TS_LASTLOGIN;
 		}
 
 	} // setTsLastlogin()
@@ -369,7 +369,7 @@ abstract class BaseUser extends BaseObject implements Persistent, AgaviIModel {
 
 		if ($this->locale !== $v || $v === 'en@locale=Europe/London') {
 			$this->locale = $v;
-			$this->modifiedColumns[] = UserPeer::LOCALE;
+			$this->modifiedColumns[] = ChuckwallaUserPeer::LOCALE;
 		}
 
 	} // setLocale()
@@ -404,7 +404,7 @@ abstract class BaseUser extends BaseObject implements Persistent, AgaviIModel {
 			$this->setNew(false);
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 8; // 8 = UserPeer::NUM_COLUMNS - UserPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 8; // 8 = ChuckwallaUserPeer::NUM_COLUMNS - ChuckwallaUserPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating User object", $e);
@@ -427,12 +427,12 @@ abstract class BaseUser extends BaseObject implements Persistent, AgaviIModel {
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(UserPeer::DATABASE_NAME);
+			$con = Propel::getConnection(ChuckwallaUserPeer::DATABASE_NAME);
 		}
 
 		try {
 			$con->beginTransaction();
-			UserPeer::doDelete($this, $con);
+			ChuckwallaUserPeer::doDelete($this, $con);
 			$this->setDeleted(true);
 			$con->commit();
 		} catch (PropelException $e) {
@@ -458,14 +458,14 @@ abstract class BaseUser extends BaseObject implements Persistent, AgaviIModel {
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(UserPeer::DATABASE_NAME);
+			$con = Propel::getConnection(ChuckwallaUserPeer::DATABASE_NAME);
 		}
 
 		try {
 			$con->beginTransaction();
 			$affectedRows = $this->doSave($con);
 			$con->commit();
-			UserPeer::addInstanceToPool($this);
+			ChuckwallaUserPeer::addInstanceToPool($this);
 			return $affectedRows;
 		} catch (PropelException $e) {
 			$con->rollback();
@@ -494,7 +494,7 @@ abstract class BaseUser extends BaseObject implements Persistent, AgaviIModel {
 			// If this object has been modified, then save it to the database.
 			if ($this->isModified()) {
 				if ($this->isNew()) {
-					$pk = UserPeer::doInsert($this, $con);
+					$pk = ChuckwallaUserPeer::doInsert($this, $con);
 					$affectedRows += 1; // we are assuming that there is only 1 row per doInsert() which
 										 // should always be true here (even though technically
 										 // BasePeer::doInsert() can insert multiple rows).
@@ -503,7 +503,7 @@ abstract class BaseUser extends BaseObject implements Persistent, AgaviIModel {
 
 					$this->setNew(false);
 				} else {
-					$affectedRows += UserPeer::doUpdate($this, $con);
+					$affectedRows += ChuckwallaUserPeer::doUpdate($this, $con);
 				}
 				$this->resetModified(); // [HL] After being saved an object is no longer 'modified'
 			}
@@ -581,7 +581,7 @@ abstract class BaseUser extends BaseObject implements Persistent, AgaviIModel {
 			$failureMap = array();
 
 
-			if (($retval = UserPeer::doValidate($this, $columns)) !== true) {
+			if (($retval = ChuckwallaUserPeer::doValidate($this, $columns)) !== true) {
 				$failureMap = array_merge($failureMap, $retval);
 			}
 
@@ -612,7 +612,7 @@ abstract class BaseUser extends BaseObject implements Persistent, AgaviIModel {
 	 */
 	public function getByName($name, $type = BasePeer::TYPE_PHPNAME)
 	{
-		$pos = UserPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+		$pos = ChuckwallaUserPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
 		return $this->getByPosition($pos);
 	}
 
@@ -668,7 +668,7 @@ abstract class BaseUser extends BaseObject implements Persistent, AgaviIModel {
 	 */
 	public function toArray($keyType = BasePeer::TYPE_PHPNAME)
 	{
-		$keys = UserPeer::getFieldNames($keyType);
+		$keys = ChuckwallaUserPeer::getFieldNames($keyType);
 		$result = array(
 			$keys[0] => $this->getId(),
 			$keys[1] => $this->getEmail(),
@@ -694,7 +694,7 @@ abstract class BaseUser extends BaseObject implements Persistent, AgaviIModel {
 	 */
 	public function setByName($name, $value, $type = BasePeer::TYPE_PHPNAME)
 	{
-		$pos = UserPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+		$pos = ChuckwallaUserPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
 		return $this->setByPosition($pos, $value);
 	}
 
@@ -754,7 +754,7 @@ abstract class BaseUser extends BaseObject implements Persistent, AgaviIModel {
 	 */
 	public function fromArray($arr, $keyType = BasePeer::TYPE_PHPNAME)
 	{
-		$keys = UserPeer::getFieldNames($keyType);
+		$keys = ChuckwallaUserPeer::getFieldNames($keyType);
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setEmail($arr[$keys[1]]);
@@ -773,16 +773,16 @@ abstract class BaseUser extends BaseObject implements Persistent, AgaviIModel {
 	 */
 	public function buildCriteria()
 	{
-		$criteria = new Criteria(UserPeer::DATABASE_NAME);
+		$criteria = new Criteria(ChuckwallaUserPeer::DATABASE_NAME);
 
-		if ($this->isColumnModified(UserPeer::ID)) $criteria->add(UserPeer::ID, $this->id);
-		if ($this->isColumnModified(UserPeer::EMAIL)) $criteria->add(UserPeer::EMAIL, $this->email);
-		if ($this->isColumnModified(UserPeer::PASSWORD)) $criteria->add(UserPeer::PASSWORD, $this->password);
-		if ($this->isColumnModified(UserPeer::IS_ACTIVE)) $criteria->add(UserPeer::IS_ACTIVE, $this->is_active);
-		if ($this->isColumnModified(UserPeer::IS_ADMIN)) $criteria->add(UserPeer::IS_ADMIN, $this->is_admin);
-		if ($this->isColumnModified(UserPeer::TS_REGISTERED)) $criteria->add(UserPeer::TS_REGISTERED, $this->ts_registered);
-		if ($this->isColumnModified(UserPeer::TS_LASTLOGIN)) $criteria->add(UserPeer::TS_LASTLOGIN, $this->ts_lastlogin);
-		if ($this->isColumnModified(UserPeer::LOCALE)) $criteria->add(UserPeer::LOCALE, $this->locale);
+		if ($this->isColumnModified(ChuckwallaUserPeer::ID)) $criteria->add(ChuckwallaUserPeer::ID, $this->id);
+		if ($this->isColumnModified(ChuckwallaUserPeer::EMAIL)) $criteria->add(ChuckwallaUserPeer::EMAIL, $this->email);
+		if ($this->isColumnModified(ChuckwallaUserPeer::PASSWORD)) $criteria->add(ChuckwallaUserPeer::PASSWORD, $this->password);
+		if ($this->isColumnModified(ChuckwallaUserPeer::IS_ACTIVE)) $criteria->add(ChuckwallaUserPeer::IS_ACTIVE, $this->is_active);
+		if ($this->isColumnModified(ChuckwallaUserPeer::IS_ADMIN)) $criteria->add(ChuckwallaUserPeer::IS_ADMIN, $this->is_admin);
+		if ($this->isColumnModified(ChuckwallaUserPeer::TS_REGISTERED)) $criteria->add(ChuckwallaUserPeer::TS_REGISTERED, $this->ts_registered);
+		if ($this->isColumnModified(ChuckwallaUserPeer::TS_LASTLOGIN)) $criteria->add(ChuckwallaUserPeer::TS_LASTLOGIN, $this->ts_lastlogin);
+		if ($this->isColumnModified(ChuckwallaUserPeer::LOCALE)) $criteria->add(ChuckwallaUserPeer::LOCALE, $this->locale);
 
 		return $criteria;
 	}
@@ -797,9 +797,9 @@ abstract class BaseUser extends BaseObject implements Persistent, AgaviIModel {
 	 */
 	public function buildPkeyCriteria()
 	{
-		$criteria = new Criteria(UserPeer::DATABASE_NAME);
+		$criteria = new Criteria(ChuckwallaUserPeer::DATABASE_NAME);
 
-		$criteria->add(UserPeer::ID, $this->id);
+		$criteria->add(ChuckwallaUserPeer::ID, $this->id);
 
 		return $criteria;
 	}
@@ -830,7 +830,7 @@ abstract class BaseUser extends BaseObject implements Persistent, AgaviIModel {
 	 * If desired, this method can also make copies of all associated (fkey referrers)
 	 * objects.
 	 *
-	 * @param      object $copyObj An object of User (or compatible) type.
+	 * @param      object $copyObj An object of ChuckwallaUser (or compatible) type.
 	 * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
 	 * @throws     PropelException
 	 */
@@ -881,7 +881,7 @@ abstract class BaseUser extends BaseObject implements Persistent, AgaviIModel {
 	 * objects.
 	 *
 	 * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-	 * @return     User Clone of current object.
+	 * @return     ChuckwallaUser Clone of current object.
 	 * @throws     PropelException
 	 */
 	public function copy($deepCopy = false)
@@ -902,12 +902,12 @@ abstract class BaseUser extends BaseObject implements Persistent, AgaviIModel {
 	 * same instance for all member of this class. The method could therefore
 	 * be static, but this would prevent one from overriding the behavior.
 	 *
-	 * @return     UserPeer
+	 * @return     ChuckwallaUserPeer
 	 */
 	public function getPeer()
 	{
 		if (self::$peer === null) {
-			self::$peer = new UserPeer();
+			self::$peer = new ChuckwallaUserPeer();
 ($this->context);
 
 		}
@@ -935,8 +935,8 @@ abstract class BaseUser extends BaseObject implements Persistent, AgaviIModel {
 	 * Gets an array of  objects which contain a foreign key that references this object.
 	 *
 	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
-	 * Otherwise if this User has previously been saved, it will retrieve
-	 * related IrcIdentitys from storage. If this User is new, it will return
+	 * Otherwise if this ChuckwallaUser has previously been saved, it will retrieve
+	 * related IrcIdentitys from storage. If this ChuckwallaUser is new, it will return
 	 * an empty collection or the current collection, the criteria is ignored on a new object.
 	 *
 	 * @param      PDO $con
@@ -960,10 +960,10 @@ abstract class BaseUser extends BaseObject implements Persistent, AgaviIModel {
 			   $this->collIrcIdentitys = array();
 			} else {
 
-				$criteria->add(IrcIdentityPeer::USER_ID, $this->getId());
+				$criteria->add(ChuckwallaIrcIdentityPeer::USER_ID, $this->getId());
 
-				IrcIdentityPeer::addSelectColumns($criteria);
-				$this->collIrcIdentitys = IrcIdentityPeer::doSelect($criteria, $con);
+				ChuckwallaIrcIdentityPeer::addSelectColumns($criteria);
+				$this->collIrcIdentitys = ChuckwallaIrcIdentityPeer::doSelect($criteria, $con);
 			}
 		} else {
 			// criteria has no effect for a new object
@@ -973,11 +973,11 @@ abstract class BaseUser extends BaseObject implements Persistent, AgaviIModel {
 				// one, just return the collection.
 
 
-				$criteria->add(IrcIdentityPeer::USER_ID, $this->getId());
+				$criteria->add(ChuckwallaIrcIdentityPeer::USER_ID, $this->getId());
 
-				IrcIdentityPeer::addSelectColumns($criteria);
+				ChuckwallaIrcIdentityPeer::addSelectColumns($criteria);
 				if (!isset($this->lastIrcIdentityCriteria) || !$this->lastIrcIdentityCriteria->equals($criteria)) {
-					$this->collIrcIdentitys = IrcIdentityPeer::doSelect($criteria, $con);
+					$this->collIrcIdentitys = ChuckwallaIrcIdentityPeer::doSelect($criteria, $con);
 				}
 			}
 		}
@@ -1004,24 +1004,24 @@ abstract class BaseUser extends BaseObject implements Persistent, AgaviIModel {
 			$criteria = clone $criteria;
 		}
 
-		$criteria->add(IrcIdentityPeer::USER_ID, $this->getId());
+		$criteria->add(ChuckwallaIrcIdentityPeer::USER_ID, $this->getId());
 
-		return IrcIdentityPeer::doCount($criteria, $distinct, $con);
+		return ChuckwallaIrcIdentityPeer::doCount($criteria, $distinct, $con);
 	}
 
 	/**
-	 * Method called to associate a IrcIdentity object to this object
-	 * through the IrcIdentity foreign key attribute.
+	 * Method called to associate a ChuckwallaIrcIdentity object to this object
+	 * through the ChuckwallaIrcIdentity foreign key attribute.
 	 *
-	 * @param      IrcIdentity $l IrcIdentity
+	 * @param      ChuckwallaIrcIdentity $l ChuckwallaIrcIdentity
 	 * @return     void
 	 * @throws     PropelException
 	 */
-	public function addIrcIdentity(IrcIdentity $l)
+	public function addIrcIdentity(ChuckwallaIrcIdentity $l)
 	{
 		$this->collIrcIdentitys = (array) $this->collIrcIdentitys;
 		array_push($this->collIrcIdentitys, $l);
 		$l->setUser($this);
 	}
 
-} // BaseUser
+} // ChuckwallaBaseUser

@@ -1,6 +1,6 @@
 <?php
 
-abstract class BaseIrcIdentityPeer implements AgaviISingletonModel {
+abstract class ChuckwallaBaseIrcIdentityPeer implements AgaviISingletonModel {
 	
 	protected $context = null;
 	
@@ -21,7 +21,7 @@ abstract class BaseIrcIdentityPeer implements AgaviISingletonModel {
 	const TABLE_NAME = 'irc_identity';
 
 	/** A class that can be returned by this peer. */
-	const CLASS_DEFAULT = 'chuckwallaom.IrcIdentity';
+	const CLASS_DEFAULT = 'chuckwallaom.ChuckwallaIrcIdentity';
 
 	/** The total number of columns. */
 	const NUM_COLUMNS = 2;
@@ -37,10 +37,10 @@ abstract class BaseIrcIdentityPeer implements AgaviISingletonModel {
 	const USER_ID = 'irc_identity.USER_ID';
 
 	/**
-	 * An identiy map to hold any loaded instances of IrcIdentity objects.
+	 * An identiy map to hold any loaded instances of ChuckwallaIrcIdentity objects.
 	 * This must be public so that other peer classes can access this when hydrating from JOIN
 	 * queries.
-	 * @var        array IrcIdentity[]
+	 * @var        array ChuckwallaIrcIdentity[]
 	 */
 	public static $instances = array();
 
@@ -83,8 +83,8 @@ abstract class BaseIrcIdentityPeer implements AgaviISingletonModel {
 	public static function getMapBuilder()
 	{
 		if (self::$mapBuilder === null) {
-			require 'chuckwallaom/map/IrcIdentityMapBuilder.php';
-			self::$mapBuilder = new IrcIdentityMapBuilder();
+			require 'chuckwallaom/map/ChuckwallaIrcIdentityMapBuilder.php';
+			self::$mapBuilder = new ChuckwallaIrcIdentityMapBuilder();
 		}
 		return self::$mapBuilder;
 	}
@@ -133,12 +133,12 @@ abstract class BaseIrcIdentityPeer implements AgaviISingletonModel {
 	 *		$c->addJoin(TablePeer::alias("alias1", TablePeer::PRIMARY_KEY_COLUMN), TablePeer::PRIMARY_KEY_COLUMN);
 	 * </code>
 	 * @param      string $alias The alias for the current table.
-	 * @param      string $column The column name for current table. (i.e. IrcIdentityPeer::COLUMN_NAME).
+	 * @param      string $column The column name for current table. (i.e. ChuckwallaIrcIdentityPeer::COLUMN_NAME).
 	 * @return     string
 	 */
 	public static function alias($alias, $column)
 	{
-		return str_replace(IrcIdentityPeer::TABLE_NAME.'.', $alias.'.', $column);
+		return str_replace(ChuckwallaIrcIdentityPeer::TABLE_NAME.'.', $alias.'.', $column);
 	}
 
 	/**
@@ -155,9 +155,9 @@ abstract class BaseIrcIdentityPeer implements AgaviISingletonModel {
 	public static function addSelectColumns(Criteria $criteria)
 	{
 
-		$criteria->addSelectColumn(IrcIdentityPeer::ID);
+		$criteria->addSelectColumn(ChuckwallaIrcIdentityPeer::ID);
 
-		$criteria->addSelectColumn(IrcIdentityPeer::USER_ID);
+		$criteria->addSelectColumn(ChuckwallaIrcIdentityPeer::USER_ID);
 
 	}
 
@@ -180,9 +180,9 @@ abstract class BaseIrcIdentityPeer implements AgaviISingletonModel {
 		// clear out anything that might confuse the ORDER BY clause
 		$criteria->clearSelectColumns()->clearOrderByColumns();
 		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->addSelectColumn(IrcIdentityPeer::COUNT_DISTINCT);
+			$criteria->addSelectColumn(ChuckwallaIrcIdentityPeer::COUNT_DISTINCT);
 		} else {
-			$criteria->addSelectColumn(IrcIdentityPeer::COUNT);
+			$criteria->addSelectColumn(ChuckwallaIrcIdentityPeer::COUNT);
 		}
 
 		// just in case we're grouping: add those columns to the select statement
@@ -191,7 +191,7 @@ abstract class BaseIrcIdentityPeer implements AgaviISingletonModel {
 			$criteria->addSelectColumn($column);
 		}
 
-		$stmt = IrcIdentityPeer::doSelectStmt($criteria, $con);
+		$stmt = ChuckwallaIrcIdentityPeer::doSelectStmt($criteria, $con);
 		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
 			return (int) $row[0];
 		} else {
@@ -204,7 +204,7 @@ abstract class BaseIrcIdentityPeer implements AgaviISingletonModel {
 	 *
 	 * @param      Criteria $criteria object used to create the SELECT statement.
 	 * @param      PDO $con
-	 * @return     IrcIdentity
+	 * @return     ChuckwallaIrcIdentity
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
@@ -212,7 +212,7 @@ abstract class BaseIrcIdentityPeer implements AgaviISingletonModel {
 	{
 		$critcopy = clone $criteria;
 		$critcopy->setLimit(1);
-		$objects = IrcIdentityPeer::doSelect($critcopy, $con);
+		$objects = ChuckwallaIrcIdentityPeer::doSelect($critcopy, $con);
 		if ($objects) {
 			return $objects[0];
 		}
@@ -229,7 +229,7 @@ abstract class BaseIrcIdentityPeer implements AgaviISingletonModel {
 	 */
 	public static function doSelect(Criteria $criteria, PDO $con = null)
 	{
-		return IrcIdentityPeer::populateObjects(IrcIdentityPeer::doSelectStmt($criteria, $con));
+		return ChuckwallaIrcIdentityPeer::populateObjects(ChuckwallaIrcIdentityPeer::doSelectStmt($criteria, $con));
 	}
 	/**
 	 * Prepares the Criteria object and uses the parent doSelect() method to execute a PDOStatement.
@@ -252,7 +252,7 @@ abstract class BaseIrcIdentityPeer implements AgaviISingletonModel {
 
 		if (!$criteria->getSelectColumns()) {
 			$criteria = clone $criteria;
-			IrcIdentityPeer::addSelectColumns($criteria);
+			ChuckwallaIrcIdentityPeer::addSelectColumns($criteria);
 		}
 
 		// Set the correct dbName
@@ -270,9 +270,9 @@ abstract class BaseIrcIdentityPeer implements AgaviISingletonModel {
 	 * to the cache in order to ensure that the same objects are always returned by doSelect*()
 	 * and retrieveByPK*() calls.
 	 *
-	 * @param      IrcIdentity $value A IrcIdentity object.
+	 * @param      ChuckwallaIrcIdentity $value A ChuckwallaIrcIdentity object.
 	 */
-	public static function addInstanceToPool(IrcIdentity $obj)
+	public static function addInstanceToPool(ChuckwallaIrcIdentity $obj)
 	{
 		// print "+Adding (by addInstanceToPool()) " . get_class($obj) . " " . var_export($obj->getPrimaryKey(),true) . " to instance pool.\n";
 	
@@ -288,21 +288,21 @@ abstract class BaseIrcIdentityPeer implements AgaviISingletonModel {
 	 * methods in your stub classes -- you may need to explicitly remove objects
 	 * from the cache in order to prevent returning objects that no longer exist.
 	 *
-	 * @param      mixed $value A IrcIdentity object or a primary key value.
+	 * @param      mixed $value A ChuckwallaIrcIdentity object or a primary key value.
 	 */
 	public static function removeInstanceFromPool($value)
 	{
-		if (is_object($value) && $value instanceof IrcIdentity) {
+		if (is_object($value) && $value instanceof ChuckwallaIrcIdentity) {
 			// print "-Removing " . get_class($value) . " " . var_export($value->getPrimaryKey(),true) . " from instance pool.\n";
 		
 			$key = (string) $value->getPrimaryKey();
 		} elseif (is_scalar($value)) {
-			// print "-Removing pk: " . var_export($value,true) . " class: IrcIdentity from instance pool.\n";
+			// print "-Removing pk: " . var_export($value,true) . " class: ChuckwallaIrcIdentity from instance pool.\n";
 			// assume we've been passed a primary key
 			$key = serialize($value);
 		} else {
 
-			$e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or IrcIdentity object: " . var_export($value,true));
+			$e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or ChuckwallaIrcIdentity object: " . var_export($value,true));
 			print $e;
 			throw $e;
 		}
@@ -324,7 +324,7 @@ abstract class BaseIrcIdentityPeer implements AgaviISingletonModel {
 	public static function getInstanceFromPool($key)
 	{
 		if (isset(self::$instances[$key])) {
-			//print "  <-Found IrcIdentity " . self::$instances[$key] . " in instance pool.\n";
+			//print "  <-Found ChuckwallaIrcIdentity " . self::$instances[$key] . " in instance pool.\n";
 			return self::$instances[$key];
 		} else {
 			return null; // just to be explicit
@@ -343,7 +343,7 @@ abstract class BaseIrcIdentityPeer implements AgaviISingletonModel {
 	 */
 	public static function clearInstancePool()
 	{
-		//print "\tClearing IrcIdentityPeer instance pool.\n";
+		//print "\tClearing ChuckwallaIrcIdentityPeer instance pool.\n";
 		self::$instances = array();
 	}
 	
@@ -374,11 +374,11 @@ abstract class BaseIrcIdentityPeer implements AgaviISingletonModel {
 		$results = array();
 	
 		// set the class once to avoid overhead in the loop
-		$cls = IrcIdentityPeer::getOMClass();
+		$cls = ChuckwallaIrcIdentityPeer::getOMClass();
 		$cls = substr($cls, strrpos($cls, '.') + 1);
 		// populate the object(s)
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key = IrcIdentityPeer::getPrimaryKeyHashFromRow($row, 0);
+			$key = ChuckwallaIrcIdentityPeer::getPrimaryKeyHashFromRow($row, 0);
 			if (isset(self::$instances[$key])) {
 				// print "  <-Found " . get_class(self::$instances[$key]) . " " . self::$instances[$key] . " in instance pool.\n";
 				$results[] = self::$instances[$key];
@@ -412,9 +412,9 @@ $obj->initialize($this->context);
 		// clear out anything that might confuse the ORDER BY clause
 		$criteria->clearSelectColumns()->clearOrderByColumns();
 		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->addSelectColumn(IrcIdentityPeer::COUNT_DISTINCT);
+			$criteria->addSelectColumn(ChuckwallaIrcIdentityPeer::COUNT_DISTINCT);
 		} else {
-			$criteria->addSelectColumn(IrcIdentityPeer::COUNT);
+			$criteria->addSelectColumn(ChuckwallaIrcIdentityPeer::COUNT);
 		}
 
 		// just in case we're grouping: add those columns to the select statement
@@ -423,9 +423,9 @@ $obj->initialize($this->context);
 			$criteria->addSelectColumn($column);
 		}
 
-		$criteria->addJoin(IrcIdentityPeer::USER_ID, UserPeer::ID);
+		$criteria->addJoin(ChuckwallaIrcIdentityPeer::USER_ID, ChuckwallaUserPeer::ID);
 
-		$stmt = IrcIdentityPeer::doSelectStmt($criteria, $con);
+		$stmt = ChuckwallaIrcIdentityPeer::doSelectStmt($criteria, $con);
 		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
 			return (int) $row[0];
 		} else {
@@ -436,9 +436,9 @@ $obj->initialize($this->context);
 
 
 	/**
-	 * Selects a collection of IrcIdentity objects pre-filled with their User objects.
+	 * Selects a collection of ChuckwallaIrcIdentity objects pre-filled with their ChuckwallaUser objects.
 	 *
-	 * @return     array Array of IrcIdentity objects.
+	 * @return     array Array of ChuckwallaIrcIdentity objects.
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
@@ -451,22 +451,22 @@ $obj->initialize($this->context);
 			$c->setDbName(self::DATABASE_NAME);
 		}
 
-		IrcIdentityPeer::addSelectColumns($c);
-		$startcol = (IrcIdentityPeer::NUM_COLUMNS - IrcIdentityPeer::NUM_LAZY_LOAD_COLUMNS);
-		UserPeer::addSelectColumns($c);
+		ChuckwallaIrcIdentityPeer::addSelectColumns($c);
+		$startcol = (ChuckwallaIrcIdentityPeer::NUM_COLUMNS - ChuckwallaIrcIdentityPeer::NUM_LAZY_LOAD_COLUMNS);
+		ChuckwallaUserPeer::addSelectColumns($c);
 
-		$c->addJoin(IrcIdentityPeer::USER_ID, UserPeer::ID);
+		$c->addJoin(ChuckwallaIrcIdentityPeer::USER_ID, ChuckwallaUserPeer::ID);
 		$stmt = BasePeer::doSelect($c, $con);
 		$results = array();
 
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = IrcIdentityPeer::getPrimaryKeyHashFromRow($row, 0);
+			$key1 = ChuckwallaIrcIdentityPeer::getPrimaryKeyHashFromRow($row, 0);
 			if (isset(self::$instances[$key1])) {
 				$obj1 = self::$instances[$key1];
 				// print "  <-Found " . get_class($obj1) . " " . $obj1 . " into instance pool.\n";
 			} else {
 
-				$omClass = IrcIdentityPeer::getOMClass();
+				$omClass = ChuckwallaIrcIdentityPeer::getOMClass();
 
 				$cls = substr($omClass, strrpos($omClass, '.') + 1);
 				$obj1 = new $cls();
@@ -477,21 +477,21 @@ $obj1->initialize($this->context);
 				self::$instances[$key1] = $obj1;
 			} // if $obj1 already loaded
 
-			$key2 = UserPeer::getPrimaryKeyHashFromRow($row, $startcol);
-			$obj2 = UserPeer::getInstanceFromPool($key2);
+			$key2 = ChuckwallaUserPeer::getPrimaryKeyHashFromRow($row, $startcol);
+			$obj2 = ChuckwallaUserPeer::getInstanceFromPool($key2);
 			if (!$obj2) {
 
-				$omClass = UserPeer::getOMClass();
+				$omClass = ChuckwallaUserPeer::getOMClass();
 
 				$cls = substr($omClass, strrpos($omClass, '.') + 1);
 				$obj2 = new $cls();
 $obj2->initialize($this->context);
 
 				$obj2->hydrate($row, $startcol);
-				UserPeer::addInstanceToPool($obj2); // FIXME, we should optimize this since we already calculated the key above
+				ChuckwallaUserPeer::addInstanceToPool($obj2); // FIXME, we should optimize this since we already calculated the key above
 			} // if obj2 already loaded
 
-			// Add the $obj1 (IrcIdentity) to the collection in $obj2 (User)
+			// Add the $obj1 (ChuckwallaIrcIdentity) to the collection in $obj2 (ChuckwallaUser)
 			$obj2->addIrcIdentity($obj1);
 
 			$results[] = $obj1;
@@ -515,9 +515,9 @@ $obj2->initialize($this->context);
 		// clear out anything that might confuse the ORDER BY clause
 		$criteria->clearSelectColumns()->clearOrderByColumns();
 		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->addSelectColumn(IrcIdentityPeer::COUNT_DISTINCT);
+			$criteria->addSelectColumn(ChuckwallaIrcIdentityPeer::COUNT_DISTINCT);
 		} else {
-			$criteria->addSelectColumn(IrcIdentityPeer::COUNT);
+			$criteria->addSelectColumn(ChuckwallaIrcIdentityPeer::COUNT);
 		}
 
 		// just in case we're grouping: add those columns to the select statement
@@ -526,9 +526,9 @@ $obj2->initialize($this->context);
 			$criteria->addSelectColumn($column);
 		}
 
-		$criteria->addJoin(IrcIdentityPeer::USER_ID, UserPeer::ID);
+		$criteria->addJoin(ChuckwallaIrcIdentityPeer::USER_ID, ChuckwallaUserPeer::ID);
 
-		$stmt = IrcIdentityPeer::doSelectStmt($criteria, $con);
+		$stmt = ChuckwallaIrcIdentityPeer::doSelectStmt($criteria, $con);
 		if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
 			return (int) $row[0];
 		} else {
@@ -539,9 +539,9 @@ $obj2->initialize($this->context);
 
 
 	/**
-	 * Selects a collection of IrcIdentity objects pre-filled with all related objects.
+	 * Selects a collection of ChuckwallaIrcIdentity objects pre-filled with all related objects.
 	 *
-	 * @return     array Array of IrcIdentity objects.
+	 * @return     array Array of ChuckwallaIrcIdentity objects.
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
@@ -554,25 +554,25 @@ $obj2->initialize($this->context);
 			$c->setDbName(self::DATABASE_NAME);
 		}
 
-		IrcIdentityPeer::addSelectColumns($c);
-		$startcol2 = (IrcIdentityPeer::NUM_COLUMNS - IrcIdentityPeer::NUM_LAZY_LOAD_COLUMNS);
+		ChuckwallaIrcIdentityPeer::addSelectColumns($c);
+		$startcol2 = (ChuckwallaIrcIdentityPeer::NUM_COLUMNS - ChuckwallaIrcIdentityPeer::NUM_LAZY_LOAD_COLUMNS);
 
-		UserPeer::addSelectColumns($c);
-		$startcol3 = $startcol2 + UserPeer::NUM_COLUMNS;
+		ChuckwallaUserPeer::addSelectColumns($c);
+		$startcol3 = $startcol2 + ChuckwallaUserPeer::NUM_COLUMNS;
 
-		$c->addJoin(IrcIdentityPeer::USER_ID, UserPeer::ID);
+		$c->addJoin(ChuckwallaIrcIdentityPeer::USER_ID, ChuckwallaUserPeer::ID);
 
 		$stmt = BasePeer::doSelect($c, $con);
 		$results = array();
 
 		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-			$key1 = IrcIdentityPeer::getPrimaryKeyHashFromRow($row, 0);
+			$key1 = ChuckwallaIrcIdentityPeer::getPrimaryKeyHashFromRow($row, 0);
 			if (isset(self::$instances[$key1])) {
 				$obj1 = self::$instances[$key1];
 				// print "  <-Found " . get_class($obj1) . " " . $obj1 . " in instance pool.\n";
 			} else {
 
-				$omClass = IrcIdentityPeer::getOMClass();
+				$omClass = ChuckwallaIrcIdentityPeer::getOMClass();
 
 				$cls = substr($omClass, strrpos($omClass, '.') + 1);
 				$obj1 = new $cls();
@@ -583,14 +583,14 @@ $obj1->initialize($this->context);
 				self::$instances[$key1] = $obj1;
 			} // if obj1 already loaded
 
-			// Add objects for joined User rows
+			// Add objects for joined ChuckwallaUser rows
 
-			$key2 = UserPeer::getPrimaryKeyHashFromRow($row, $startcol2);
+			$key2 = ChuckwallaUserPeer::getPrimaryKeyHashFromRow($row, $startcol2);
 
-			$obj2 = UserPeer::getInstanceFromPool($key2);
+			$obj2 = ChuckwallaUserPeer::getInstanceFromPool($key2);
 			if (!$obj2) {
 
-				$omClass = UserPeer::getOMClass();
+				$omClass = ChuckwallaUserPeer::getOMClass();
 
 
 				$cls = substr($omClass, strrpos($omClass, '.') + 1);
@@ -598,10 +598,10 @@ $obj1->initialize($this->context);
 $obj2->initialize($this->context);
 
 				$obj2->hydrate($row, $startcol2);
-				UserPeer::addInstanceToPool($obj2); // FIXME - Optimize: we already know the key
+				ChuckwallaUserPeer::addInstanceToPool($obj2); // FIXME - Optimize: we already know the key
 			} // if obj2 loaded
 
-			// Add the $obj1 (IrcIdentity) to the collection in $obj2 (User)
+			// Add the $obj1 (ChuckwallaIrcIdentity) to the collection in $obj2 (ChuckwallaUser)
 			$obj2->addIrcIdentity($obj1);
 
 			$results[] = $obj1;
@@ -632,13 +632,13 @@ $obj2->initialize($this->context);
 	 */
 	public static function getOMClass()
 	{
-		return IrcIdentityPeer::CLASS_DEFAULT;
+		return ChuckwallaIrcIdentityPeer::CLASS_DEFAULT;
 	}
 
 	/**
-	 * Method perform an INSERT on the database, given a IrcIdentity or Criteria object.
+	 * Method perform an INSERT on the database, given a ChuckwallaIrcIdentity or Criteria object.
 	 *
-	 * @param      mixed $values Criteria or IrcIdentity object containing data that is used to create the INSERT statement.
+	 * @param      mixed $values Criteria or ChuckwallaIrcIdentity object containing data that is used to create the INSERT statement.
 	 * @param      PDO $con the PDO connection to use
 	 * @return     mixed The new primary key.
 	 * @throws     PropelException Any exceptions caught during processing will be
@@ -653,10 +653,10 @@ $obj2->initialize($this->context);
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
 		} else {
-			$criteria = $values->buildCriteria(); // build Criteria from IrcIdentity object
+			$criteria = $values->buildCriteria(); // build Criteria from ChuckwallaIrcIdentity object
 		}
 
-		$criteria->remove(IrcIdentityPeer::ID); // remove pkey col since this table uses auto-increment
+		$criteria->remove(ChuckwallaIrcIdentityPeer::ID); // remove pkey col since this table uses auto-increment
 
 
 		// Set the correct dbName
@@ -677,9 +677,9 @@ $obj2->initialize($this->context);
 	}
 
 	/**
-	 * Method perform an UPDATE on the database, given a IrcIdentity or Criteria object.
+	 * Method perform an UPDATE on the database, given a ChuckwallaIrcIdentity or Criteria object.
 	 *
-	 * @param      mixed $values Criteria or IrcIdentity object containing data that is used to create the UPDATE statement.
+	 * @param      mixed $values Criteria or ChuckwallaIrcIdentity object containing data that is used to create the UPDATE statement.
 	 * @param      PDO $con The connection to use (specify PDO connection object to exert more control over transactions).
 	 * @return     int The number of affected rows (if supported by underlying database driver).
 	 * @throws     PropelException Any exceptions caught during processing will be
@@ -696,10 +696,10 @@ $obj2->initialize($this->context);
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
 
-			$comparison = $criteria->getComparison(IrcIdentityPeer::ID);
-			$selectCriteria->add(IrcIdentityPeer::ID, $criteria->remove(IrcIdentityPeer::ID), $comparison);
+			$comparison = $criteria->getComparison(ChuckwallaIrcIdentityPeer::ID);
+			$selectCriteria->add(ChuckwallaIrcIdentityPeer::ID, $criteria->remove(ChuckwallaIrcIdentityPeer::ID), $comparison);
 
-		} else { // $values is IrcIdentity object
+		} else { // $values is ChuckwallaIrcIdentity object
 			$criteria = $values->buildCriteria(); // gets full criteria
 			$selectCriteria = $values->buildPkeyCriteria(); // gets criteria w/ primary key(s)
 		}
@@ -725,7 +725,7 @@ $obj2->initialize($this->context);
 			// use transaction because $criteria could contain info
 			// for more than one table or we could emulating ON DELETE CASCADE, etc.
 			$con->beginTransaction();
-			$affectedRows += BasePeer::doDeleteAll(IrcIdentityPeer::TABLE_NAME, $con);
+			$affectedRows += BasePeer::doDeleteAll(ChuckwallaIrcIdentityPeer::TABLE_NAME, $con);
 			$con->commit();
 			return $affectedRows;
 		} catch (PropelException $e) {
@@ -735,9 +735,9 @@ $obj2->initialize($this->context);
 	}
 
 	/**
-	 * Method perform a DELETE on the database, given a IrcIdentity or Criteria object OR a primary key value.
+	 * Method perform a DELETE on the database, given a ChuckwallaIrcIdentity or Criteria object OR a primary key value.
 	 *
-	 * @param      mixed $values Criteria or IrcIdentity object or primary key or array of primary keys
+	 * @param      mixed $values Criteria or ChuckwallaIrcIdentity object or primary key or array of primary keys
 	 *              which is used to create the DELETE statement
 	 * @param      PDO $con the connection to use
 	 * @return     int 	The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -748,30 +748,30 @@ $obj2->initialize($this->context);
 	 public static function doDelete($values, PDO $con = null)
 	 {
 		if ($con === null) {
-			$con = Propel::getConnection(IrcIdentityPeer::DATABASE_NAME);
+			$con = Propel::getConnection(ChuckwallaIrcIdentityPeer::DATABASE_NAME);
 		}
 
 		if ($values instanceof Criteria) {
 			// invalidate the cache for all objects of this type, since we have no
 			// way of knowing (without running a query) what objects should be invalidated
 			// from the cache based on this Criteria.
-			IrcIdentityPeer::clearInstancePool();
+			ChuckwallaIrcIdentityPeer::clearInstancePool();
 
 			// rename for clarity
 			$criteria = clone $values;
-		} elseif ($values instanceof IrcIdentity) {
+		} elseif ($values instanceof ChuckwallaIrcIdentity) {
 			// invalidate the cache for this single object
-			IrcIdentityPeer::removeInstanceFromPool($values);
+			ChuckwallaIrcIdentityPeer::removeInstanceFromPool($values);
 			// create criteria based on pk values
 			$criteria = $values->buildPkeyCriteria();
 		} else {
 			// it must be the primary key
 
 			// we can invalidate the cache for this single object
-			IrcIdentityPeer::removeInstanceFromPool($values);
+			ChuckwallaIrcIdentityPeer::removeInstanceFromPool($values);
 
 			$criteria = new Criteria(self::DATABASE_NAME);
-			$criteria->add(IrcIdentityPeer::ID, (array) $values, Criteria::IN);
+			$criteria->add(ChuckwallaIrcIdentityPeer::ID, (array) $values, Criteria::IN);
 		}
 
 		// Set the correct dbName
@@ -786,8 +786,8 @@ $obj2->initialize($this->context);
 			
 			$affectedRows += BasePeer::doDelete($criteria, $con);
 
-			// invalidate objects in NickPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
-			NickPeer::clearInstancePool();
+			// invalidate objects in ChuckwallaNickPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
+			ChuckwallaNickPeer::clearInstancePool();
 
 			$con->commit();
 			return $affectedRows;
@@ -798,24 +798,24 @@ $obj2->initialize($this->context);
 	}
 
 	/**
-	 * Validates all modified columns of given IrcIdentity object.
+	 * Validates all modified columns of given ChuckwallaIrcIdentity object.
 	 * If parameter $columns is either a single column name or an array of column names
 	 * than only those columns are validated.
 	 *
 	 * NOTICE: This does not apply to primary or foreign keys for now.
 	 *
-	 * @param      IrcIdentity $obj The object to validate.
+	 * @param      ChuckwallaIrcIdentity $obj The object to validate.
 	 * @param      mixed $cols Column name or array of column names.
 	 *
 	 * @return     mixed TRUE if all columns are valid or the error message of the first invalid column.
 	 */
-	public static function doValidate(IrcIdentity $obj, $cols = null)
+	public static function doValidate(ChuckwallaIrcIdentity $obj, $cols = null)
 	{
 		$columns = array();
 
 		if ($cols) {
-			$dbMap = Propel::getDatabaseMap(IrcIdentityPeer::DATABASE_NAME);
-			$tableMap = $dbMap->getTable(IrcIdentityPeer::TABLE_NAME);
+			$dbMap = Propel::getDatabaseMap(ChuckwallaIrcIdentityPeer::DATABASE_NAME);
+			$tableMap = $dbMap->getTable(ChuckwallaIrcIdentityPeer::TABLE_NAME);
 
 			if (! is_array($cols)) {
 				$cols = array($cols);
@@ -831,7 +831,7 @@ $obj2->initialize($this->context);
 
 		}
 
-		return BasePeer::doValidate(IrcIdentityPeer::DATABASE_NAME, IrcIdentityPeer::TABLE_NAME, $columns);
+		return BasePeer::doValidate(ChuckwallaIrcIdentityPeer::DATABASE_NAME, ChuckwallaIrcIdentityPeer::TABLE_NAME, $columns);
 	}
 
 	/**
@@ -839,7 +839,7 @@ $obj2->initialize($this->context);
 	 *
 	 * @param      mixed $pk the primary key.
 	 * @param      PDO $con the connection to use
-	 * @return     IrcIdentity
+	 * @return     ChuckwallaIrcIdentity
 	 */
 	public static function retrieveByPK($pk, PDO $con = null)
 	{
@@ -847,12 +847,12 @@ $obj2->initialize($this->context);
 			$con = Propel::getConnection(self::DATABASE_NAME);
 		}
 
-		$criteria = new Criteria(IrcIdentityPeer::DATABASE_NAME);
+		$criteria = new Criteria(ChuckwallaIrcIdentityPeer::DATABASE_NAME);
 
-		$criteria->add(IrcIdentityPeer::ID, $pk);
+		$criteria->add(ChuckwallaIrcIdentityPeer::ID, $pk);
 
 
-		$v = IrcIdentityPeer::doSelect($criteria, $con);
+		$v = ChuckwallaIrcIdentityPeer::doSelect($criteria, $con);
 
 		return !empty($v) > 0 ? $v[0] : null;
 	}
@@ -876,22 +876,22 @@ $obj2->initialize($this->context);
 			$objs = array();
 		} else {
 			$criteria = new Criteria();
-			$criteria->add(IrcIdentityPeer::ID, $pks, Criteria::IN);
-			$objs = IrcIdentityPeer::doSelect($criteria, $con);
+			$criteria->add(ChuckwallaIrcIdentityPeer::ID, $pks, Criteria::IN);
+			$objs = ChuckwallaIrcIdentityPeer::doSelect($criteria, $con);
 		}
 		return $objs;
 	}
 
-} // BaseIrcIdentityPeer
+} // ChuckwallaBaseIrcIdentityPeer
 
 // This is the static code needed to register the MapBuilder for this table with the main Propel class.
 //
-// NOTE: This static code cannot call methods on the IrcIdentityPeer class, because it is not defined yet.
-// If you need to use overridden methods, you can add this code to the bottom of the IrcIdentityPeer class:
+// NOTE: This static code cannot call methods on the ChuckwallaIrcIdentityPeer class, because it is not defined yet.
+// If you need to use overridden methods, you can add this code to the bottom of the ChuckwallaIrcIdentityPeer class:
 //
-// Propel::getDatabaseMap(IrcIdentityPeer::DATABASE_NAME)->addTableBuilder(IrcIdentityPeer::TABLE_NAME, IrcIdentityPeer::getMapBuilder());
+// Propel::getDatabaseMap(ChuckwallaIrcIdentityPeer::DATABASE_NAME)->addTableBuilder(ChuckwallaIrcIdentityPeer::TABLE_NAME, ChuckwallaIrcIdentityPeer::getMapBuilder());
 //
 // Doing so will effectively overwrite the registration below.
 
-Propel::getDatabaseMap(BaseIrcIdentityPeer::DATABASE_NAME)->addTableBuilder(BaseIrcIdentityPeer::TABLE_NAME, BaseIrcIdentityPeer::getMapBuilder());
+Propel::getDatabaseMap(ChuckwallaBaseIrcIdentityPeer::DATABASE_NAME)->addTableBuilder(ChuckwallaBaseIrcIdentityPeer::TABLE_NAME, ChuckwallaBaseIrcIdentityPeer::getMapBuilder());
 
