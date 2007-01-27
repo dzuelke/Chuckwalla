@@ -36,6 +36,48 @@ abstract class ChuckwallaBaseIrcIdentity extends BaseObject implements Persisten
 	 */
 	protected $user_id;
 
+
+	/**
+	 * The value for the ident field.
+	 * @var        string
+	 */
+	protected $ident;
+
+
+	/**
+	 * The value for the realname field.
+	 * @var        string
+	 */
+	protected $realname;
+
+
+	/**
+	 * The value for the host field.
+	 * @var        string
+	 */
+	protected $host;
+
+
+	/**
+	 * The value for the server field.
+	 * @var        string
+	 */
+	protected $server;
+
+
+	/**
+	 * The value for the ircop field.
+	 * @var        boolean
+	 */
+	protected $ircop = true;
+
+
+	/**
+	 * The value for the is_away field.
+	 * @var        boolean
+	 */
+	protected $is_away = true;
+
 	/**
 	 * @var        User
 	 */
@@ -88,6 +130,72 @@ abstract class ChuckwallaBaseIrcIdentity extends BaseObject implements Persisten
 	}
 
 	/**
+	 * Get the [ident] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getIdent()
+	{
+
+		return $this->ident;
+	}
+
+	/**
+	 * Get the [realname] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getRealname()
+	{
+
+		return $this->realname;
+	}
+
+	/**
+	 * Get the [host] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getHost()
+	{
+
+		return $this->host;
+	}
+
+	/**
+	 * Get the [server] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getServer()
+	{
+
+		return $this->server;
+	}
+
+	/**
+	 * Get the [ircop] column value.
+	 * 
+	 * @return     boolean
+	 */
+	public function getIrcop()
+	{
+
+		return $this->ircop;
+	}
+
+	/**
+	 * Get the [is_away] column value.
+	 * 
+	 * @return     boolean
+	 */
+	public function getIsAway()
+	{
+
+		return $this->is_away;
+	}
+
+	/**
 	 * Set the value of [id] column.
 	 * 
 	 * @param      int $v new value
@@ -124,6 +232,102 @@ abstract class ChuckwallaBaseIrcIdentity extends BaseObject implements Persisten
 	} // setUserId()
 
 	/**
+	 * Set the value of [ident] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     void
+	 */
+	public function setIdent($v)
+	{
+
+		if ($this->ident !== $v) {
+			$this->ident = $v;
+			$this->modifiedColumns[] = ChuckwallaIrcIdentityPeer::IDENT;
+		}
+
+	} // setIdent()
+
+	/**
+	 * Set the value of [realname] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     void
+	 */
+	public function setRealname($v)
+	{
+
+		if ($this->realname !== $v) {
+			$this->realname = $v;
+			$this->modifiedColumns[] = ChuckwallaIrcIdentityPeer::REALNAME;
+		}
+
+	} // setRealname()
+
+	/**
+	 * Set the value of [host] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     void
+	 */
+	public function setHost($v)
+	{
+
+		if ($this->host !== $v) {
+			$this->host = $v;
+			$this->modifiedColumns[] = ChuckwallaIrcIdentityPeer::HOST;
+		}
+
+	} // setHost()
+
+	/**
+	 * Set the value of [server] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     void
+	 */
+	public function setServer($v)
+	{
+
+		if ($this->server !== $v) {
+			$this->server = $v;
+			$this->modifiedColumns[] = ChuckwallaIrcIdentityPeer::SERVER;
+		}
+
+	} // setServer()
+
+	/**
+	 * Set the value of [ircop] column.
+	 * 
+	 * @param      boolean $v new value
+	 * @return     void
+	 */
+	public function setIrcop($v)
+	{
+
+		if ($this->ircop !== $v || $v === true) {
+			$this->ircop = $v;
+			$this->modifiedColumns[] = ChuckwallaIrcIdentityPeer::IRCOP;
+		}
+
+	} // setIrcop()
+
+	/**
+	 * Set the value of [is_away] column.
+	 * 
+	 * @param      boolean $v new value
+	 * @return     void
+	 */
+	public function setIsAway($v)
+	{
+
+		if ($this->is_away !== $v || $v === true) {
+			$this->is_away = $v;
+			$this->modifiedColumns[] = ChuckwallaIrcIdentityPeer::IS_AWAY;
+		}
+
+	} // setIsAway()
+
+	/**
 	 * Hydrates (populates) the object variables with values from the database resultset.
 	 *
 	 * An offset (0-based "start column") is specified so that objects can be hydrated
@@ -142,12 +346,18 @@ abstract class ChuckwallaBaseIrcIdentity extends BaseObject implements Persisten
 
 			$this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
 			$this->user_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
+			$this->ident = $row[$startcol + 2];
+			$this->realname = $row[$startcol + 3];
+			$this->host = $row[$startcol + 4];
+			$this->server = $row[$startcol + 5];
+			$this->ircop = ($row[$startcol + 6] !== null) ? (boolean) $row[$startcol + 6] : null;
+			$this->is_away = ($row[$startcol + 7] !== null) ? (boolean) $row[$startcol + 7] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 2; // 2 = ChuckwallaIrcIdentityPeer::NUM_COLUMNS - ChuckwallaIrcIdentityPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 8; // 8 = ChuckwallaIrcIdentityPeer::NUM_COLUMNS - ChuckwallaIrcIdentityPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating IrcIdentity object", $e);
@@ -400,6 +610,24 @@ abstract class ChuckwallaBaseIrcIdentity extends BaseObject implements Persisten
 			case 1:
 				return $this->getUserId();
 				break;
+			case 2:
+				return $this->getIdent();
+				break;
+			case 3:
+				return $this->getRealname();
+				break;
+			case 4:
+				return $this->getHost();
+				break;
+			case 5:
+				return $this->getServer();
+				break;
+			case 6:
+				return $this->getIrcop();
+				break;
+			case 7:
+				return $this->getIsAway();
+				break;
 			default:
 				return null;
 				break;
@@ -422,6 +650,12 @@ abstract class ChuckwallaBaseIrcIdentity extends BaseObject implements Persisten
 		$result = array(
 			$keys[0] => $this->getId(),
 			$keys[1] => $this->getUserId(),
+			$keys[2] => $this->getIdent(),
+			$keys[3] => $this->getRealname(),
+			$keys[4] => $this->getHost(),
+			$keys[5] => $this->getServer(),
+			$keys[6] => $this->getIrcop(),
+			$keys[7] => $this->getIsAway(),
 		);
 		return $result;
 	}
@@ -459,6 +693,24 @@ abstract class ChuckwallaBaseIrcIdentity extends BaseObject implements Persisten
 			case 1:
 				$this->setUserId($value);
 				break;
+			case 2:
+				$this->setIdent($value);
+				break;
+			case 3:
+				$this->setRealname($value);
+				break;
+			case 4:
+				$this->setHost($value);
+				break;
+			case 5:
+				$this->setServer($value);
+				break;
+			case 6:
+				$this->setIrcop($value);
+				break;
+			case 7:
+				$this->setIsAway($value);
+				break;
 		} // switch()
 	}
 
@@ -484,6 +736,12 @@ abstract class ChuckwallaBaseIrcIdentity extends BaseObject implements Persisten
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setUserId($arr[$keys[1]]);
+		if (array_key_exists($keys[2], $arr)) $this->setIdent($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setRealname($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setHost($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setServer($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setIrcop($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setIsAway($arr[$keys[7]]);
 	}
 
 	/**
@@ -497,6 +755,12 @@ abstract class ChuckwallaBaseIrcIdentity extends BaseObject implements Persisten
 
 		if ($this->isColumnModified(ChuckwallaIrcIdentityPeer::ID)) $criteria->add(ChuckwallaIrcIdentityPeer::ID, $this->id);
 		if ($this->isColumnModified(ChuckwallaIrcIdentityPeer::USER_ID)) $criteria->add(ChuckwallaIrcIdentityPeer::USER_ID, $this->user_id);
+		if ($this->isColumnModified(ChuckwallaIrcIdentityPeer::IDENT)) $criteria->add(ChuckwallaIrcIdentityPeer::IDENT, $this->ident);
+		if ($this->isColumnModified(ChuckwallaIrcIdentityPeer::REALNAME)) $criteria->add(ChuckwallaIrcIdentityPeer::REALNAME, $this->realname);
+		if ($this->isColumnModified(ChuckwallaIrcIdentityPeer::HOST)) $criteria->add(ChuckwallaIrcIdentityPeer::HOST, $this->host);
+		if ($this->isColumnModified(ChuckwallaIrcIdentityPeer::SERVER)) $criteria->add(ChuckwallaIrcIdentityPeer::SERVER, $this->server);
+		if ($this->isColumnModified(ChuckwallaIrcIdentityPeer::IRCOP)) $criteria->add(ChuckwallaIrcIdentityPeer::IRCOP, $this->ircop);
+		if ($this->isColumnModified(ChuckwallaIrcIdentityPeer::IS_AWAY)) $criteria->add(ChuckwallaIrcIdentityPeer::IS_AWAY, $this->is_away);
 
 		return $criteria;
 	}
@@ -552,6 +816,18 @@ abstract class ChuckwallaBaseIrcIdentity extends BaseObject implements Persisten
 	{
 
 		$copyObj->setUserId($this->user_id);
+
+		$copyObj->setIdent($this->ident);
+
+		$copyObj->setRealname($this->realname);
+
+		$copyObj->setHost($this->host);
+
+		$copyObj->setServer($this->server);
+
+		$copyObj->setIrcop($this->ircop);
+
+		$copyObj->setIsAway($this->is_away);
 
 
 		if ($deepCopy) {

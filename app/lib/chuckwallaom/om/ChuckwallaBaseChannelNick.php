@@ -36,6 +36,20 @@ abstract class ChuckwallaBaseChannelNick extends BaseObject implements Persisten
 	 */
 	protected $nick_id;
 
+
+	/**
+	 * The value for the voiced field.
+	 * @var        boolean
+	 */
+	protected $voiced = true;
+
+
+	/**
+	 * The value for the opped field.
+	 * @var        boolean
+	 */
+	protected $opped = true;
+
 	/**
 	 * @var        Channel
 	 */
@@ -83,6 +97,28 @@ abstract class ChuckwallaBaseChannelNick extends BaseObject implements Persisten
 	}
 
 	/**
+	 * Get the [voiced] column value.
+	 * 
+	 * @return     boolean
+	 */
+	public function getVoiced()
+	{
+
+		return $this->voiced;
+	}
+
+	/**
+	 * Get the [opped] column value.
+	 * 
+	 * @return     boolean
+	 */
+	public function getOpped()
+	{
+
+		return $this->opped;
+	}
+
+	/**
 	 * Set the value of [channel_id] column.
 	 * 
 	 * @param      int $v new value
@@ -123,6 +159,38 @@ abstract class ChuckwallaBaseChannelNick extends BaseObject implements Persisten
 	} // setNickId()
 
 	/**
+	 * Set the value of [voiced] column.
+	 * 
+	 * @param      boolean $v new value
+	 * @return     void
+	 */
+	public function setVoiced($v)
+	{
+
+		if ($this->voiced !== $v || $v === true) {
+			$this->voiced = $v;
+			$this->modifiedColumns[] = ChuckwallaChannelNickPeer::VOICED;
+		}
+
+	} // setVoiced()
+
+	/**
+	 * Set the value of [opped] column.
+	 * 
+	 * @param      boolean $v new value
+	 * @return     void
+	 */
+	public function setOpped($v)
+	{
+
+		if ($this->opped !== $v || $v === true) {
+			$this->opped = $v;
+			$this->modifiedColumns[] = ChuckwallaChannelNickPeer::OPPED;
+		}
+
+	} // setOpped()
+
+	/**
 	 * Hydrates (populates) the object variables with values from the database resultset.
 	 *
 	 * An offset (0-based "start column") is specified so that objects can be hydrated
@@ -141,12 +209,14 @@ abstract class ChuckwallaBaseChannelNick extends BaseObject implements Persisten
 
 			$this->channel_id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
 			$this->nick_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
+			$this->voiced = ($row[$startcol + 2] !== null) ? (boolean) $row[$startcol + 2] : null;
+			$this->opped = ($row[$startcol + 3] !== null) ? (boolean) $row[$startcol + 3] : null;
 			$this->resetModified();
 
 			$this->setNew(false);
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 2; // 2 = ChuckwallaChannelNickPeer::NUM_COLUMNS - ChuckwallaChannelNickPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 4; // 4 = ChuckwallaChannelNickPeer::NUM_COLUMNS - ChuckwallaChannelNickPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating ChannelNick object", $e);
@@ -394,6 +464,12 @@ abstract class ChuckwallaBaseChannelNick extends BaseObject implements Persisten
 			case 1:
 				return $this->getNickId();
 				break;
+			case 2:
+				return $this->getVoiced();
+				break;
+			case 3:
+				return $this->getOpped();
+				break;
 			default:
 				return null;
 				break;
@@ -416,6 +492,8 @@ abstract class ChuckwallaBaseChannelNick extends BaseObject implements Persisten
 		$result = array(
 			$keys[0] => $this->getChannelId(),
 			$keys[1] => $this->getNickId(),
+			$keys[2] => $this->getVoiced(),
+			$keys[3] => $this->getOpped(),
 		);
 		return $result;
 	}
@@ -453,6 +531,12 @@ abstract class ChuckwallaBaseChannelNick extends BaseObject implements Persisten
 			case 1:
 				$this->setNickId($value);
 				break;
+			case 2:
+				$this->setVoiced($value);
+				break;
+			case 3:
+				$this->setOpped($value);
+				break;
 		} // switch()
 	}
 
@@ -478,6 +562,8 @@ abstract class ChuckwallaBaseChannelNick extends BaseObject implements Persisten
 
 		if (array_key_exists($keys[0], $arr)) $this->setChannelId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setNickId($arr[$keys[1]]);
+		if (array_key_exists($keys[2], $arr)) $this->setVoiced($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setOpped($arr[$keys[3]]);
 	}
 
 	/**
@@ -491,6 +577,8 @@ abstract class ChuckwallaBaseChannelNick extends BaseObject implements Persisten
 
 		if ($this->isColumnModified(ChuckwallaChannelNickPeer::CHANNEL_ID)) $criteria->add(ChuckwallaChannelNickPeer::CHANNEL_ID, $this->channel_id);
 		if ($this->isColumnModified(ChuckwallaChannelNickPeer::NICK_ID)) $criteria->add(ChuckwallaChannelNickPeer::NICK_ID, $this->nick_id);
+		if ($this->isColumnModified(ChuckwallaChannelNickPeer::VOICED)) $criteria->add(ChuckwallaChannelNickPeer::VOICED, $this->voiced);
+		if ($this->isColumnModified(ChuckwallaChannelNickPeer::OPPED)) $criteria->add(ChuckwallaChannelNickPeer::OPPED, $this->opped);
 
 		return $criteria;
 	}
@@ -556,6 +644,10 @@ abstract class ChuckwallaBaseChannelNick extends BaseObject implements Persisten
 	 */
 	public function copyInto($copyObj, $deepCopy = false)
 	{
+
+		$copyObj->setVoiced($this->voiced);
+
+		$copyObj->setOpped($this->opped);
 
 
 		$copyObj->setNew(true);

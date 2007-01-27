@@ -36,7 +36,7 @@ class ChuckwallaChannelPeer extends ChuckwallaBaseChannelPeer {
 
 		$criteria->add(ChuckwallaChannelPeer::NAME, $name);
 
-		$v = ChuckwallaChannelPeer::doSelect($criteria);
+		$v = $this->getContext()->getModel('ChuckwallaChannelPeer')->doSelect($criteria);
 
 		if(empty($v)) {
 			$channel = $this->getContext()->getModel('ChuckwallaChannel');

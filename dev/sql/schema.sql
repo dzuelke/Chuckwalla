@@ -29,6 +29,8 @@ CREATE TABLE `channel_nick`
 (
 	`channel_id` INTEGER  NOT NULL,
 	`nick_id` INTEGER  NOT NULL,
+	`voiced` INTEGER default 0,
+	`opped` INTEGER default 0,
 	PRIMARY KEY (`channel_id`,`nick_id`),
 	CONSTRAINT `channel_nick_FK_1`
 		FOREIGN KEY (`channel_id`)
@@ -52,6 +54,12 @@ CREATE TABLE `irc_identity`
 (
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
 	`user_id` INTEGER,
+	`ident` VARCHAR(255),
+	`realname` VARCHAR(255),
+	`host` VARCHAR(255),
+	`server` VARCHAR(255),
+	`ircop` INTEGER default 0,
+	`is_away` INTEGER default 0,
 	PRIMARY KEY (`id`),
 	INDEX `irc_identity_FI_1` (`user_id`),
 	CONSTRAINT `irc_identity_FK_1`

@@ -24,7 +24,7 @@ abstract class ChuckwallaBaseChannelNickPeer implements AgaviISingletonModel {
 	const CLASS_DEFAULT = 'chuckwallaom.ChuckwallaChannelNick';
 
 	/** The total number of columns. */
-	const NUM_COLUMNS = 2;
+	const NUM_COLUMNS = 4;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -35,6 +35,12 @@ abstract class ChuckwallaBaseChannelNickPeer implements AgaviISingletonModel {
 
 	/** the column name for the NICK_ID field */
 	const NICK_ID = 'channel_nick.NICK_ID';
+
+	/** the column name for the VOICED field */
+	const VOICED = 'channel_nick.VOICED';
+
+	/** the column name for the OPPED field */
+	const OPPED = 'channel_nick.OPPED';
 
 	/**
 	 * An identiy map to hold any loaded instances of ChuckwallaChannelNick objects.
@@ -57,10 +63,10 @@ abstract class ChuckwallaBaseChannelNickPeer implements AgaviISingletonModel {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('ChannelId', 'NickId', ),
-		BasePeer::TYPE_COLNAME => array (self::CHANNEL_ID, self::NICK_ID, ),
-		BasePeer::TYPE_FIELDNAME => array ('channel_id', 'nick_id', ),
-		BasePeer::TYPE_NUM => array (0, 1, )
+		BasePeer::TYPE_PHPNAME => array ('ChannelId', 'NickId', 'Voiced', 'Opped', ),
+		BasePeer::TYPE_COLNAME => array (self::CHANNEL_ID, self::NICK_ID, self::VOICED, self::OPPED, ),
+		BasePeer::TYPE_FIELDNAME => array ('channel_id', 'nick_id', 'voiced', 'opped', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
 	);
 
 	/**
@@ -70,10 +76,10 @@ abstract class ChuckwallaBaseChannelNickPeer implements AgaviISingletonModel {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('ChannelId' => 0, 'NickId' => 1, ),
-		BasePeer::TYPE_COLNAME => array (self::CHANNEL_ID => 0, self::NICK_ID => 1, ),
-		BasePeer::TYPE_FIELDNAME => array ('channel_id' => 0, 'nick_id' => 1, ),
-		BasePeer::TYPE_NUM => array (0, 1, )
+		BasePeer::TYPE_PHPNAME => array ('ChannelId' => 0, 'NickId' => 1, 'Voiced' => 2, 'Opped' => 3, ),
+		BasePeer::TYPE_COLNAME => array (self::CHANNEL_ID => 0, self::NICK_ID => 1, self::VOICED => 2, self::OPPED => 3, ),
+		BasePeer::TYPE_FIELDNAME => array ('channel_id' => 0, 'nick_id' => 1, 'voiced' => 2, 'opped' => 3, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
 	);
 
 	/**
@@ -158,6 +164,10 @@ abstract class ChuckwallaBaseChannelNickPeer implements AgaviISingletonModel {
 		$criteria->addSelectColumn(ChuckwallaChannelNickPeer::CHANNEL_ID);
 
 		$criteria->addSelectColumn(ChuckwallaChannelNickPeer::NICK_ID);
+
+		$criteria->addSelectColumn(ChuckwallaChannelNickPeer::VOICED);
+
+		$criteria->addSelectColumn(ChuckwallaChannelNickPeer::OPPED);
 
 	}
 

@@ -35,7 +35,7 @@ class ChuckwallaNickPeer extends ChuckwallaBaseNickPeer {
 
 		$criteria->add(ChuckwallaNickPeer::NICK, $name);
 
-		$v = ChuckwallaNickPeer::doSelect($criteria);
+		$v = $this->getContext()->getModel('ChuckwallaNickPeer')->doSelect($criteria);
 
 		if(empty($v)) {
 			$nick = $this->getContext()->getModel('ChuckwallaNick');

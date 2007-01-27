@@ -24,7 +24,7 @@ abstract class ChuckwallaBaseIrcIdentityPeer implements AgaviISingletonModel {
 	const CLASS_DEFAULT = 'chuckwallaom.ChuckwallaIrcIdentity';
 
 	/** The total number of columns. */
-	const NUM_COLUMNS = 2;
+	const NUM_COLUMNS = 8;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -35,6 +35,24 @@ abstract class ChuckwallaBaseIrcIdentityPeer implements AgaviISingletonModel {
 
 	/** the column name for the USER_ID field */
 	const USER_ID = 'irc_identity.USER_ID';
+
+	/** the column name for the IDENT field */
+	const IDENT = 'irc_identity.IDENT';
+
+	/** the column name for the REALNAME field */
+	const REALNAME = 'irc_identity.REALNAME';
+
+	/** the column name for the HOST field */
+	const HOST = 'irc_identity.HOST';
+
+	/** the column name for the SERVER field */
+	const SERVER = 'irc_identity.SERVER';
+
+	/** the column name for the IRCOP field */
+	const IRCOP = 'irc_identity.IRCOP';
+
+	/** the column name for the IS_AWAY field */
+	const IS_AWAY = 'irc_identity.IS_AWAY';
 
 	/**
 	 * An identiy map to hold any loaded instances of ChuckwallaIrcIdentity objects.
@@ -57,10 +75,10 @@ abstract class ChuckwallaBaseIrcIdentityPeer implements AgaviISingletonModel {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'UserId', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::USER_ID, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'user_id', ),
-		BasePeer::TYPE_NUM => array (0, 1, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'UserId', 'Ident', 'Realname', 'Host', 'Server', 'Ircop', 'IsAway', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::USER_ID, self::IDENT, self::REALNAME, self::HOST, self::SERVER, self::IRCOP, self::IS_AWAY, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'user_id', 'ident', 'realname', 'host', 'server', 'ircop', 'is_away', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, )
 	);
 
 	/**
@@ -70,10 +88,10 @@ abstract class ChuckwallaBaseIrcIdentityPeer implements AgaviISingletonModel {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'UserId' => 1, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::USER_ID => 1, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'user_id' => 1, ),
-		BasePeer::TYPE_NUM => array (0, 1, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'UserId' => 1, 'Ident' => 2, 'Realname' => 3, 'Host' => 4, 'Server' => 5, 'Ircop' => 6, 'IsAway' => 7, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::USER_ID => 1, self::IDENT => 2, self::REALNAME => 3, self::HOST => 4, self::SERVER => 5, self::IRCOP => 6, self::IS_AWAY => 7, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'user_id' => 1, 'ident' => 2, 'realname' => 3, 'host' => 4, 'server' => 5, 'ircop' => 6, 'is_away' => 7, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, )
 	);
 
 	/**
@@ -158,6 +176,18 @@ abstract class ChuckwallaBaseIrcIdentityPeer implements AgaviISingletonModel {
 		$criteria->addSelectColumn(ChuckwallaIrcIdentityPeer::ID);
 
 		$criteria->addSelectColumn(ChuckwallaIrcIdentityPeer::USER_ID);
+
+		$criteria->addSelectColumn(ChuckwallaIrcIdentityPeer::IDENT);
+
+		$criteria->addSelectColumn(ChuckwallaIrcIdentityPeer::REALNAME);
+
+		$criteria->addSelectColumn(ChuckwallaIrcIdentityPeer::HOST);
+
+		$criteria->addSelectColumn(ChuckwallaIrcIdentityPeer::SERVER);
+
+		$criteria->addSelectColumn(ChuckwallaIrcIdentityPeer::IRCOP);
+
+		$criteria->addSelectColumn(ChuckwallaIrcIdentityPeer::IS_AWAY);
 
 	}
 

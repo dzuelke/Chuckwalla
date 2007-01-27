@@ -20,4 +20,23 @@ require 'chuckwallaom/om/ChuckwallaBaseNick.php';
  */
 class ChuckwallaNick extends ChuckwallaBaseNick {
 
+	public function getChannelNicks($criteria = null, PDO $con = null)
+	{
+		// make sure propel knows the context
+		$this->getContext()->getModel('ChuckwallaNickPeer');
+		$this->getContext()->getModel('ChuckwallaChannelNickPeer');
+
+		return parent::getChannelNicks($criteria, $con);
+	}
+
+	public function getOrCreateIrcIdentity()
+	{
+		$identity = $this->getIrcIdentity();
+		if(!$identity) {
+			$identity = $this->getContext()->getModel('ChuckwallaIrcIdentity');
+			$this->setIrcIdentity($identity);
+		}
+		return $identity;
+	}
+
 } // ChuckwallaNick
