@@ -2,10 +2,11 @@
 #header {
 	position: absolute;
 	top: 0px;
-	height: 5em;
+	height: 4.8em;
 	width: 100%;
 	background:#FFFFFF url(../images/carpet.gif) scroll left bottom;
-	text-align:left;	
+	text-align:left;
+	border-bottom: 0.1em solid #787878;
 }
 /* End Header */
 
@@ -113,5 +114,6 @@
 	display:block;
 	width: 100%;
 	border-top: 0.1em solid #787878;
+	background:#FFFFFF url(../images/carpet.gif) scroll left bottom;
 }
 /* End Footer */
