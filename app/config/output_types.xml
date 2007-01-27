@@ -51,6 +51,20 @@
 				<parameter name="build_json_response">true</parameter>
 			</output_type>
 
+			<output_type name="atom">
+				<xi:include href="#xpointer(//configurations/configuration[@context='web']/output_types/output_type[@name='html']/renderers)" />
+				<layouts default="standard">
+					<layout name="standard">
+						<layers>
+							<layer name="content" class="AgaviFileTemplateLayer">
+								<parameter name="extension">.atom.php</parameter>
+							</layer>
+						</layers>
+					</layout>
+				</layouts>
+				<parameter name="Content-Type">application/atom+xml; charset=UTF-8</parameter>
+			</output_type>
+
 		</output_types>
 	</configuration>
 
