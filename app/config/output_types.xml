@@ -30,7 +30,26 @@
 			</output_type>
 
 			<output_type name="json">
+				<renderers default="php">
+					<renderer name="php" class="AgaviPhpRenderer">
+						<parameter name="assigns">
+							<parameter name="routing">ro</parameter>
+							<parameter name="request">rq</parameter>
+							<parameter name="controller">ct</parameter>
+							<parameter name="user">us</parameter>
+							<parameter name="translation_manager">tm</parameter>
+						</parameter>
+					</renderer>
+				</renderers>
+				<layouts default="standard">
+					<layout name="standard">
+						<layers>
+							<layer name="content" class="AgaviFileTemplateLayer" />
+						</layers>
+					</layout>
+				</layouts>
 				<parameter name="Content-Type">text/javascript; charset=UTF-8</parameter>
+				<parameter name="build_json_response">true</parameter>
 			</output_type>
 
 		</output_types>

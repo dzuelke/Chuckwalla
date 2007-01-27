@@ -19,7 +19,7 @@
 		
 		<request class="AgaviWebRequest" />
 		
-		<response class="AgaviWebResponse" />
+		<response class="ChuckwallaWebResponse" />
 		
 		<routing class="AgaviWebRouting" />
 		
