@@ -2,16 +2,16 @@
 
 abstract class ChuckwallaBaseUserPeer implements AgaviISingletonModel {
 	
-	protected $context = null;
+	protected static $context = null;
 	
 	public function initialize(AgaviContext $context, array $parameters = array())
 	{
-		$this->context = $context;
+		self::$context = $context;
 	}
 	
 	public function getContext()
 	{
-		return $this->context;
+		return self::$context;
 	}
 
 	/** the default database name for this class */
@@ -415,7 +415,7 @@ abstract class ChuckwallaBaseUserPeer implements AgaviISingletonModel {
 			} else {
 		
 			$obj = new $cls();
-$obj->initialize($this->context);
+$obj->initialize(self::$context);
 
 				$obj->hydrate($row);
 				$results[] = $obj;

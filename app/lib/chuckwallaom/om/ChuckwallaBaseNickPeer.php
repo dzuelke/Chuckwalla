@@ -2,16 +2,16 @@
 
 abstract class ChuckwallaBaseNickPeer implements AgaviISingletonModel {
 	
-	protected $context = null;
+	protected static $context = null;
 	
 	public function initialize(AgaviContext $context, array $parameters = array())
 	{
-		$this->context = $context;
+		self::$context = $context;
 	}
 	
 	public function getContext()
 	{
-		return $this->context;
+		return self::$context;
 	}
 
 	/** the default database name for this class */
@@ -390,7 +390,7 @@ abstract class ChuckwallaBaseNickPeer implements AgaviISingletonModel {
 			} else {
 		
 			$obj = new $cls();
-$obj->initialize($this->context);
+$obj->initialize(self::$context);
 
 				$obj->hydrate($row);
 				$results[] = $obj;
@@ -475,7 +475,7 @@ $obj->initialize($this->context);
 
 				$cls = substr($omClass, strrpos($omClass, '.') + 1);
 				$obj1 = new $cls();
-$obj1->initialize($this->context);
+$obj1->initialize(self::$context);
 
 				$obj1->hydrate($row);
 				// print "->Adding " . get_class($obj1) . " " . $obj1 . " into instance pool.\n";
@@ -490,7 +490,7 @@ $obj1->initialize($this->context);
 
 				$cls = substr($omClass, strrpos($omClass, '.') + 1);
 				$obj2 = new $cls();
-$obj2->initialize($this->context);
+$obj2->initialize(self::$context);
 
 				$obj2->hydrate($row, $startcol);
 				ChuckwallaIrcIdentityPeer::addInstanceToPool($obj2); // FIXME, we should optimize this since we already calculated the key above
@@ -581,7 +581,7 @@ $obj2->initialize($this->context);
 
 				$cls = substr($omClass, strrpos($omClass, '.') + 1);
 				$obj1 = new $cls();
-$obj1->initialize($this->context);
+$obj1->initialize(self::$context);
 
 				$obj1->hydrate($row);
 				// print "->Adding " . get_class($obj1) . " " . $obj1 . " into instance pool.\n";
@@ -600,7 +600,7 @@ $obj1->initialize($this->context);
 
 				$cls = substr($omClass, strrpos($omClass, '.') + 1);
 				$obj2 = new $cls();
-$obj2->initialize($this->context);
+$obj2->initialize(self::$context);
 
 				$obj2->hydrate($row, $startcol2);
 				ChuckwallaIrcIdentityPeer::addInstanceToPool($obj2); // FIXME - Optimize: we already know the key
