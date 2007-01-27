@@ -2,8 +2,8 @@
 <configurations>
 	<configuration>
 		<autoloads>
-			<autoload name="ChuckwallaWebBaseAction" file="%core.module_dir%/Web/lib/action/ChuckwallaWebBaseAction.class.php" />
-			<autoload name="ChuckwallaWebBaseView" file="%core.module_dir%/Web/lib/view/ChuckwallaWebBaseView.class.php" />
+			<autoload name="ChuckwallaWebBaseAction">%core.module_dir%/Web/lib/action/ChuckwallaWebBaseAction.class.php</autoload>
+			<autoload name="ChuckwallaWebBaseView">%core.module_dir%/Web/lib/view/ChuckwallaWebBaseView.class.php</autoload>
 		</autoloads>
 	</configuration>
 </configurations>
