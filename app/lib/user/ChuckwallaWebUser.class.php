@@ -1,6 +1,6 @@
 <?php
 
-class ChuckwallaWebBaseUser extends ChuckwallaBaseUser
+class ChuckwallaWebUser extends ChuckwallaBaseUser
 {
 	public function startup()
 	{
