@@ -1,6 +1,6 @@
 <?php
 
-$old = error_reporting(E_ALL ^ E_STRICT);
+$old = error_reporting(E_ALL & !E_STRICT);
 
 require('Net/SmartIRC.php');
 
