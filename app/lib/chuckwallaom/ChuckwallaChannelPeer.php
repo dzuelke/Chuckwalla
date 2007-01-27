@@ -20,4 +20,33 @@ require 'chuckwallaom/om/ChuckwallaBaseChannelPeer.php';
  */
 class ChuckwallaChannelPeer extends ChuckwallaBaseChannelPeer {
 
+	/**
+	 * Retrieve a channel by its name. A new channel object is created and 
+	 * returned when it doesn't exist in the database yet. Note that the new
+	 * object is returned in an unsaved state, so before getting an id you need
+	 * to save it.
+	 * 
+	 *
+	 * @param      string The name of the channel.
+	 * @return     Channel
+	 */
+	public function retrieveOrCreateByName($name)
+	{
+		$criteria = new Criteria(ChuckwallaChannelPeer::DATABASE_NAME);
+
+		$criteria->add(ChuckwallaChannelPeer::NAME, $name);
+
+		$v = ChuckwallaChannelPeer::doSelect($criteria);
+
+		if(empty($v)) {
+			$channel = $this->getContext()->getModel('ChuckwallaChannel');
+			$channel->setName($name);
+			$channel->setTopic('');
+		} else {
+			$channel = $v[0];
+		}
+
+		return $channel;
+	}
+
 } // ChuckwallaChannelPeer
