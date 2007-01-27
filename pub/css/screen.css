@@ -7,11 +7,13 @@
 	background:#FFFFFF url(../images/carpet.gif) scroll left bottom;
 	text-align:left;
 	border-bottom: 0.1em solid #787878;
+	z-index: 10;
 }
 
 #menu {
 	float: right;
 	z-index: 10;
+	position: relative;
 }
 #menu ul {
 	font-size:0.8em;
@@ -89,6 +91,7 @@
 /* Room Title Block */
 #roomTitle {
 	position:absolute;
+	z-index: 10;
 	top:0em;
 	height: 1.2em;
 	left:0em;
@@ -184,6 +187,10 @@
 /* End Footer */
 
 /* Forms */
+form {
+	padding: 1em;
+}
+
 fieldset {
 	clear:	 both;
 	border:	 none;

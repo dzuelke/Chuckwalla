@@ -13,7 +13,7 @@
 <dt><label for="remember">Remember Me</label></dt>
 <dd><input type="checkbox" name="remember" id="remember" /></dd>
 </dl>
-<div class='login'>
+<div class='submit'>
 	<input type="submit" name="login" id="login" value="login" />
 </div>
 </fieldset>
