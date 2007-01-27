@@ -1944,7 +1944,7 @@ class Net_SmartIRC_base
         $found = false;
         
         if (is_numeric($messagecode)) {
-            if (!(is_array($this->nreplycodes) || is_object($this->nreplycodes)) || !array_key_exists($messagecode, $this->nreplycodes)) {
+            if (!array_key_exists($messagecode, $this->nreplycodes)) {
                 $this->log(SMARTIRC_DEBUG_MESSAGEHANDLER, 'DEBUG_MESSAGEHANDLER: ignoring unreconzied messagecode! "'.$messagecode.'"', __FILE__, __LINE__);
                 $this->log(SMARTIRC_DEBUG_MESSAGEHANDLER, 'DEBUG_MESSAGEHANDLER: this IRC server ('.$this->_address.') doesn\'t conform to the RFC 2812!', __FILE__, __LINE__);
                 return;
