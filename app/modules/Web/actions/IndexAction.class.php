@@ -35,10 +35,11 @@ class Web_IndexAction extends AgaviAction
 	 * execute*() being present, e.g. for a "write" Request, validateWrite() will
 	 * be run even if there is no executeWrite() method.
 	 */
-//	public function execute(AgaviRequestDataHolder $rd)
-//	{
-//		return 'Success';
-//	}
+	public function execute(AgaviRequestDataHolder $rd)
+	{
+		$b = new ChuckwallaUser();
+		return 'Success';
+	}
 
 	/**
 	 * This method returns the View name in case the Action doesn't serve the

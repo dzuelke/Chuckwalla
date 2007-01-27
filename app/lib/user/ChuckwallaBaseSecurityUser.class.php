@@ -1,6 +1,6 @@
 <?php
 
-class ChuckwallaBaseUser extends AgaviSecurityUser
+class ChuckwallaBaseSecurityUser extends AgaviSecurityUser
 {
 	public function login($email, $password)
 	{

@@ -4,7 +4,7 @@
 		<autoloads>
 			<autoload name="ChuckwallaBaseAction">%core.lib_dir%/action/ChuckwallaBaseAction.class.php</autoload>
 			<autoload name="ChuckwallaBaseModel">%core.lib_dir%/model/ChuckwallaBaseModel.class.php</autoload>
-			<autoload name="ChuckwallaBaseUser">%core.lib_dir%/user/ChuckwallaBaseUser.class.php</autoload>
+			<autoload name="ChuckwallaBaseSecurityUser">%core.lib_dir%/user/ChuckwallaBaseSecurityUser.class.php</autoload>
 			<autoload name="ChuckwallaBaseView">%core.lib_dir%/view/ChuckwallaBaseView.class.php</autoload>
 			
 			<autoload name="ChuckwallaIrcbotController">%core.lib_dir%/controller/ChuckwallaIrcbotController.class.php</autoload>

@@ -63,7 +63,7 @@
 		
 		<translation_manager class="AgaviTranslationManager" />
 		
-		<user class="ChuckwallaBaseUser" />
+		<user class="ChuckwallaBaseSecurityUser" />
 		
 		<validation_manager class="AgaviValidationManager" />
 		
