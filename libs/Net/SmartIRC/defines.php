@@ -231,4 +231,6 @@ foreach ($SMARTIRC_replycodes as $key => $value) {
     define('SMARTIRC_'.$key, $value);
     $SMARTIRC_nreplycodes[$value] = $key;
 }
+$GLOBALS['SMARTIRC_replycodes'] = $SMARTIRC_replycodes;
+$GLOBALS['SMARTIRC_nreplycodes'] = $SMARTIRC_nreplycodes;
 ?>
