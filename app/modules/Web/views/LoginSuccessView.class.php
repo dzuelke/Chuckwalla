@@ -19,7 +19,7 @@ class Web_LoginSuccessView extends ChuckwallaWebBaseView
 			$this->getResponse()->setRedirect($usr->removeAttribute('redirect', 'org.agavi.Chuckwalla.login'));
 			return;
 		}
-
+		$this->setAttribute('_title', 'Chuckwalla Bot');
 	}
 }
 

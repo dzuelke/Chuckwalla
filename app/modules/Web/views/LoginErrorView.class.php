@@ -6,6 +6,7 @@ class Web_LoginErrorView extends ChuckwallaWebBaseView
 	{
 		parent::setupHtml($rd);
 		$this->getLayer('content')->setTemplate('LoginInput');
+		$this->setAttribute('_title', 'Chuckwalla Bot');
 	}
 }
 

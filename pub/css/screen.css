@@ -2,7 +2,7 @@
 #header {
 	position: absolute;
 	top: 0px;
-	height: 4.8em;
+	height: 4.9em;
 	width: 100%;
 	background:#FFFFFF url(../images/carpet.gif) scroll left bottom;
 	text-align:left;
@@ -71,7 +71,8 @@
 	top:0em;
 	bottom:2em;
 	left:0em;
-	width:10em;
+	width:9.9em;
+	border-right: 0.1em solid;
 }
 
 #sidebar .channel { 
@@ -88,9 +89,9 @@
 /* Room Title Block */
 #roomTitle {
 	position:absolute;
-	top:0px;
+	top:0em;
 	height: 1.2em;
-	left:9em;
+	left:0em;
 	right: 0em;
 	overflow: hidden; 
 	padding: 0.1em;
@@ -113,7 +114,7 @@
 /* Center / Core */
 #core {
 	position: absolute;
-	top: 1.4em;
+	top: 0em;
 	bottom: 2em;
 	left: 10em;
 	right: 0em;
@@ -122,22 +123,30 @@
 /* End Center / Core */
 
 /* Messages Block */
-
-.messages dl { 
+#messages {
+	position: absolute;
+	top: 1.9em;
+	bottom: 2em;
+	left: 0em;
+	right: 0em;
+	overflow:auto;	
+}
+#messages dl { 
 	display: block;  
-	border-bottom: 0.05em solid;
+	border-bottom: 0.06em solid;
 	overflow: auto;
+	min-height: 1.1em;
 }
 
-.messages dt { float: left;}
-.messages dd { 
+#messages dt { float: left;}
+#messages dd { 
 	float: left;
 	width:84%; 
 	padding-left: 1%;
 }
-.messages dt.timestamp { width: 5%; }
-.messages dt.name { width: 10%; overflow: hidden;}
-.messages.name:after { content: ': '; }
+#messages dt.timestamp { width: 5%; }
+#messages dt.name { width: 10%; overflow: hidden;}
+#messages .name:after { content: ': '; }
 /* End Messages Block */
 
 /* Logo */

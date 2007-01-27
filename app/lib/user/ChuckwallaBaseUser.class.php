@@ -4,6 +4,7 @@ class ChuckwallaBaseUser extends AgaviSecurityUser
 {
 	public function login($email, $password)
 	{
+		return false;
 		$c = new Criteria();
 		$c->add(ChuckwallaUserPeer::EMAIL, $email);
 		$c->add(ChuckwallaUserPeer::PASSWORD, md5($password));

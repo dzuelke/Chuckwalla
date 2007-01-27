@@ -6,6 +6,7 @@ class Web_HeadersSuccessView extends ChuckwallaWebBaseView
 	{
 		parent::setupHtml($rd);
 		$this->loadLayout('slot');
+		$this->setAttribute('_title', 'Chuckwalla Bot');
 	}
 }
 
