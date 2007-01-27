@@ -11,6 +11,8 @@
 			<autoload name="ChuckwallaIrcbotRequest">%core.lib_dir%/request/ChuckwallaIrcbotRequest.class.php</autoload>
 			<autoload name="ChuckwallaIrcbotResponse">%core.lib_dir%/response/ChuckwallaIrcbotResponse.class.php</autoload>
 			<autoload name="ChuckwallaIrcbotRouting">%core.lib_dir%/routing/ChuckwallaIrcbotRouting.class.php</autoload>
+			
+			<autoload name="Net_SmartIRC">%core.libs_dir%/Net_SmartIRC.loader.php</autoload>
 		</autoloads>
 	</configuration>
 </configurations>

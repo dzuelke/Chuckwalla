@@ -53,4 +53,8 @@ AgaviConfig::set('core.app_dir', dirname(__FILE__));
 // |  - core.template_dir (defaults to "<core.app_dir>/templates")             |
 // +---------------------------------------------------------------------------+
 
+AgaviConfig::set('core.libs_dir', realpath(dirname(__FILE__) . '/../libs'));
+
+set_include_path(AgaviConfig::get('core.libs_dir') . PATH_SEPARATOR . get_include_path());
+
 ?>
