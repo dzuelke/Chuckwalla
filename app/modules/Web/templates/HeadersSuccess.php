@@ -1,5 +1,4 @@
-<?php $headerInfo = $t['headerInfo']; ?>
-<h1 class="siteHeader"><?php echo $headerInfo['title']; ?> Agavi</h1>
+<h1 class="siteHeader"><?php echo AgaviConfig::get('core.app_name'); ?></h1>
 <div>
 <div id="menu">
 <ul>

@@ -19,7 +19,10 @@
 				Event.observe(toggleHeader, 'click', function (e) { toggleItem.toggle(); el.toggleClassName('toggleNames');})
 			 });
 			// Toggle Room Titles
-			Event.observe($('roomTitle'), 'click', function  (e) {Event.element(e).toggleClassName('fullview');});
+			if ($('roomTitle'))
+				Event.observe($('roomTitle'), 'click', function  (e) {Event.element(e).toggleClassName('fullview');});
+			// Lets highlight all flash messages
+			document.getElementsByClassName('flash').each( function (el) { new Effect.Highlight(el,{duration: 1});});
 		}
 	</script>
 </head>

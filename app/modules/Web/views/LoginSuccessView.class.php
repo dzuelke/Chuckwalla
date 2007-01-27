@@ -11,7 +11,7 @@ class Web_LoginSuccessView extends ChuckwallaWebBaseView
 
 		// set the autologon cookie if requested
 		if($rd->hasParameter('remember')) {
-			$res->setCookie('autologon[username]', $rd->getParameter('username'), 60*60*24*14);
+			$res->setCookie('autologon[email]', $rd->getParameter('email'), 60*60*24*14);
 			$res->setCookie('autologon[password]', $rd->getParameter('password'), 60*60*24*14);
 		}
 

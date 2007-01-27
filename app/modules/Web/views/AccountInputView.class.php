@@ -6,6 +6,11 @@ class Web_AccountInputView extends ChuckwallaWebBaseView
 	{
 		parent::setupHtml($rd);
 		$this->setAttribute('_title', 'Chuckwalla Bot');
+		
+		$user = $this->getContext()->getUser()->getPropelUser();
+		$this->setAttribute('user', $user);
+		$updated = ($rd->getParameter('updated')) ? true : false;
+		$this->setAttribute('updated', $updated);
 	}
 }
 

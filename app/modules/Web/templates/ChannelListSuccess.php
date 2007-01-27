@@ -5,7 +5,7 @@
 		<?php if ($channel->number_of_members > 1) : ?>s<?php endif;?> 
 		<dl class="members toggleItem">
 			<?php foreach ($channel->users as $user): ?>
-			<dd id="<?php echo $channel_name.'_'.$user->name; ?>" class="user"><?php echo $user->name;?></dd>
+			<dd id="<?php echo $channel->name.'_'.$user->name; ?>" class="user"><?php echo $user->name;?></dd>
 			<?php endforeach;?>
 		</dl>
 	</dd>
