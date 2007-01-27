@@ -13,6 +13,12 @@ class ChuckwallaWebBaseView extends ChuckwallaBaseView
 		// layout "standard" in output type "json"
 		$this->loadLayout('standard');
 	}
+	
+	public function setupAtom(AgaviRequestDataHolder $rd)
+	{
+		// layout "standard" in output type "atom"
+		$this->loadLayout('standard');
+	}
 }
 
 ?>
