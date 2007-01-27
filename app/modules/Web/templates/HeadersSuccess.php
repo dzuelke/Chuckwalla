@@ -3,9 +3,13 @@
 <div>
 <div id="menu">
 <ul>
-	<li><a href="<?php echo $ro->gen('login'); ?>">Logout</a></li>
-	<li><a href="#">User Prefs</a></li>
-	<li><a href="#">Messages 2</a></li>
+	<?php if(!$us->isAuthenticated()): ?>
+		<li><a href="<?php echo $ro->gen('login'); ?>">Login</a></li>
+	<?php else: ?>
+		<li><a href="#">Messages 2</a></li>
+		<li><a href="<?php echo $ro->gen('account'); ?>">Account Management</a></li>
+		<li><a href="<?php echo $ro->gen('login').'/logout'; ?>">Logout</a></li>
+	<?php endif; ?>
 </ul>
 </div>
 </div>

@@ -1,11 +1,10 @@
 <?php
 
-class Web_LoginInputView extends ChuckwallaWebBaseView
+class Web_AccountInputView extends ChuckwallaWebBaseView
 {
 	public function executeHtml(AgaviRequestDataHolder $rd)
 	{
 		parent::setupHtml($rd);
-
 	}
 }
 

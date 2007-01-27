@@ -210,10 +210,10 @@ label.error {
 	color:	 #D00;
 	font-weight:	 bold;
 }
-.login {
+.submit {
 	clear: both;
 }
-.login input {
+.submit input {
 	width: 10em;
 	margin-left: 14em;
 }

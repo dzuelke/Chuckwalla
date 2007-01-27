@@ -31,7 +31,7 @@
 		<div id="sidebar">
 			<?php echo $slots['sidebar']; ?>
 		</div>
-		<div id="core" class="<?php echo $t['coreClass']; ?>">
+		<div id="core" class="<?php echo (array_key_exists('coreClass', $t)) ? $t['coreClass'] : 'content' ;?>">
 			<?php echo $slots['content']; ?>
 		</div>
 	</div>
