@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <configurations>
-	<configuration>
+	<configuration context="web">
 		<routes>
-			<!-- this shows the welcome page after creating a project. remove it once you're done admiring it's shininess. -->
-			<route pattern="" module="%actions.default_module%" action="WelcomeToAgavi" />
+			
+			<!-- if requested via Prototype, we send back JSON instead of HTML -->
+			<route pattern="^XMLHttpRequest$" source="_SERVER[HTTP_X_REQUESTED_WITH]" output_type="json" />
 			
 			<route pattern="^/$" module="%actions.default_module%" action="%actions.default_action%" />
 		</routes>
