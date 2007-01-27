@@ -19,5 +19,32 @@ require 'chuckwallaom/om/ChuckwallaBaseNickPeer.php';
  * @package    chuckwallaom
  */
 class ChuckwallaNickPeer extends ChuckwallaBaseNickPeer {
+	/**
+	 * Retrieve a channel by its name. A new channel object is created and 
+	 * returned when it doesn't exist in the database yet. Note that the new
+	 * object is returned in an unsaved state, so before getting an id you need
+	 * to save it.
+	 * 
+	 *
+	 * @param      string The name of the channel.
+	 * @return     Channel
+	 */
+	public function retrieveOrCreateByName($name)
+	{
+		$criteria = new Criteria(ChuckwallaNickPeer::DATABASE_NAME);
+
+		$criteria->add(ChuckwallaNickPeer::NICK, $name);
+
+		$v = ChuckwallaNickPeer::doSelect($criteria);
+
+		if(empty($v)) {
+			$nick = $this->getContext()->getModel('ChuckwallaNick');
+			$nick->setNick($name);
+		} else {
+			$nick = $v[0];
+		}
+
+		return $nick;
+	}
 
 } // ChuckwallaNickPeer
