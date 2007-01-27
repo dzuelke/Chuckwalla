@@ -29,6 +29,11 @@
 							</layer>
 						</layers>
 					</layout>
+					<layout name="slot">
+						<layers>
+							<layer name="content" class="AgaviFileTemplateLayer" />
+						</layers>
+					</layout>
 				</layouts>
 				<parameter name="Content-Type">text/html; charset=UTF-8</parameter>
 			</output_type>
