@@ -51,7 +51,7 @@ DROP TABLE IF EXISTS `irc_identity`;
 CREATE TABLE `irc_identity`
 (
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
-	`user_id` INTEGER  NOT NULL,
+	`user_id` INTEGER,
 	PRIMARY KEY (`id`),
 	INDEX `irc_identity_FI_1` (`user_id`),
 	CONSTRAINT `irc_identity_FK_1`
@@ -71,7 +71,7 @@ CREATE TABLE `nick`
 (
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
 	`nick` VARCHAR(255)  NOT NULL,
-	`irc_identity_id` INTEGER  NOT NULL,
+	`irc_identity_id` INTEGER,
 	PRIMARY KEY (`id`),
 	INDEX `nick_FI_1` (`irc_identity_id`),
 	CONSTRAINT `nick_FK_1`

@@ -20,7 +20,7 @@
 	
 	<table name="irc_identity">
 		<column name="id" required="true" primaryKey="true" autoIncrement="true" type="INTEGER" />
-		<column name="user_id" required="true" type="INTEGER" />
+		<column name="user_id" required="false" type="INTEGER" />
 		<foreign-key foreignTable="user" onDelete="SETNULL">
 			<reference local="user_id" foreign="id" />
 		</foreign-key>
@@ -29,7 +29,7 @@
 	<table name="nick">
 		<column name="id" required="true" primaryKey="true" autoIncrement="true" type="INTEGER" />
 		<column name="nick" required="true" type="VARCHAR" size="255" />
-		<column name="irc_identity_id" required="true" type="INTEGER" />
+		<column name="irc_identity_id" required="false" type="INTEGER" />
 		<foreign-key foreignTable="irc_identity" onDelete="SETNULL">
 			<reference local="irc_identity_id" foreign="id" />
 		</foreign-key>
