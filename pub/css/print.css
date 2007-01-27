@@ -6,7 +6,7 @@
 #sidebar {}
 
 #sidebar .channel { 
-	font-size: 13px;
+	font-size: 1.2em;
 }
 #sidebar .channelInformation {
 	display: none;
@@ -15,7 +15,7 @@
 
 /* Room Title Block */
 #roomTitle {
-	font-size: 11px;
+	font-size: 1em;
 }
 
 /* End Room Title Block */
@@ -46,5 +46,5 @@
 /* End Logo */
 
 /* Footer */
-#footer { font-size: 8px;}
+#footer { font-size: 0.8em;}
 /* End Footer */
