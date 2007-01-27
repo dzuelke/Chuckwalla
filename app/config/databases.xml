@@ -17,6 +17,16 @@
 		</databases>
 	</configuration>
 	
+	<configuration environment="development-dominik">
+		<databases default="mysql">
+			<database name="mysql">
+				<parameter name="dsn">mysql:host=localhost;dbname=agavi-td</parameter>
+				<parameter name="username">root</parameter>
+				<parameter name="password"></parameter>
+			</database>
+		</databases>
+	</configuration>
+
 	<!-- <configuration environment="development-ross"> -->
 	<!-- </configuration> -->
 	<!--  -->
