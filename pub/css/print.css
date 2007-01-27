@@ -1,0 +1,50 @@
+/* Header */
+#header { }
+/* End Header */
+
+/* Sidebar Block */
+#sidebar {}
+
+#sidebar .channel { 
+	font-size: 13px;
+}
+#sidebar .channelInformation {
+	display: none;
+}
+/* End Sidebar Block */
+
+/* Room Title Block */
+#roomTitle {
+	font-size: 11px;
+}
+
+/* End Room Title Block */
+
+/* Messages Block */
+#messages { }
+
+#messages dl { 
+	display: block;  
+	border-top: 1px solid; 
+}
+#messages dl:last-child {
+	border-bottom: 1px solid black;
+}
+#messages dt { float: left;}
+#messages dd { 
+	float: left;
+	width:84%; 
+	padding-left: 1%;
+}
+#messages dt.timestamp { width: 5%; }
+#messages dt.name { width: 10%; overflow: hidden;}
+#messages.name:after { content: ': '; }
+/* End Messages Block */
+
+/* Logo */
+#logo { display: none;}
+/* End Logo */
+
+/* Footer */
+#footer { font-size: 8px;}
+/* End Footer */

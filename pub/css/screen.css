@@ -1,0 +1,109 @@
+/* Header */
+#header {
+	position: absolute;
+	top: 0px;
+	height: 100px;
+	width: 100%;
+	background:#FFFFFF url(../images/carpet.gif) scroll left bottom;
+	text-align:left;	
+}
+/* End Header */
+
+/* Sidebar Block */
+#sidebar {
+	position:absolute;
+	top:100px;
+	bottom:20px;
+	left:0px;
+	width:200px;
+}
+
+#sidebar .channel { 
+	background-image:url(../images/icons/bullet_arrow_down.png);
+	background-position: left center;
+	background-repeat: no-repeat;
+	padding-left: 15px;
+}
+#sidebar .toggleNames .channel {
+	background-image:url(../images/icons/bullet_arrow_up.png);
+}
+/* End Sidebar Block */
+
+/* Room Title Block */
+#roomTitle {
+	position:absolute;
+	top:100px;
+	height: 15px;
+	left:200px;
+	right: 0px;
+	overflow: hidden; 
+	padding-right: 15px;
+	background-image:url(../images/icons/bullet_arrow_down.png);
+	background-position: right top;
+	background-repeat: no-repeat;
+	background-color: grey;
+	color: white;
+	font-size: 12px;
+}
+
+#roomTitle.fullview {
+	height: auto;
+	background-image:url(../images/icons/bullet_arrow_up.png);
+	z-index: 10;
+}
+
+/* End Room Title Block */
+
+/* Messages Block */
+#messages {
+	position: absolute;
+	top: 115px;
+	bottom: 20px;
+	left: 200px;
+	right: 0px;
+	overflow:auto;
+}
+
+#messages dl { 
+	display: block;  
+	border-top: 1px solid; 
+	overflow: auto;
+}
+#messages dl:last-child {
+	border-bottom: 1px solid black;
+}
+#messages dt { float: left;}
+#messages dd { 
+	float: left;
+	width:84%; 
+	padding-left: 1%;
+}
+#messages dt.timestamp { width: 5%; }
+#messages dt.name { width: 10%; overflow: hidden;}
+#messages.name:after { content: ': '; }
+/* End Messages Block */
+
+/* Logo */
+#logo {
+	position: absolute;
+	height: 361px;
+	bottom: 16px;
+	right: 0px; 
+	background-image: url(../images/agavi.png);
+	background-position: right bottom;
+	background-repeat: no-repeat;
+	width: 300px;
+}
+/* End Logo */
+
+/* Footer */
+#footer { 
+	position: absolute; 
+	height: 20px;
+	bottom: 0px;
+	right: 0px;
+	display:block;
+	width: 100%;
+	border-top: 1px solid #787878;
+}
+/* End Footer */
