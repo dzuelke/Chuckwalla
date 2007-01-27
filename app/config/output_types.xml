@@ -23,6 +23,7 @@
 							<layer name="content" class="AgaviFileTemplateLayer" />
 							<layer name="decorator" class="AgaviFileTemplateLayer">
 								<slots>
+									<slot name="header" module="Web" action="Headers" />
 									<slot name="sidebar" module="Web" action="ChannelList" />
 								</slots>
 								<parameter name="template">Master</parameter>

@@ -7,6 +7,14 @@ class Web_ChannelListSuccessView extends ChuckwallaWebBaseView
 		parent::setupHtml($rd);
 		$this->loadLayout('slot');
 		
+		/*dummy data */
+		$channel = array();
+		$channel['name'] = 'Agavi';
+		$channel['number_of_members'] = 1;
+		$channel['id'] = 1;
+		$user = array('name' => 'Ross');
+		$channel['users'] = array((object) $user);
+		$this->setAttribute('channels', array((object)$channel));
 	}
 }
 

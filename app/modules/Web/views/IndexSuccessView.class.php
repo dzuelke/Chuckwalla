@@ -6,7 +6,7 @@ class Web_IndexSuccessView extends ChuckwallaWebBaseView
 	{
 		parent::setupHtml($rd);
 
-		$this->setAttribute('_title', 'Welcome - Chuckwalla Bot');
+		$this->setAttribute('_title', 'Chuckwalla Bot');
 	}
 }
 

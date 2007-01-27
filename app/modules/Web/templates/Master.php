@@ -25,13 +25,13 @@
 </head>
 <body>
 	<div id="header">
-		
+		<?php echo $slots['header']; ?>
 	</div>	
 	<div id="content">
 		<div id="sidebar">
 			<?php echo $slots['sidebar']; ?>
 		</div>
-		<div id="messages">
+		<div id="core" class="<?php echo $t['coreClass']; ?>">
 			<?php echo $slots['content']; ?>
 		</div>
 	</div>

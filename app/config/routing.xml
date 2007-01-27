@@ -8,7 +8,12 @@
 			
 			<!-- all URLs ending on /feed trigger Atom output -->
 			<route pattern="/feed$" stop="false" cut="true" output_type="atom" />
-			
+
+			<route name="login" pattern="^/login" module="%actions.login_module%" action="%actions.login_action%">
+				<routes>
+					<route name="logout" pattern="^/logout" module="%actions.login_module%" action="Logout" />
+				</routes>
+			</route>			
 			<route pattern="^/$" module="%actions.default_module%" action="%actions.default_action%" />
 		</routes>
 	</configuration>
