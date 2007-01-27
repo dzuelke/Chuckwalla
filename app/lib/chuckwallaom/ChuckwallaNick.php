@@ -31,6 +31,7 @@ class ChuckwallaNick extends ChuckwallaBaseNick {
 
 	public function getOrCreateIrcIdentity()
 	{
+		$this->getContext()->getModel('ChuckwallaIrcIdentityPeer');
 		$identity = $this->getIrcIdentity();
 		if(!$identity) {
 			$identity = $this->getContext()->getModel('ChuckwallaIrcIdentity');

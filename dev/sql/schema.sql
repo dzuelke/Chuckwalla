@@ -54,12 +54,15 @@ CREATE TABLE `irc_identity`
 (
 	`id` INTEGER  NOT NULL AUTO_INCREMENT,
 	`user_id` INTEGER,
+	`is_online` INTEGER default 0,
 	`ident` VARCHAR(255),
 	`realname` VARCHAR(255),
 	`host` VARCHAR(255),
 	`server` VARCHAR(255),
 	`ircop` INTEGER default 0,
 	`is_away` INTEGER default 0,
+	`last_quit_time` DATETIME,
+	`last_quit_message` TEXT,
 	PRIMARY KEY (`id`),
 	INDEX `irc_identity_FI_1` (`user_id`),
 	CONSTRAINT `irc_identity_FK_1`

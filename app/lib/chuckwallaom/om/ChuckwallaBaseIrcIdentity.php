@@ -38,6 +38,13 @@ abstract class ChuckwallaBaseIrcIdentity extends BaseObject implements Persisten
 
 
 	/**
+	 * The value for the is_online field.
+	 * @var        boolean
+	 */
+	protected $is_online = true;
+
+
+	/**
 	 * The value for the ident field.
 	 * @var        string
 	 */
@@ -77,6 +84,20 @@ abstract class ChuckwallaBaseIrcIdentity extends BaseObject implements Persisten
 	 * @var        boolean
 	 */
 	protected $is_away = true;
+
+
+	/**
+	 * The value for the last_quit_time field.
+	 * @var        int
+	 */
+	protected $last_quit_time;
+
+
+	/**
+	 * The value for the last_quit_message field.
+	 * @var        string
+	 */
+	protected $last_quit_message;
 
 	/**
 	 * @var        User
@@ -127,6 +148,17 @@ abstract class ChuckwallaBaseIrcIdentity extends BaseObject implements Persisten
 	{
 
 		return $this->user_id;
+	}
+
+	/**
+	 * Get the [is_online] column value.
+	 * 
+	 * @return     boolean
+	 */
+	public function getIsOnline()
+	{
+
+		return $this->is_online;
 	}
 
 	/**
@@ -196,6 +228,48 @@ abstract class ChuckwallaBaseIrcIdentity extends BaseObject implements Persisten
 	}
 
 	/**
+	 * Get the [optionally formatted] [last_quit_time] column value.
+	 * 
+	 * @param      string $format The date/time format string (either date()-style or strftime()-style).
+	 *							If format is NULL, then the integer unix timestamp will be returned.
+	 * @return     mixed Formatted date/time value as string or integer unix timestamp (if format is NULL).
+	 * @throws     PropelException - if unable to convert the date/time to timestamp.
+	 */
+	public function getLastQuitTime($format = 'Y-m-d H:i:s')
+	{
+
+		if ($this->last_quit_time === null || $this->last_quit_time === '') {
+			return null;
+		} elseif (!is_int($this->last_quit_time)) {
+			// a non-timestamp value was set externally, so we convert it
+			$ts = strtotime($this->last_quit_time);
+			if ($ts === -1 || $ts === false) { // in PHP 5.1 return value changes to FALSE
+				throw new PropelException("Unable to parse value of [last_quit_time] as date/time value: " . var_export($this->last_quit_time, true));
+			}
+		} else {
+			$ts = $this->last_quit_time;
+		}
+		if ($format === null) {
+			return $ts;
+		} elseif (strpos($format, '%') !== false) {
+			return strftime($format, $ts);
+		} else {
+			return date($format, $ts);
+		}
+	}
+
+	/**
+	 * Get the [last_quit_message] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getLastQuitMessage()
+	{
+
+		return $this->last_quit_message;
+	}
+
+	/**
 	 * Set the value of [id] column.
 	 * 
 	 * @param      int $v new value
@@ -230,6 +304,22 @@ abstract class ChuckwallaBaseIrcIdentity extends BaseObject implements Persisten
 		}
 
 	} // setUserId()
+
+	/**
+	 * Set the value of [is_online] column.
+	 * 
+	 * @param      boolean $v new value
+	 * @return     void
+	 */
+	public function setIsOnline($v)
+	{
+
+		if ($this->is_online !== $v || $v === true) {
+			$this->is_online = $v;
+			$this->modifiedColumns[] = ChuckwallaIrcIdentityPeer::IS_ONLINE;
+		}
+
+	} // setIsOnline()
 
 	/**
 	 * Set the value of [ident] column.
@@ -328,6 +418,46 @@ abstract class ChuckwallaBaseIrcIdentity extends BaseObject implements Persisten
 	} // setIsAway()
 
 	/**
+	 * Set the value of [last_quit_time] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     void
+	 */
+	public function setLastQuitTime($v)
+	{
+
+		if ($v !== null && !is_int($v)) {
+			$ts = strtotime($v);
+			if ($ts === -1 || $ts === false) { // in PHP 5.1 return value changes to FALSE
+				throw new PropelException("Unable to parse date/time value for [last_quit_time] from input: " . var_export($v, true));
+			}
+		} else {
+			$ts = $v;
+		}
+		if ($this->last_quit_time !== $ts) {
+			$this->last_quit_time = $ts;
+			$this->modifiedColumns[] = ChuckwallaIrcIdentityPeer::LAST_QUIT_TIME;
+		}
+
+	} // setLastQuitTime()
+
+	/**
+	 * Set the value of [last_quit_message] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     void
+	 */
+	public function setLastQuitMessage($v)
+	{
+
+		if ($this->last_quit_message !== $v) {
+			$this->last_quit_message = $v;
+			$this->modifiedColumns[] = ChuckwallaIrcIdentityPeer::LAST_QUIT_MESSAGE;
+		}
+
+	} // setLastQuitMessage()
+
+	/**
 	 * Hydrates (populates) the object variables with values from the database resultset.
 	 *
 	 * An offset (0-based "start column") is specified so that objects can be hydrated
@@ -346,18 +476,21 @@ abstract class ChuckwallaBaseIrcIdentity extends BaseObject implements Persisten
 
 			$this->id = ($row[$startcol + 0] !== null) ? (int) $row[$startcol + 0] : null;
 			$this->user_id = ($row[$startcol + 1] !== null) ? (int) $row[$startcol + 1] : null;
-			$this->ident = $row[$startcol + 2];
-			$this->realname = $row[$startcol + 3];
-			$this->host = $row[$startcol + 4];
-			$this->server = $row[$startcol + 5];
-			$this->ircop = ($row[$startcol + 6] !== null) ? (boolean) $row[$startcol + 6] : null;
-			$this->is_away = ($row[$startcol + 7] !== null) ? (boolean) $row[$startcol + 7] : null;
+			$this->is_online = ($row[$startcol + 2] !== null) ? (boolean) $row[$startcol + 2] : null;
+			$this->ident = $row[$startcol + 3];
+			$this->realname = $row[$startcol + 4];
+			$this->host = $row[$startcol + 5];
+			$this->server = $row[$startcol + 6];
+			$this->ircop = ($row[$startcol + 7] !== null) ? (boolean) $row[$startcol + 7] : null;
+			$this->is_away = ($row[$startcol + 8] !== null) ? (boolean) $row[$startcol + 8] : null;
+			$this->last_quit_time = $row[$startcol + 9]; // FIXME - this is a timestamp, we should maybe convert it (?)
+			$this->last_quit_message = $row[$startcol + 10];
 			$this->resetModified();
 
 			$this->setNew(false);
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 8; // 8 = ChuckwallaIrcIdentityPeer::NUM_COLUMNS - ChuckwallaIrcIdentityPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 11; // 11 = ChuckwallaIrcIdentityPeer::NUM_COLUMNS - ChuckwallaIrcIdentityPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating IrcIdentity object", $e);
@@ -611,22 +744,31 @@ abstract class ChuckwallaBaseIrcIdentity extends BaseObject implements Persisten
 				return $this->getUserId();
 				break;
 			case 2:
-				return $this->getIdent();
+				return $this->getIsOnline();
 				break;
 			case 3:
-				return $this->getRealname();
+				return $this->getIdent();
 				break;
 			case 4:
-				return $this->getHost();
+				return $this->getRealname();
 				break;
 			case 5:
-				return $this->getServer();
+				return $this->getHost();
 				break;
 			case 6:
-				return $this->getIrcop();
+				return $this->getServer();
 				break;
 			case 7:
+				return $this->getIrcop();
+				break;
+			case 8:
 				return $this->getIsAway();
+				break;
+			case 9:
+				return $this->getLastQuitTime();
+				break;
+			case 10:
+				return $this->getLastQuitMessage();
 				break;
 			default:
 				return null;
@@ -650,12 +792,15 @@ abstract class ChuckwallaBaseIrcIdentity extends BaseObject implements Persisten
 		$result = array(
 			$keys[0] => $this->getId(),
 			$keys[1] => $this->getUserId(),
-			$keys[2] => $this->getIdent(),
-			$keys[3] => $this->getRealname(),
-			$keys[4] => $this->getHost(),
-			$keys[5] => $this->getServer(),
-			$keys[6] => $this->getIrcop(),
-			$keys[7] => $this->getIsAway(),
+			$keys[2] => $this->getIsOnline(),
+			$keys[3] => $this->getIdent(),
+			$keys[4] => $this->getRealname(),
+			$keys[5] => $this->getHost(),
+			$keys[6] => $this->getServer(),
+			$keys[7] => $this->getIrcop(),
+			$keys[8] => $this->getIsAway(),
+			$keys[9] => $this->getLastQuitTime(),
+			$keys[10] => $this->getLastQuitMessage(),
 		);
 		return $result;
 	}
@@ -694,22 +839,31 @@ abstract class ChuckwallaBaseIrcIdentity extends BaseObject implements Persisten
 				$this->setUserId($value);
 				break;
 			case 2:
-				$this->setIdent($value);
+				$this->setIsOnline($value);
 				break;
 			case 3:
-				$this->setRealname($value);
+				$this->setIdent($value);
 				break;
 			case 4:
-				$this->setHost($value);
+				$this->setRealname($value);
 				break;
 			case 5:
-				$this->setServer($value);
+				$this->setHost($value);
 				break;
 			case 6:
-				$this->setIrcop($value);
+				$this->setServer($value);
 				break;
 			case 7:
+				$this->setIrcop($value);
+				break;
+			case 8:
 				$this->setIsAway($value);
+				break;
+			case 9:
+				$this->setLastQuitTime($value);
+				break;
+			case 10:
+				$this->setLastQuitMessage($value);
 				break;
 		} // switch()
 	}
@@ -736,12 +890,15 @@ abstract class ChuckwallaBaseIrcIdentity extends BaseObject implements Persisten
 
 		if (array_key_exists($keys[0], $arr)) $this->setId($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setUserId($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setIdent($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setRealname($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setHost($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setServer($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setIrcop($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setIsAway($arr[$keys[7]]);
+		if (array_key_exists($keys[2], $arr)) $this->setIsOnline($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setIdent($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setRealname($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setHost($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setServer($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setIrcop($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setIsAway($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setLastQuitTime($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setLastQuitMessage($arr[$keys[10]]);
 	}
 
 	/**
@@ -755,12 +912,15 @@ abstract class ChuckwallaBaseIrcIdentity extends BaseObject implements Persisten
 
 		if ($this->isColumnModified(ChuckwallaIrcIdentityPeer::ID)) $criteria->add(ChuckwallaIrcIdentityPeer::ID, $this->id);
 		if ($this->isColumnModified(ChuckwallaIrcIdentityPeer::USER_ID)) $criteria->add(ChuckwallaIrcIdentityPeer::USER_ID, $this->user_id);
+		if ($this->isColumnModified(ChuckwallaIrcIdentityPeer::IS_ONLINE)) $criteria->add(ChuckwallaIrcIdentityPeer::IS_ONLINE, $this->is_online);
 		if ($this->isColumnModified(ChuckwallaIrcIdentityPeer::IDENT)) $criteria->add(ChuckwallaIrcIdentityPeer::IDENT, $this->ident);
 		if ($this->isColumnModified(ChuckwallaIrcIdentityPeer::REALNAME)) $criteria->add(ChuckwallaIrcIdentityPeer::REALNAME, $this->realname);
 		if ($this->isColumnModified(ChuckwallaIrcIdentityPeer::HOST)) $criteria->add(ChuckwallaIrcIdentityPeer::HOST, $this->host);
 		if ($this->isColumnModified(ChuckwallaIrcIdentityPeer::SERVER)) $criteria->add(ChuckwallaIrcIdentityPeer::SERVER, $this->server);
 		if ($this->isColumnModified(ChuckwallaIrcIdentityPeer::IRCOP)) $criteria->add(ChuckwallaIrcIdentityPeer::IRCOP, $this->ircop);
 		if ($this->isColumnModified(ChuckwallaIrcIdentityPeer::IS_AWAY)) $criteria->add(ChuckwallaIrcIdentityPeer::IS_AWAY, $this->is_away);
+		if ($this->isColumnModified(ChuckwallaIrcIdentityPeer::LAST_QUIT_TIME)) $criteria->add(ChuckwallaIrcIdentityPeer::LAST_QUIT_TIME, $this->last_quit_time);
+		if ($this->isColumnModified(ChuckwallaIrcIdentityPeer::LAST_QUIT_MESSAGE)) $criteria->add(ChuckwallaIrcIdentityPeer::LAST_QUIT_MESSAGE, $this->last_quit_message);
 
 		return $criteria;
 	}
@@ -817,6 +977,8 @@ abstract class ChuckwallaBaseIrcIdentity extends BaseObject implements Persisten
 
 		$copyObj->setUserId($this->user_id);
 
+		$copyObj->setIsOnline($this->is_online);
+
 		$copyObj->setIdent($this->ident);
 
 		$copyObj->setRealname($this->realname);
@@ -828,6 +990,10 @@ abstract class ChuckwallaBaseIrcIdentity extends BaseObject implements Persisten
 		$copyObj->setIrcop($this->ircop);
 
 		$copyObj->setIsAway($this->is_away);
+
+		$copyObj->setLastQuitTime($this->last_quit_time);
+
+		$copyObj->setLastQuitMessage($this->last_quit_message);
 
 
 		if ($deepCopy) {

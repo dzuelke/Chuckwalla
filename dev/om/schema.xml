@@ -23,12 +23,15 @@
 	<table name="irc_identity">
 		<column name="id" required="true" primaryKey="true" autoIncrement="true" type="INTEGER" />
 		<column name="user_id" required="false" type="INTEGER" />
+		<column name="is_online" required="false" type="BOOLEAN" default="false" />
 		<column name="ident" required="false" type="VARCHAR" size="255" />
 		<column name="realname" required="false" type="VARCHAR" size="255" />
 		<column name="host" required="false" type="VARCHAR" size="255" />
 		<column name="server" required="false" type="VARCHAR" size="255" />
 		<column name="ircop" required="false" type="BOOLEAN" default="false" />
 		<column name="is_away" required="false" type="BOOLEAN" default="false" />
+		<column name="last_quit_time" required="false" type="TIMESTAMP" />
+		<column name="last_quit_message" required="false" type="LONGVARCHAR" />
 		<foreign-key foreignTable="user" onDelete="SETNULL">
 			<reference local="user_id" foreign="id" />
 		</foreign-key>

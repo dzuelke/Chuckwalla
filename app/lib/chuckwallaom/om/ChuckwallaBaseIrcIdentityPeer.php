@@ -24,7 +24,7 @@ abstract class ChuckwallaBaseIrcIdentityPeer implements AgaviISingletonModel {
 	const CLASS_DEFAULT = 'chuckwallaom.ChuckwallaIrcIdentity';
 
 	/** The total number of columns. */
-	const NUM_COLUMNS = 8;
+	const NUM_COLUMNS = 11;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -35,6 +35,9 @@ abstract class ChuckwallaBaseIrcIdentityPeer implements AgaviISingletonModel {
 
 	/** the column name for the USER_ID field */
 	const USER_ID = 'irc_identity.USER_ID';
+
+	/** the column name for the IS_ONLINE field */
+	const IS_ONLINE = 'irc_identity.IS_ONLINE';
 
 	/** the column name for the IDENT field */
 	const IDENT = 'irc_identity.IDENT';
@@ -53,6 +56,12 @@ abstract class ChuckwallaBaseIrcIdentityPeer implements AgaviISingletonModel {
 
 	/** the column name for the IS_AWAY field */
 	const IS_AWAY = 'irc_identity.IS_AWAY';
+
+	/** the column name for the LAST_QUIT_TIME field */
+	const LAST_QUIT_TIME = 'irc_identity.LAST_QUIT_TIME';
+
+	/** the column name for the LAST_QUIT_MESSAGE field */
+	const LAST_QUIT_MESSAGE = 'irc_identity.LAST_QUIT_MESSAGE';
 
 	/**
 	 * An identiy map to hold any loaded instances of ChuckwallaIrcIdentity objects.
@@ -75,10 +84,10 @@ abstract class ChuckwallaBaseIrcIdentityPeer implements AgaviISingletonModel {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'UserId', 'Ident', 'Realname', 'Host', 'Server', 'Ircop', 'IsAway', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::USER_ID, self::IDENT, self::REALNAME, self::HOST, self::SERVER, self::IRCOP, self::IS_AWAY, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'user_id', 'ident', 'realname', 'host', 'server', 'ircop', 'is_away', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'UserId', 'IsOnline', 'Ident', 'Realname', 'Host', 'Server', 'Ircop', 'IsAway', 'LastQuitTime', 'LastQuitMessage', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::USER_ID, self::IS_ONLINE, self::IDENT, self::REALNAME, self::HOST, self::SERVER, self::IRCOP, self::IS_AWAY, self::LAST_QUIT_TIME, self::LAST_QUIT_MESSAGE, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'user_id', 'is_online', 'ident', 'realname', 'host', 'server', 'ircop', 'is_away', 'last_quit_time', 'last_quit_message', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
 	);
 
 	/**
@@ -88,10 +97,10 @@ abstract class ChuckwallaBaseIrcIdentityPeer implements AgaviISingletonModel {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'UserId' => 1, 'Ident' => 2, 'Realname' => 3, 'Host' => 4, 'Server' => 5, 'Ircop' => 6, 'IsAway' => 7, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::USER_ID => 1, self::IDENT => 2, self::REALNAME => 3, self::HOST => 4, self::SERVER => 5, self::IRCOP => 6, self::IS_AWAY => 7, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'user_id' => 1, 'ident' => 2, 'realname' => 3, 'host' => 4, 'server' => 5, 'ircop' => 6, 'is_away' => 7, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'UserId' => 1, 'IsOnline' => 2, 'Ident' => 3, 'Realname' => 4, 'Host' => 5, 'Server' => 6, 'Ircop' => 7, 'IsAway' => 8, 'LastQuitTime' => 9, 'LastQuitMessage' => 10, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::USER_ID => 1, self::IS_ONLINE => 2, self::IDENT => 3, self::REALNAME => 4, self::HOST => 5, self::SERVER => 6, self::IRCOP => 7, self::IS_AWAY => 8, self::LAST_QUIT_TIME => 9, self::LAST_QUIT_MESSAGE => 10, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'user_id' => 1, 'is_online' => 2, 'ident' => 3, 'realname' => 4, 'host' => 5, 'server' => 6, 'ircop' => 7, 'is_away' => 8, 'last_quit_time' => 9, 'last_quit_message' => 10, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
 	);
 
 	/**
@@ -177,6 +186,8 @@ abstract class ChuckwallaBaseIrcIdentityPeer implements AgaviISingletonModel {
 
 		$criteria->addSelectColumn(ChuckwallaIrcIdentityPeer::USER_ID);
 
+		$criteria->addSelectColumn(ChuckwallaIrcIdentityPeer::IS_ONLINE);
+
 		$criteria->addSelectColumn(ChuckwallaIrcIdentityPeer::IDENT);
 
 		$criteria->addSelectColumn(ChuckwallaIrcIdentityPeer::REALNAME);
@@ -188,6 +199,10 @@ abstract class ChuckwallaBaseIrcIdentityPeer implements AgaviISingletonModel {
 		$criteria->addSelectColumn(ChuckwallaIrcIdentityPeer::IRCOP);
 
 		$criteria->addSelectColumn(ChuckwallaIrcIdentityPeer::IS_AWAY);
+
+		$criteria->addSelectColumn(ChuckwallaIrcIdentityPeer::LAST_QUIT_TIME);
+
+		$criteria->addSelectColumn(ChuckwallaIrcIdentityPeer::LAST_QUIT_MESSAGE);
 
 	}
 
