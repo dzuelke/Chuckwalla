@@ -4,7 +4,7 @@
 		<enabled>On</enabled>
 		<title>Chuckwalla Web Interface Module</title>
 		<version></version>
-		<name>Bot</name>
+		<name>Web</name>
 		<authors>
 			<author>David Zülke</author>
 			<author>Ross Lawley</author>
