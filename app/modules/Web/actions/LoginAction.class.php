@@ -1,16 +1,21 @@
 <?php
 
-class Web_LoginAction extends AgaviAction
+class Web_LoginAction extends ChuckwallaWebBaseAction
 {
-	public function execute(AgaviRequestDataHolder $rd)
+	public function executeWrite(AgaviRequestDataHolder $rd)
 	{
-		// remove this execute() method and create executeRead() and executeWrite() methods or equivalents
-		throw new Exception('LoginAction is not yet implemented. This is only an empty stub Action that serves as a reminder for you to do this :)');
+		try {
+			$this->getContext()->getUser()->login($rd->getParamter('email'), $rd->getParameter('password'));
+		} catch(Exception $e) {
+			return 'Error';
+		}
+		
+		return 'Success';
 	}
-
+	
 	public function getDefaultViewName()
 	{
-		return 'Success';
+		return "Input";
 	}
 }
 
