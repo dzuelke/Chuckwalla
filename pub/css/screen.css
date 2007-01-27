@@ -134,19 +134,27 @@
 #messages dl { 
 	display: block;  
 	border-bottom: 0.06em solid;
-	overflow: auto;
 	min-height: 1.1em;
+	overflow: auto;
+	background: #FFFFFF;
 }
 
-#messages dt { float: left;}
+#messages dt {
+	float: left;
+}
 #messages dd { 
 	float: left;
 	width:84%; 
 	padding-left: 1%;
 }
+
 #messages dt.timestamp { width: 5%; }
 #messages dt.name { width: 10%; overflow: hidden;}
 #messages .name:after { content: ': '; }
+
+#messages dl.highlight {
+	background-color:#FFFFCC;
+} 
 /* End Messages Block */
 
 /* Logo */

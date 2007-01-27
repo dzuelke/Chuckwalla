@@ -16,10 +16,16 @@
 			document.getElementsByClassName('toggles').each( function (el) { 
 				toggleHeader = el.getElementsByClassName('toggleHeader')[0];
 				toggleItem = el.getElementsByClassName('toggleItem')[0];
-				Event.observe(toggleHeader, 'click', function (e) { toggleItem.toggle(); el.toggleClassName('toggleNames');})
+				Event.observe(toggleHeader, 'click', function (e) { 
+					toggleItem.toggle(); 
+					el.toggleClassName('toggleNames');
+				})
 			 });
 			// Toggle Room Titles
-			Event.observe($('roomTitle'), 'click', function  (e) {Event.element(e).toggleClassName('fullview');});
+			Event.observe($('roomTitle'), 'click', function  (e) {
+				$('roomTitle').toggleClassName('fullview');
+				$('messages').style.top = $('roomTitle').getHeight()+'px';
+			});
 		}
 	</script>
 </head>
@@ -49,6 +55,90 @@
 			Welcome to Agavi :: home of the convention nazis :: 911GT2 coming soon :: http://www.agavi.org :: http://svn.agavi.org/branches/0.11/ if you want to use SVN (don't use trunk, earth will explode) :: Have a question? Just ask it, and wait patiently, because patience is the key to happiness :: We're looking for documentation contributors and developers :: http://trac.agavi.org/milestone/0.11 :: irc logs http://users.tkk.fi/~tjorri/agavi/logs
 		</div>
 		<div id="messages">
+			<dl>
+				<dt class="timestamp">04:34</dt>
+				<dt class="name">Wombert Wombert Wombert Wombert</dt>
+				<dd>Hello Test</dd>
+			</dl>
+	    	<dl>
+				<dt class="timestamp">04:34</dt>
+				<dt class="name">Wombert</dt>
+				<dd>Hello Test</dd>
+			</dl>
+			<dl class="highlight">
+				<dt class="timestamp">05:34</dt>
+				<dt class="name">Ross</dt>
+				<dd>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed eget nulla in lacus suscipit mattis. Vivamus non metus. Pellentesque eu urna sed pede dictum vulputate. Quisque enim nibh, vehicula ac, accumsan nec, sagittis aliquam, enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nulla vitae nulla quis est mollis vulputate. Sed lacinia volutpat eros. Mauris cursus dui et nibh. Vestibulum erat nisi, ornare et, adipiscing nec, interdum ut, turpis. Nulla facilisi. Quisque tincidunt est. Etiam gravida pede vestibulum tellus. Vivamus sit amet leo. Integer hendrerit. Fusce et nisl nec ante aliquam vehicula. Etiam pretium tincidunt velit.
+				</dd>
+			</dl>
+			<dl>
+				<dt class="timestamp">04:34</dt>
+				<dt class="name" >ReallyAnnoyingandVeryLongName</dt>
+				<dd>Hello Test</dd>
+			</dl>
+			<dl>
+				<dt class="timestamp">04:34</dt>
+				<dt class="name">Wombert Wombert Wombert Wombert</dt>
+				<dd>Hello Test</dd>
+			</dl>
+	    	<dl>
+				<dt class="timestamp">04:34</dt>
+				<dt class="name">Wombert</dt>
+				<dd>Hello Test</dd>
+			</dl>
+			<dl class="highlight">
+				<dt class="timestamp">05:34</dt>
+				<dt class="name">Ross</dt>
+				<dd>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed eget nulla in lacus suscipit mattis. Vivamus non metus. Pellentesque eu urna sed pede dictum vulputate. Quisque enim nibh, vehicula ac, accumsan nec, sagittis aliquam, enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nulla vitae nulla quis est mollis vulputate. Sed lacinia volutpat eros. Mauris cursus dui et nibh. Vestibulum erat nisi, ornare et, adipiscing nec, interdum ut, turpis. Nulla facilisi. Quisque tincidunt est. Etiam gravida pede vestibulum tellus. Vivamus sit amet leo. Integer hendrerit. Fusce et nisl nec ante aliquam vehicula. Etiam pretium tincidunt velit.
+				</dd>
+			</dl>
+			<dl>
+				<dt class="timestamp">04:34</dt>
+				<dt class="name" >ReallyAnnoyingandVeryLongName</dt>
+				<dd>Hello Test</dd>
+			</dl>
+			<dl>
+				<dt class="timestamp">04:34</dt>
+				<dt class="name">Wombert Wombert Wombert Wombert</dt>
+				<dd>Hello Test</dd>
+			</dl>
+	    	<dl>
+				<dt class="timestamp">04:34</dt>
+				<dt class="name">Wombert</dt>
+				<dd>Hello Test</dd>
+			</dl>
+			<dl class="highlight">
+				<dt class="timestamp">05:34</dt>
+				<dt class="name">Ross</dt>
+				<dd>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed eget nulla in lacus suscipit mattis. Vivamus non metus. Pellentesque eu urna sed pede dictum vulputate. Quisque enim nibh, vehicula ac, accumsan nec, sagittis aliquam, enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nulla vitae nulla quis est mollis vulputate. Sed lacinia volutpat eros. Mauris cursus dui et nibh. Vestibulum erat nisi, ornare et, adipiscing nec, interdum ut, turpis. Nulla facilisi. Quisque tincidunt est. Etiam gravida pede vestibulum tellus. Vivamus sit amet leo. Integer hendrerit. Fusce et nisl nec ante aliquam vehicula. Etiam pretium tincidunt velit.
+				</dd>
+			</dl>
+			<dl>
+				<dt class="timestamp">04:34</dt>
+				<dt class="name" >ReallyAnnoyingandVeryLongName</dt>
+				<dd>Hello Test</dd>
+			</dl>
+			<dl>
+				<dt class="timestamp">04:34</dt>
+				<dt class="name">Wombert Wombert Wombert Wombert</dt>
+				<dd>Hello Test</dd>
+			</dl>
+	    	<dl>
+				<dt class="timestamp">04:34</dt>
+				<dt class="name">Wombert</dt>
+				<dd>Hello Test</dd>
+			</dl>
+			<dl class="highlight">
+				<dt class="timestamp">05:34</dt>
+				<dt class="name">Ross</dt>
+				<dd>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed eget nulla in lacus suscipit mattis. Vivamus non metus. Pellentesque eu urna sed pede dictum vulputate. Quisque enim nibh, vehicula ac, accumsan nec, sagittis aliquam, enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nulla vitae nulla quis est mollis vulputate. Sed lacinia volutpat eros. Mauris cursus dui et nibh. Vestibulum erat nisi, ornare et, adipiscing nec, interdum ut, turpis. Nulla facilisi. Quisque tincidunt est. Etiam gravida pede vestibulum tellus. Vivamus sit amet leo. Integer hendrerit. Fusce et nisl nec ante aliquam vehicula. Etiam pretium tincidunt velit.
+				</dd>
+			</dl>
+			<dl>
+				<dt class="timestamp">04:34</dt>
+				<dt class="name" >ReallyAnnoyingandVeryLongName</dt>
+				<dd>Hello Test</dd>
+			</dl>
 			<dl>
 				<dt class="timestamp">04:34</dt>
 				<dt class="name">Wombert Wombert Wombert Wombert</dt>
