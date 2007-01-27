@@ -1,7 +1,8 @@
 For development:
 
 - copy libs/agavi/etc/agavi-dist(.bat) to agavi(.bat) and edit it so AGAVI_INSTALLATION points to libs/agavi/src (with full absolute path)
-- edit databases.xml, add a configuration section for "development-<yourname>" environment and put in your data similar to the way done with existing ones
+- edit databases.xml, add a configuration section for "development-<yourname>" environment and point the config parameter to the propel runtime config
+- propel runtime config: config/chuckwalla-conf.php must be copied to config/chuckwalla-conf-<yourname>.php, edit it and put in your data
 - copy pub/*.php-dist to pub/*.php and bootstrap "development-<yourname>" as the environment
 - copy pub/dist.htaccess to pub/.htaccess, enable rewrites and insert the relative url path to the pub dir as the rewrite base
 

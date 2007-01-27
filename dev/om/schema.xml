@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<database name="chuckwalla" defaultIdMethod="native">
+
+	<table name="channel">
+		<column name="id" required="true" primaryKey="true" autoIncrement="true" type="INTEGER" />
+		<column name="name" required="true" type="VARCHAR" size="255" />
+		<column name="topic" required="true" type="LONGVARCHAR" size="255" />
+	</table>
+	
+	<table name="channel_nick">
+		<column name="channel_id" required="true" primaryKey="true" type="INTEGER" />
+		<column name="nick_id" required="true" primaryKey="true" type="INTEGER" />
+		<foreign-key foreignTable="channel" onDelete="CASCADE">
+			<reference local="channel_id" foreign="id" />
+		</foreign-key>
+		<foreign-key foreignTable="nick" onDelete="CASCADE">
+			<reference local="nick_id" foreign="id" />
+		</foreign-key>
+	</table>
+	
+	<table name="irc_identity">
+		<column name="id" required="true" primaryKey="true" autoIncrement="true" type="INTEGER" />
+		<column name="user_id" required="true" type="INTEGER" />
+		<foreign-key foreignTable="user" onDelete="SETNULL">
+			<reference local="user_id" foreign="id" />
+		</foreign-key>
+	</table>
+	
+	<table name="nick">
+		<column name="id" required="true" primaryKey="true" autoIncrement="true" type="INTEGER" />
+		<column name="nick" required="true" type="VARCHAR" size="255" />
+		<column name="irc_identity_id" required="true" type="INTEGER" />
+		<foreign-key foreignTable="irc_identity" onDelete="SETNULL">
+			<reference local="irc_identity_id" foreign="id" />
+		</foreign-key>
+	</table>
+	
+	<table name="user">
+		<column name="id" required="true" primaryKey="true" autoIncrement="true" type="INTEGER" />
+		<column name="email" required="true" type="VARCHAR" size="255" />
+		<column name="password" required="true" type="VARCHAR" size="255" />
+		<column name="is_active" required="true" type="VARCHAR" size="255" />
+		<column name="is_admin" required="true" type="VARCHAR" size="255" />
+		<column name="ts_registered" required="true" type="TIMESTAMP" />
+		<column name="ts_lastlogin" required="true" type="TIMESTAMP" />
+		<column name="locale" required="true" type="VARCHAR" size="255" default="en@locale=Europe/London" />
+	</table>
+</database>

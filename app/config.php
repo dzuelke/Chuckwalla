@@ -54,7 +54,8 @@ AgaviConfig::set('core.app_dir', dirname(__FILE__));
 // +---------------------------------------------------------------------------+
 
 AgaviConfig::set('core.libs_dir', realpath(dirname(__FILE__) . '/../libs'));
+AgaviConfig::set('core.lib_dir', realpath(dirname(__FILE__) . '/lib'));
 
-set_include_path(AgaviConfig::get('core.libs_dir') . PATH_SEPARATOR . get_include_path());
+set_include_path(AgaviConfig::get('core.libs_dir') . PATH_SEPARATOR . AgaviConfig::get('core.lib_dir') . PATH_SEPARATOR . get_include_path());
 
 ?>

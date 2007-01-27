@@ -1,38 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <configurations>
 	<configuration>
-		<databases default="mysql">
-			<database name="mysql" class="AgaviPdoDatabase">
+		<databases default="propel">
+			<database name="propel" class="AgaviPropelDatabase">
 			</database>
 		</databases>
 	</configuration>
 	
 	<configuration environment="development-david">
-		<databases default="mysql">
-			<database name="mysql">
-				<parameter name="dsn">mysql:host=localhost;dbname=chuckwalla</parameter>
-				<parameter name="username">chuckwalla</parameter>
-				<parameter name="password">123qwe</parameter>
+		<databases default="propel">
+			<database name="propel" class="AgaviPropelDatabase">
+				<parameter name="config">%core.config_dir%/chuckwalla-conf.php</parameter>
 			</database>
 		</databases>
 	</configuration>
 	
 	<configuration environment="development-ross">
-		<databases default="mysql">
-			<database name="mysql">
-				<parameter name="dsn">mysql:host=localhost;dbname=chuckwalla</parameter>
-				<parameter name="username">chuck</parameter>
-				<parameter name="password">walla</parameter>
+		<databases default="propel">
+			<database name="propel" class="AgaviPropelDatabase">
+				<parameter name="config">%core.config_dir%/chuckwalla-conf.php</parameter>
 			</database>
 		</databases>
 	</configuration>
 
 	<configuration environment="development-dominik">
-		<databases default="mysql">
-			<database name="mysql">
-				<parameter name="dsn">mysql:host=localhost;dbname=agavi-td</parameter>
-				<parameter name="username">root</parameter>
-				<parameter name="password"></parameter>
+		<databases default="propel">
+			<database name="propel" class="AgaviPropelDatabase">
+				<parameter name="config">%core.config_dir%/chuckwalla-conf.php</parameter>
 			</database>
 		</databases>
 	</configuration>

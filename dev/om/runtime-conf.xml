@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<config>
+	<propel>
+		<datasources default="chuckwalla">
+
+			<datasource id="chuckwalla">
+				<adapter>mysql</adapter>
+				<!-- Connection parameters. See PDO documentation for DSN format and available option constants. -->
+				<connection>
+					<dsn>mysql:host=localhost;dbname=chuckwalla</dsn>
+					<user>chuckwalla</user>
+					<password>123qwe</password>
+					<options>
+						<option id="ATTR_PERSISTENT">false</option>
+					</options>
+					
+					<attributes>
+						<option id="ATTR_EMULATE_PREPARES">true</option>
+					</attributes>
+					
+					<settings>
+						<setting id="charset">utf8</setting>
+						
+						<!-- you can also execute arbitrary queries after the connection is created
+						<setting name="queries">
+							<query>SELECT * FROM foo</query>
+							<query>INSERT INTO BAR ('hey', 'there')</query>
+						</setting>
+						-->
+					</settings>
+				</connection>
+			</datasource>
+
+		</datasources>
+	</propel>
+</config>
