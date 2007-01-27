@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <configurations>
 
-	<configuration>
+	<configuration context="web">
 		<filters>
 
-			<filter name="FormPopulationFilter" class="AgaviFormPopulationFilter" enabled="false" >
-				<parameters>
-					<parameter name="methods">
-						<parameters>
-							<parameter>write</parameter>
-						</parameters>
-					</parameter>
-				</parameters>
+			<filter name="FormPopulationFilter" class="AgaviFormPopulationFilter">
+				<parameter name="methods">
+					<parameter>write</parameter>
+				</parameter>
+				<parameter name="output_types">
+					<parameter>html</parameter>
+				</parameter>
 			</filter>
 
 		</filters>

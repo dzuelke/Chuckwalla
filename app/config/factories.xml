@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <configurations>
 	
-	<configuration>
+	<configuration context="web">
 		
 		<controller class="AgaviController" />
 		
@@ -29,7 +29,41 @@
 		
 		<translation_manager class="AgaviTranslationManager" />
 		
-		<user class="AgaviSecurityUser" />
+		<user class="ChuckwallaBaseUser" />
+		
+		<validation_manager class="AgaviValidationManager" />
+		
+	</configuration>
+	
+	<configuration context="ircbot">
+		
+		<controller class="ChuckwallaIrcbotController" />
+		
+		<database_manager class="AgaviDatabaseManager" />
+		
+		<dispatch_filter class="AgaviDispatchFilter" />
+		
+		<execution_container class="AgaviExecutionContainer" />
+		
+		<execution_filter class="AgaviExecutionFilter" />
+		
+		<filter_chain class="AgaviFilterChain" />
+		
+		<logger_manager class="AgaviLoggerManager" />
+		
+		<request class="ChuckwallaIrcbotRequest" />
+		
+		<response class="ChuckwallaIrcbotResponse" />
+		
+		<routing class="ChuckwallaIrcbotRouting" />
+		
+		<security_filter class="AgaviSecurityFilter" />
+		
+		<storage class="AgaviSessionStorage" />
+		
+		<translation_manager class="AgaviTranslationManager" />
+		
+		<user class="ChuckwallaBaseUser" />
 		
 		<validation_manager class="AgaviValidationManager" />
 		

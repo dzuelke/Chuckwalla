@@ -1,38 +1,66 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <configurations>
 
-	<configuration>
+	<configuration context="web">
 		<output_types default="html">
 
 			<output_type name="html">
 				<renderers default="php">
 					<renderer name="php" class="AgaviPhpRenderer">
-						<parameters>
-							<parameter name="assigns">
-								<parameters>
-									<parameter name="routing">ro</parameter>
-									<parameter name="request">rq</parameter>
-									<parameter name="controller">ct</parameter>
-									<parameter name="user">us</parameter>
-									<parameter name="translation_manager">tm</parameter>
-								</parameters>
-							</parameter>
-						</parameters>
+						<parameter name="assigns">
+							<parameter name="routing">ro</parameter>
+							<parameter name="request">rq</parameter>
+							<parameter name="controller">ct</parameter>
+							<parameter name="user">us</parameter>
+							<parameter name="translation_manager">tm</parameter>
+						</parameter>
 					</renderer>
 				</renderers>
-				<layouts default="default"> 
-					<layout name="default"> 
+				<layouts default="standard">
+					<layout name="standard">
 						<layers>
-							<layer name="content" class="AgaviFileTemplateLayer" /> 
-						</layers> 
-					</layout> 
-				</layouts> 
-				<parameters>
-					<parameter name="Content-Type">text/html; charset=UTF-8</parameter>
-				</parameters>
+							<layer name="content" class="AgaviFileTemplateLayer" />
+							<layer name="decorator" class="AgaviFileTemplateLayer">
+								<parameter name="template">Master</parameter>
+							</layer>
+						</layers>
+					</layout>
+				</layouts>
+				<parameter name="Content-Type">text/html; charset=UTF-8</parameter>
+			</output_type>
+
+			<output_type name="json">
+				<parameter name="Content-Type">text/javascript; charset=UTF-8</parameter>
 			</output_type>
 
 		</output_types>
 	</configuration>
 
+	<configuration context="ircbot">
+		<output_types default="irc">
+
+			<output_type name="irc">
+				<renderers default="php">
+					<renderer name="php" class="AgaviPhpRenderer">
+						<parameter name="assigns">
+							<parameter name="routing">ro</parameter>
+							<parameter name="request">rq</parameter>
+							<parameter name="controller">ct</parameter>
+							<parameter name="user">us</parameter>
+							<parameter name="translation_manager">tm</parameter>
+						</parameter>
+					</renderer>
+				</renderers>
+				<layouts default="standard">
+					<layout name="standard">
+						<layers>
+							<layer name="content" class="AgaviFileTemplateLayer" />
+						</layers>
+					</layout>
+				</layouts>
+			</output_type>
+
+		</output_types>
+	</configuration>
+	
 </configurations>

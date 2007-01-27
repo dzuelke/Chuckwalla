@@ -1,24 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!--
-+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+
-| This file is part of the Agavi package.                                    |
-| Copyright (c) 2006 the Agavi Project.                                      |
-| ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ |
-| MODULE INFORMATION FILE                                                    |
-| ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ |
-| KEYWORDS:                                                                  |
-| You may reference any configuration directive by enclosing the name in     |
-| "%" signs. Example: %core.agavi_dir%                                         |
-+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~+
--->
 <configurations>
 	<configuration>
 		<enabled>On</enabled>
-		<title>Bot Agavi Module</title>
+		<title>Chuckwalla IRC Bot Module</title>
 		<version></version>
 		<name>Bot</name>
 		<authors>
-			<author></author>
+			<author>David Zülke</author>
+			<author>Dominik del Bondio</author>
 		</authors>
 		<homepage></homepage>
 		<update_url></update_url>

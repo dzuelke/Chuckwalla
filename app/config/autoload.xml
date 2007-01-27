@@ -1,3 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <configurations parent="%core.system_config_dir%/autoload.xml">
+	<configuration>
+		<autoloads>
+			<autoload name="ChuckwallaBaseAction">%core.lib_dir%/action/ChuckwallaBaseAction.class.php</autoload>
+			<autoload name="ChuckwallaBaseModel">%core.lib_dir%/model/ChuckwallaBaseModel.class.php</autoload>
+			<autoload name="ChuckwallaBaseUser">%core.lib_dir%/user/ChuckwallaBaseUser.class.php</autoload>
+			<autoload name="ChuckwallaBaseView">%core.lib_dir%/view/ChuckwallaBaseView.class.php</autoload>
+			
+			<autoload name="ChuckwallaIrcbotController">%core.lib_dir%/controller/ChuckwallaIrcbotController.class.php</autoload>
+			<autoload name="ChuckwallaIrcbotRequest">%core.lib_dir%/request/ChuckwallaIrcbotRequest.class.php</autoload>
+			<autoload name="ChuckwallaIrcbotResponse">%core.lib_dir%/response/ChuckwallaIrcbotResponse.class.php</autoload>
+			<autoload name="ChuckwallaIrcbotRouting">%core.lib_dir%/routing/ChuckwallaIrcbotRouting.class.php</autoload>
+		</autoloads>
+	</configuration>
 </configurations>

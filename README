@@ -1,0 +1,12 @@
+Welcome to Chuckwalla
+=====================
+
+Chuckwalla is an IRC Bot written in PHP using the Agavi Framework. It puts a strong focus on a web interface with highly accessible logs and personalization features.
+
+
+The Name
+--------
+
+The Agavi framework is originally based on the Mojavi Framework. Since Agave plants grow in the Mojave desert, it was only logical to pick an animal that lives in the Mojave desert as an inspiration for the project name.
+We are not sure, but being a vegetarian, the Chuckwalla lizard (Sauromalus obesus obesus) likely enjoys eating Agave plants a lot. At least we think he does. He's a rather nice chap anyway, as you can see here: http://www.nps.gov/archive/moja/mojaanlz.htm
+
