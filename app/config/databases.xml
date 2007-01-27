@@ -11,8 +11,8 @@
 		<databases default="mysql">
 			<database name="mysql">
 				<parameter name="dsn">mysql:host=localhost;dbname=chuckwalla</parameter>
-				<parameter name="username">asd</parameter>
-				<parameter name="password">asd</parameter>
+				<parameter name="username">chuckwalla</parameter>
+				<parameter name="password">123qwe</parameter>
 			</database>
 		</databases>
 	</configuration>
