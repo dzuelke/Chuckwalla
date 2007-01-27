@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<configurations>
+
+	<configuration environment="development">
+		<filters>
+
+			<filter name="ExecutionTimeFilter" class="AgaviExecutionTimeFilter">
+				<parameters>
+					<parameter name="comment">On</parameter>
+				</parameters>
+			</filter>
+
+		</filters>
+	</configuration>
+
+</configurations>

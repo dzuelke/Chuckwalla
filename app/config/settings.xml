@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<configurations>
+	<configuration>
+
+		<system_actions>
+
+			<system_action name="default">
+				<module>Web</module>
+				<action>Index</action>
+			</system_action>
+
+			<system_action name="error_404">
+				<module>Web</module>
+				<action>Error404</action>
+			</system_action>
+
+			<system_action name="login">
+				<module>Web</module>
+				<action>Login</action>
+			</system_action>
+
+			<system_action name="module_disabled">
+				<module>Web</module>
+				<action>ModuleDisabled</action>
+			</system_action>
+
+			<system_action name="secure">
+				<module>Web</module>
+				<action>Secure</action>
+			</system_action>
+
+			<system_action name="unavailable">
+				<module>Web</module>
+				<action>Unavailable</action>
+			</system_action>
+
+		</system_actions>
+
+		<settings>
+			<setting name="app_name">My Project</setting>
+
+			<setting name="available">true</setting>
+			<setting name="debug">false</setting>
+			<setting name="modpub">/modpub</setting>
+
+			<setting name="use_database">false</setting>
+			<setting name="use_logging">false</setting>
+			<setting name="use_routing">true</setting>
+			<setting name="use_security">true</setting>
+			<setting name="use_translation">false</setting>
+		</settings>
+
+		<exception_templates>
+			<exception_template>%core.agavi_dir%/exception/templates/shiny.php</exception_template>
+			<exception_template context="console">%core.agavi_dir%/exception/templates/plaintext.php</exception_template>
+		</exception_templates>
+
+	</configuration>
+
+	<configuration environment="development">
+		<settings>
+			<setting name="debug">true</setting>
+		</settings>
+	</configuration>
+
+</configurations>
