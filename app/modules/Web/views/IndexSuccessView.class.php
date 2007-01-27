@@ -1,12 +1,11 @@
 <?php
 
-class Web_IndexSuccessView extends AgaviView
+class Web_IndexSuccessView extends ChuckwallaWebBaseView
 {
-	public function execute(AgaviRequestDataHolder $rd)
+	public function executeHtml(AgaviRequestDataHolder $rd)
 	{
-		$this->loadLayout();
+		parent::setupHtml($rd);
 
-		// set the title
 		$this->setAttribute('_title', 'Welcome - Chuckwalla Bot');
 	}
 }
