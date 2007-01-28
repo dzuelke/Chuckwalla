@@ -23,7 +23,7 @@
 			<li><a href="#"><img src="images/icons/email_edit.png" alt="" /></a><a href="#"><img src="images/icons/vcard.png" alt="" /></a>eremit</li>
 			<li><a href="#"><img src="images/icons/vcard.png" alt="" /></a>GMFlash</li>
 			<li><a href="#"><img src="images/icons/vcard.png" alt="" /></a>horros</li>
-			<li><a href="#"><img src="images/icons/email_edit.png" alt="" /></a><a href="#"><img src="images/icons/vcard.png" alt="" /></a>kaos</li>
+			<li><a href="#"><img src="images/icons/email_edit.png" alt="" /></a><a href="#" class="userinfo" id="userinfo-123"><img src="images/icons/vcard.png" alt="" /></a>kaos</li>
 			<li><a href="#"><img src="images/icons/vcard.png" alt="" /></a>luke`_</li>
 			<li><a href="#"><img src="images/icons/email_edit.png" alt="" /></a><a href="#"><img src="images/icons/vcard.png" alt="" /></a>MrJeep</li>
 			<li><a href="#"><img src="images/icons/email_edit.png" alt="" /></a><a href="#"><img src="images/icons/vcard.png" alt="" /></a>RossC0</li>

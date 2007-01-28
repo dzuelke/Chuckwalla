@@ -37,5 +37,7 @@
 		</div>
 	</div>
 	<div id="footer">Powered by <a href="http://www.agavi.org/">Chuckwalla</a></div>
+	<div id="lightbox" style='display:none;'><div id="lightbox-content"></div><div id="lightbox-close"><a href="#">Close</a></div></div>
+	<div id="overlay" style='display:none;'></div>
 </body>
 </html>

@@ -21,7 +21,31 @@ var Rules = {
 		  	}
 		});
 	Event.stop(event);
-  }
+  },
+
+  '.userinfo:click' : function(el, event) {
+		if (!el.id)
+			el = el.parentNode;
+		var userid = el.id.split('-')[1];
+		new Ajax.Request('/info',{
+			method: 'post',
+			parameters: 'user='+userid,
+			onSuccess: function(transport) {
+				var json = transport.responseText.parseJSON();
+				$('lightbox-content').innerHTML = json.content;
+				$('lightbox').show();
+				$('overlay').show();	
+		  	}	
+		});
+   },
+
+	'#lightbox-close:click' : function(el, event) {
+		$('lightbox-content').innerHTML = '';
+		$('lightbox').hide();
+		$('overlay').hide();
+		Event.stop(e);	
+   }
+
 }
 
 function onload () {EventSelectors.start(Rules);}
