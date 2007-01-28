@@ -25,6 +25,10 @@ class IRCConnection {
 		$parameters['classes.server_peer'] = isset($parameters['classes.server_peer']) ? $parameters['classes.server_peer'] : 'IRCServerPeer';
 		$parameters['classes.client_peer'] = isset($parameters['classes.client_peer']) ? $parameters['classes.client_peer'] : 'IRCClientPeer';
 		
+		$parameters['sendq.delay'] = isset($parameters['sendq.delay']) ? $parameters['sendq.delay'] : 2000;
+		$parameters['sendq.max_at_once'] = isset($parameters['sendq.max_at_once']) ? $parameters['sendq.max_at_once'] : 10;
+		$parameters['sendq.in'] = isset($parameters['sendq.in']) ? $parameters['sendq.in'] : 5000;
+		
 		$this->parameters = $parameters;
 		
 		if (isset($parameters['client.hostname'])) {
