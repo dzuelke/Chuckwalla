@@ -11,7 +11,7 @@ class IRCConnection {
 	
 	public function __construct ($parameters = array()) {
 		
-		$self = new IRCClient(
+		$this->self = new IRCClient(
 			array(
 				'nickname' => $parameters['client.nickname'][0],
 				'username' => $parameters['client.username'],
