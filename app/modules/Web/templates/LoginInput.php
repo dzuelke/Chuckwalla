@@ -11,7 +11,7 @@
 </dl>
 <dl>
 <dt><label for="remember">Remember Me</label></dt>
-<dd><input type="checkbox" name="remember" id="remember" <?php if ($t['email']) echo 'checked'; ?>/></dd>
+<dd><input type="checkbox" name="remember" id="remember" <?php if ($t['email']) echo 'checked="true"'; ?>/></dd>
 </dl>
 <div class='submit'>
 	<input type="submit" name="login" id="login" value="login" />
