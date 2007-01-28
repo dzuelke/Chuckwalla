@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <configurations>
 	<configuration>
+		<hostname>irc.freenode.net</hostname>
+		<port>6667</port>
+		<nickname>AgaviBot</nickname>
+		<realname>AgaviBot</realname>
+		<usermode>0</usermode>
+		<username>mee</username>
+		<channels>
+			<channel>#testkaos</channel>
+		</channels>
+		<debug>15</debug><!-- SMARTIRC_DEBUG_NOTICE | SMARTIRC_DEBUG_CONNECTION | SMARTIRC_DEBUG_SOCKET -->
+	</configuration>
+	
+	<configuration environment="development-dominik">
+		<hostname>venus.elysiumhq.com</hostname>
+		<port>7000</port>
+		<channels>
+			<channel>#testkaos</channel>
+		</channels>
+	</configuration>
+
+	<configuration environment="development-1.+">
+		<debug>4095</debug><!-- SMARTIRC_DEBUG_ALL -->
 	</configuration>
 </configurations>
