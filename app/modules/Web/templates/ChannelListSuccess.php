@@ -11,3 +11,15 @@
 	</dd>
 </dl>
 <?php endforeach; ?>
+
+<ul>
+	<li>
+		<div>#agavi</div>
+		<ul>
+			<li><a href="#">splatch</a></li>
+			<li><a href="#">MrJeep</a></li>
+			<li><a href="#">RossC0</a></li>
+			<li><a href="#">Wombert</a></li>
+		</ul>
+	</li>
+</ul>

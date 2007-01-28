@@ -15,19 +15,29 @@
 </head>
 <body>
 	<div id="header">
-		<?php echo $slots['header']; ?>
-	</div>	
+		<h1 class="siteHeader"><?php echo AgaviConfig::get('core.app_name'); ?></h1>
+		<!-- <div>
+		<div id="menu">
+		<ul>
+			<?php if(!$us->isAuthenticated()): ?>
+				<li><a href="<?php echo $ro->gen('login'); ?>">Login</a></li>
+			<?php else: ?>
+				<li><a href="#">Messages 2</a></li>
+				<li><a href="<?php echo $ro->gen('account'); ?>">Account Management</a></li>
+				<li><a href="<?php echo $ro->gen('login').'/logout'; ?>">Logout</a></li>
+			<?php endif; ?>
+		</ul>
+		</div>
+		</div> -->
+	</div>
 	<div id="content">
-		<div id="sidebar">
-			<?php echo $slots['sidebar']; ?>
+		<div id="sidebar"> 
+<?php echo $slots['sidebar']; ?>
 		</div>
 		<div id="core" class="<?php echo (array_key_exists('coreClass', $t)) ? $t['coreClass'] : 'content' ;?>">
-			<?php echo $slots['content']; ?>
+<?php echo $slots['content']; ?>
 		</div>
 	</div>
-	<div id="logo" class="transparent50"></div>
-	<div id="footer">
-		Powered by Chuckwalla
-	</div>
+	<div id="footer">Powered by <a href="http://www.agavi.org/">Chuckwalla</a></div>
 </body>
 </html>

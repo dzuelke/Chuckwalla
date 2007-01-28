@@ -14,7 +14,7 @@ abbr,acronym {border:0;}
 body {
 	background-color:#FFFFFF;
 	font-family: 'Trebuchet MS', Verdana, Tahoma, Arial, Helvetica, sans-serif;
-	font-size: 62.5%; /* http://www.clagnut.com/blog/348/ */
+	font-size: 80%; /* http://www.clagnut.com/blog/348/ */
 	line-height: 1em; /* http://meyerweb.com/eric/thoughts/2006/02/08/unitless-line-heights/ */
 	color: #000;
 }
