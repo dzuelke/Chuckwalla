@@ -3,7 +3,7 @@
 class ChuckwallaBotBaseView extends ChuckwallaBaseView
 {
 	public function setupIrc(AgaviRequestDataHolder $rd)
-	{echo "setup\n\n\n\n\n";
+	{
 		$this->loadLayout();
 
 		$ircR = $this->getContext()->getRequest()->getAttribute('irc_request', 'org.agavi.Chuckwalla.irc_params');

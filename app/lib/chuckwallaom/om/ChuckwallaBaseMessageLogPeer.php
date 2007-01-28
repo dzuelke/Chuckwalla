@@ -24,7 +24,7 @@ abstract class ChuckwallaBaseMessageLogPeer implements AgaviISingletonModel {
 	const CLASS_DEFAULT = 'chuckwallaom.ChuckwallaMessageLog';
 
 	/** The total number of columns. */
-	const NUM_COLUMNS = 5;
+	const NUM_COLUMNS = 6;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -44,6 +44,9 @@ abstract class ChuckwallaBaseMessageLogPeer implements AgaviISingletonModel {
 
 	/** the column name for the MESSAGE field */
 	const MESSAGE = 'message_log.MESSAGE';
+
+	/** the column name for the MESSAGE_DATE field */
+	const MESSAGE_DATE = 'message_log.MESSAGE_DATE';
 
 	/**
 	 * An identiy map to hold any loaded instances of ChuckwallaMessageLog objects.
@@ -66,10 +69,10 @@ abstract class ChuckwallaBaseMessageLogPeer implements AgaviISingletonModel {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('Id', 'Type', 'NickId', 'ChannelId', 'Message', ),
-		BasePeer::TYPE_COLNAME => array (self::ID, self::TYPE, self::NICK_ID, self::CHANNEL_ID, self::MESSAGE, ),
-		BasePeer::TYPE_FIELDNAME => array ('id', 'type', 'nick_id', 'channel_id', 'message', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
+		BasePeer::TYPE_PHPNAME => array ('Id', 'Type', 'NickId', 'ChannelId', 'Message', 'MessageDate', ),
+		BasePeer::TYPE_COLNAME => array (self::ID, self::TYPE, self::NICK_ID, self::CHANNEL_ID, self::MESSAGE, self::MESSAGE_DATE, ),
+		BasePeer::TYPE_FIELDNAME => array ('id', 'type', 'nick_id', 'channel_id', 'message', 'message_date', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
 	);
 
 	/**
@@ -79,10 +82,10 @@ abstract class ChuckwallaBaseMessageLogPeer implements AgaviISingletonModel {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Type' => 1, 'NickId' => 2, 'ChannelId' => 3, 'Message' => 4, ),
-		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::TYPE => 1, self::NICK_ID => 2, self::CHANNEL_ID => 3, self::MESSAGE => 4, ),
-		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'type' => 1, 'nick_id' => 2, 'channel_id' => 3, 'message' => 4, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
+		BasePeer::TYPE_PHPNAME => array ('Id' => 0, 'Type' => 1, 'NickId' => 2, 'ChannelId' => 3, 'Message' => 4, 'MessageDate' => 5, ),
+		BasePeer::TYPE_COLNAME => array (self::ID => 0, self::TYPE => 1, self::NICK_ID => 2, self::CHANNEL_ID => 3, self::MESSAGE => 4, self::MESSAGE_DATE => 5, ),
+		BasePeer::TYPE_FIELDNAME => array ('id' => 0, 'type' => 1, 'nick_id' => 2, 'channel_id' => 3, 'message' => 4, 'message_date' => 5, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
 	);
 
 	/**
@@ -173,6 +176,8 @@ abstract class ChuckwallaBaseMessageLogPeer implements AgaviISingletonModel {
 		$criteria->addSelectColumn(ChuckwallaMessageLogPeer::CHANNEL_ID);
 
 		$criteria->addSelectColumn(ChuckwallaMessageLogPeer::MESSAGE);
+
+		$criteria->addSelectColumn(ChuckwallaMessageLogPeer::MESSAGE_DATE);
 
 	}
 

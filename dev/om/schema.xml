@@ -69,6 +69,7 @@
 		<column name="nick_id" required="true" type="INTEGER" />
 		<column name="channel_id" required="true" type="INTEGER" />
 		<column name="message" required="true" type="LONGVARCHAR" />
+		<column name="message_date" required="true" type="TIMESTAMP" />
 		<foreign-key foreignTable="channel" onDelete="CASCADE">
 			<reference local="channel_id" foreign="id" />
 		</foreign-key>

@@ -140,6 +140,7 @@ CREATE TABLE `message_log`
 	`nick_id` INTEGER  NOT NULL,
 	`channel_id` INTEGER  NOT NULL,
 	`message` TEXT  NOT NULL,
+	`message_date` DATETIME  NOT NULL,
 	PRIMARY KEY (`id`),
 	INDEX `message_log_FI_1` (`channel_id`),
 	CONSTRAINT `message_log_FK_1`

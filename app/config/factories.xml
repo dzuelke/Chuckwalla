@@ -37,7 +37,9 @@
 	
 	<configuration context="ircbot">
 		
-		<controller class="ChuckwallaIrcbotController" />
+		<controller class="ChuckwallaIrcbotController">
+			<parameter name="max_executions">0</parameter>
+		</controller>
 		
 		<database_manager class="AgaviDatabaseManager" />
 		

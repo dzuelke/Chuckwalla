@@ -57,6 +57,13 @@ abstract class ChuckwallaBaseMessageLog extends BaseObject implements Persistent
 	 */
 	protected $message;
 
+
+	/**
+	 * The value for the message_date field.
+	 * @var        int
+	 */
+	protected $message_date;
+
 	/**
 	 * @var        Channel
 	 */
@@ -134,6 +141,37 @@ abstract class ChuckwallaBaseMessageLog extends BaseObject implements Persistent
 	{
 
 		return $this->message;
+	}
+
+	/**
+	 * Get the [optionally formatted] [message_date] column value.
+	 * 
+	 * @param      string $format The date/time format string (either date()-style or strftime()-style).
+	 *							If format is NULL, then the integer unix timestamp will be returned.
+	 * @return     mixed Formatted date/time value as string or integer unix timestamp (if format is NULL).
+	 * @throws     PropelException - if unable to convert the date/time to timestamp.
+	 */
+	public function getMessageDate($format = 'Y-m-d H:i:s')
+	{
+
+		if ($this->message_date === null || $this->message_date === '') {
+			return null;
+		} elseif (!is_int($this->message_date)) {
+			// a non-timestamp value was set externally, so we convert it
+			$ts = strtotime($this->message_date);
+			if ($ts === -1 || $ts === false) { // in PHP 5.1 return value changes to FALSE
+				throw new PropelException("Unable to parse value of [message_date] as date/time value: " . var_export($this->message_date, true));
+			}
+		} else {
+			$ts = $this->message_date;
+		}
+		if ($format === null) {
+			return $ts;
+		} elseif (strpos($format, '%') !== false) {
+			return strftime($format, $ts);
+		} else {
+			return date($format, $ts);
+		}
 	}
 
 	/**
@@ -225,6 +263,30 @@ abstract class ChuckwallaBaseMessageLog extends BaseObject implements Persistent
 	} // setMessage()
 
 	/**
+	 * Set the value of [message_date] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     void
+	 */
+	public function setMessageDate($v)
+	{
+
+		if ($v !== null && !is_int($v)) {
+			$ts = strtotime($v);
+			if ($ts === -1 || $ts === false) { // in PHP 5.1 return value changes to FALSE
+				throw new PropelException("Unable to parse date/time value for [message_date] from input: " . var_export($v, true));
+			}
+		} else {
+			$ts = $v;
+		}
+		if ($this->message_date !== $ts) {
+			$this->message_date = $ts;
+			$this->modifiedColumns[] = ChuckwallaMessageLogPeer::MESSAGE_DATE;
+		}
+
+	} // setMessageDate()
+
+	/**
 	 * Hydrates (populates) the object variables with values from the database resultset.
 	 *
 	 * An offset (0-based "start column") is specified so that objects can be hydrated
@@ -246,12 +308,13 @@ abstract class ChuckwallaBaseMessageLog extends BaseObject implements Persistent
 			$this->nick_id = ($row[$startcol + 2] !== null) ? (int) $row[$startcol + 2] : null;
 			$this->channel_id = ($row[$startcol + 3] !== null) ? (int) $row[$startcol + 3] : null;
 			$this->message = $row[$startcol + 4];
+			$this->message_date = $row[$startcol + 5]; // FIXME - this is a timestamp, we should maybe convert it (?)
 			$this->resetModified();
 
 			$this->setNew(false);
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 5; // 5 = ChuckwallaMessageLogPeer::NUM_COLUMNS - ChuckwallaMessageLogPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 6; // 6 = ChuckwallaMessageLogPeer::NUM_COLUMNS - ChuckwallaMessageLogPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating MessageLog object", $e);
@@ -510,6 +573,9 @@ abstract class ChuckwallaBaseMessageLog extends BaseObject implements Persistent
 			case 4:
 				return $this->getMessage();
 				break;
+			case 5:
+				return $this->getMessageDate();
+				break;
 			default:
 				return null;
 				break;
@@ -535,6 +601,7 @@ abstract class ChuckwallaBaseMessageLog extends BaseObject implements Persistent
 			$keys[2] => $this->getNickId(),
 			$keys[3] => $this->getChannelId(),
 			$keys[4] => $this->getMessage(),
+			$keys[5] => $this->getMessageDate(),
 		);
 		return $result;
 	}
@@ -581,6 +648,9 @@ abstract class ChuckwallaBaseMessageLog extends BaseObject implements Persistent
 			case 4:
 				$this->setMessage($value);
 				break;
+			case 5:
+				$this->setMessageDate($value);
+				break;
 		} // switch()
 	}
 
@@ -609,6 +679,7 @@ abstract class ChuckwallaBaseMessageLog extends BaseObject implements Persistent
 		if (array_key_exists($keys[2], $arr)) $this->setNickId($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setChannelId($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setMessage($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setMessageDate($arr[$keys[5]]);
 	}
 
 	/**
@@ -625,6 +696,7 @@ abstract class ChuckwallaBaseMessageLog extends BaseObject implements Persistent
 		if ($this->isColumnModified(ChuckwallaMessageLogPeer::NICK_ID)) $criteria->add(ChuckwallaMessageLogPeer::NICK_ID, $this->nick_id);
 		if ($this->isColumnModified(ChuckwallaMessageLogPeer::CHANNEL_ID)) $criteria->add(ChuckwallaMessageLogPeer::CHANNEL_ID, $this->channel_id);
 		if ($this->isColumnModified(ChuckwallaMessageLogPeer::MESSAGE)) $criteria->add(ChuckwallaMessageLogPeer::MESSAGE, $this->message);
+		if ($this->isColumnModified(ChuckwallaMessageLogPeer::MESSAGE_DATE)) $criteria->add(ChuckwallaMessageLogPeer::MESSAGE_DATE, $this->message_date);
 
 		return $criteria;
 	}
@@ -686,6 +758,8 @@ abstract class ChuckwallaBaseMessageLog extends BaseObject implements Persistent
 		$copyObj->setChannelId($this->channel_id);
 
 		$copyObj->setMessage($this->message);
+
+		$copyObj->setMessageDate($this->message_date);
 
 
 		$copyObj->setNew(true);
