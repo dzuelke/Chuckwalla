@@ -49,4 +49,22 @@ class ChuckwallaChannelPeer extends ChuckwallaBaseChannelPeer {
 		return $channel;
 	}
 
+
+	public function retrieveByName($name)
+	{
+		$criteria = new Criteria(ChuckwallaChannelPeer::DATABASE_NAME);
+
+		$criteria->add(ChuckwallaChannelPeer::NAME, $name);
+
+		$v = $this->getContext()->getModel('ChuckwallaChannelPeer')->doSelect($criteria);
+
+		if(empty($v)) {
+			return null;
+		} else {
+			$channel = $v[0];
+		}
+
+		return $channel;
+	}
+
 } // ChuckwallaChannelPeer
