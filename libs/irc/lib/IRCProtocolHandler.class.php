@@ -3,6 +3,8 @@ class IRCProtocolHandler extends IRCHandler {
 	
 	public function __construct () {
 		
+		
+		
 	}
 
 	/*
