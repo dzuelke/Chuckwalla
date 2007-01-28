@@ -56,4 +56,11 @@
 		<column name="ts_lastlogin" required="true" type="TIMESTAMP" />
 		<column name="locale" required="true" type="VARCHAR" size="255" default="en@locale=Europe/London" />
 	</table>
+
+	<table name="commands">
+		<column name="id" required="true" primaryKey="true" autoIncrement="true" type="INTEGER" />
+		<column name="command" required="true" type="VARCHAR" size="255" />
+		<column name="reply_to" required="true" type="VARCHAR" size="255" />
+	</table>
+
 </database>

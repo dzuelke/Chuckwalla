@@ -111,5 +111,20 @@ CREATE TABLE `user`
 	PRIMARY KEY (`id`)
 )Type=InnoDB;
 
+#-----------------------------------------------------------------------------
+#-- commands
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `commands`;
+
+
+CREATE TABLE `commands`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`command` VARCHAR(255)  NOT NULL,
+	`reply_to` VARCHAR(255)  NOT NULL,
+	PRIMARY KEY (`id`)
+)Type=InnoDB;
+
 # This restores the fkey checks, after having unset them earlier
 SET FOREIGN_KEY_CHECKS = 1;
