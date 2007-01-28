@@ -21,6 +21,7 @@ require IRC_BASE . '/IRCBuffer.class.php';
 require IRC_BASE . '/IRCHandler.class.php';
 require IRC_BASE . '/IRCProtocol.class.php';
 require IRC_BASE . '/IRCProtocolHandler.class.php';
+require IRC_BASE . '/IRCSocketQueue.class.php';
 require IRC_BASE . '/IRCSocket.class.php';
 
 require IRC_BASE . '/IRCConnection.class.php';

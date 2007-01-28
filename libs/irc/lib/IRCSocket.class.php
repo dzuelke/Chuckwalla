@@ -7,6 +7,7 @@ class IRCSocket {
 	protected $streamContext = null;
 	protected $handlers = array();
 	protected $connection = null;
+	protected $queue = null;
 	
 	const ACTION_OPEN = 0x01;
 	const ACTION_CLOSE = 0x02;
@@ -26,6 +27,8 @@ class IRCSocket {
 		);
 		
 		$this->streamContext = $context;
+		
+		$this->queue = new IRCSocketQueue($this->getConnection());
 		
 	}
 	
@@ -152,9 +155,15 @@ class IRCSocket {
 	
 	public function send ($buffer, $parameters = array()) {
 		
-		fwrite($this->socket, $buffer . "\n");
+		$this->queue->set(array_merge($parameters, array('buffer' => $buffer)));
 		
-		$this->executeHandlers(self::ACTION_WRITE, array_merge($parameters, array('buffer' => $buffer)));
+	}
+	
+	protected function sendReal ($parameters) {
+		
+		fwrite($this->socket, $parameters['buffer'] . "\n");
+		
+		$this->executeHandlers(self::ACTION_WRITE, $parameters);
 		
 	}
 	
@@ -177,6 +186,10 @@ class IRCSocket {
 	public function execute () {
 		
 		static $buffer = '';
+		
+		if ($send = $this->queue->execute()) {
+			$this->sendReal($send);
+		}
 		
 		if (feof($this->socket)) {
 			

@@ -25,6 +25,8 @@ class IRCConnection {
 		$parameters['classes.server_peer'] = isset($parameters['classes.server_peer']) ? $parameters['classes.server_peer'] : 'IRCServerPeer';
 		$parameters['classes.client_peer'] = isset($parameters['classes.client_peer']) ? $parameters['classes.client_peer'] : 'IRCClientPeer';
 		
+		$this->parameters = $parameters;
+		
 		if (isset($parameters['client.hostname'])) {
 			$context = stream_context_create(array('socket' => array('bindto' => $parameters['client.hostname'] . ':0')));
 			$this->socket = new $parameters['classes.socket']($this, $parameters['server.hostname'], $parameters['server.port'], $context);
@@ -41,8 +43,6 @@ class IRCConnection {
 		
 		$this->clientPeer = new $parameters['classes.client_peer']($this);
 		$this->clientPeer->set($this->self);
-		
-		$this->parameters = $parameters;
 		
 	}
 	
