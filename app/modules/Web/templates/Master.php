@@ -5,9 +5,9 @@
 	<title><?php echo $t['_title']; ?></title>
 	<base href="<?php echo $ro->getBaseHref(); ?>" />
 	<title>Chuckwalla Bot</title>
-	<link rel="stylesheet" type="text/css" href="css/base.css?ver=1" />
-	<link rel="stylesheet" type="text/css" href="css/screen.css?ver=1" />
-	<link rel="stylesheet" type="text/css" media="print" href="css/print.css?ver=1" />
+	<link rel="stylesheet" type="text/css" href="css/base.css?ver=2" />
+	<link rel="stylesheet" type="text/css" href="css/screen.css?ver=2" />
+	<link rel="stylesheet" type="text/css" media="print" href="css/print.css?ver=2" />
 	<script src="js/prototype.js" type="text/javascript"></script>
 	<script src="js/scriptaculous/scriptaculous.js" type="text/javascript"></script>
 	<script src="js/eventSelectors.js" type="text/javascript"></script>
@@ -15,20 +15,18 @@
 </head>
 <body>
 	<div id="header">
+				<div id="menu">
+					<ul>
+		<?php if(!$us->isAuthenticated()): ?>
+						<li><a href="<?php echo $ro->gen('login'); ?>">Login</a></li>
+		<?php else: ?>
+						<li><a href="#">2 new memos</a></li>
+						<li><a href="<?php echo $ro->gen('account'); ?>">My Account</a></li>
+						<li><a href="<?php echo $ro->gen('login.logout'); ?>">Logout</a></li>
+		<?php endif; ?>
+					</ul>
+				</div>
 		<h1 class="siteHeader"><?php echo AgaviConfig::get('core.app_name'); ?></h1>
-		<!-- <div>
-		<div id="menu">
-		<ul>
-			<?php if(!$us->isAuthenticated()): ?>
-				<li><a href="<?php echo $ro->gen('login'); ?>">Login</a></li>
-			<?php else: ?>
-				<li><a href="#">Messages 2</a></li>
-				<li><a href="<?php echo $ro->gen('account'); ?>">Account Management</a></li>
-				<li><a href="<?php echo $ro->gen('login').'/logout'; ?>">Logout</a></li>
-			<?php endif; ?>
-		</ul>
-		</div>
-		</div> -->
 	</div>
 	<div id="content">
 		<div id="sidebar"> 
