@@ -25,7 +25,7 @@ class IRCProtocolHandler extends IRCHandler {
 	public function handleOpen (IRCConnection $connection, $parameters) {
 		
 		$nickname = $connection->getParameter('client.nickname');
-		$this->send(new IRCOutboundMessage(IRCProtocol::MESSAGE_NICK, $nickname[0]));
+		$this->send(new IRCOutboundMessage('NICK', $nickname[0]));
 		$this->send(new IRCOutboundMessage('USER',
 			array(
 				$connection->getParameter('client.username'),
@@ -35,6 +35,35 @@ class IRCProtocolHandler extends IRCHandler {
 			)
 		));
 		
+		$this->bind(IRCSocket::ACTION_READ, '_handle_nick_error', array(IRCProtocol::ERROR_NICKNAMEINUSE => '##'), array(array($this, 'handleNickError')));
+		$this->bind(IRCSocket::ACTION_READ, '_handle_welcome', array(IRCProtocol::REPLY_WELCOME => '##'), array(array($this, 'handleWelcome')));
+		
+	}
+	
+	public function handleNickError (IRCConnection $connection, $parameters, IRCInboundMessage $message) {
+		
+		static $try = 0;
+		
+		$nicknames = $connection->getParameter('client.nickname');
+		
+		$try ++;
+		
+		if (!isset($nicknames[$try])) {
+			
+			$this->send(new IRCOutboundMessage('QUIT'));
+			$this->getSocket()->disconnect();
+			return;
+			
+		}
+		
+		$this->send(new IRCOutboundMessage('NICK', $nicknames[$try]));
+		
+	}
+	
+	public function handleWelcome (IRCConnection $connection, $parameters, IRCInboundMessage $message) {
+		
+		$this->unbind(IRCSocket::ACTION_READ, '_handle_nick_error');
+		
 	}
 	
 	public function bind ($action, $identifier, $limits, $callbacks) {
@@ -43,6 +72,19 @@ class IRCProtocolHandler extends IRCHandler {
 			'limits' => $limits,
 			'callbacks' => $callbacks
 		);
+		
+	}
+	
+	public function unbind ($action, $identifier) {
+		
+		if (isset($this->callbacks[$action][$identifier])) {
+			
+			unset($this->callbacks[$action][$identifier]);
+			return true;
+			
+		}
+		
+		return false;
 		
 	}
 

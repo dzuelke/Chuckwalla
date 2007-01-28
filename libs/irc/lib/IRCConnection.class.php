@@ -21,7 +21,7 @@ class IRCConnection {
 		);
 		
 		$parameters['classes.socket'] = isset($parameters['classes.socket']) ? $parameters['classes.socket'] : 'IRCSocket';
-		$parameters['classes.protocol_handlers'] = isset($parameters['classes.protocol_handlers']) ? $parameters['classes.protocol_handlers'] : array('protocol' => 'IRCProtocolHandler');
+		$parameters['classes.protocol_handlers'] = isset($parameters['classes.protocol_handlers']) ? $parameters['classes.protocol_handlers'] : array('_' => 'IRCProtocolHandler');
 		$parameters['classes.server_peer'] = isset($parameters['classes.server_peer']) ? $parameters['classes.server_peer'] : 'IRCServerPeer';
 		$parameters['classes.client_peer'] = isset($parameters['classes.client_peer']) ? $parameters['classes.client_peer'] : 'IRCClientPeer';
 		
@@ -79,6 +79,12 @@ class IRCConnection {
 	public function getClient () {
 		
 		return $this->self;
+		
+	}
+	
+	public function getDefaultHandler () {
+		
+		return $this->getSocket()->hasHandler('_') ? $this->getSocket()->getHandler('_') : null;
 		
 	}
 	
