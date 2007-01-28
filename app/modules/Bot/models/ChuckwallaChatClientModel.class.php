@@ -152,7 +152,7 @@ class Bot_ChuckwallaChatClientModel extends ChuckwallaBaseModel implements Agavi
 	{
 		$msg = $this->splitIrcMessage($message->getBuffer()->getRawBuffer());
 		$channel = $this->getAndCreateChannel($msg->params[1]);
-		$channel->setTopic($msg->params[2]);
+		$channel->setTopic(utf8_encode(substr($msg->params[2], 0, 255)));
 		$channel->save();
 	}
 	public function onChannelWho(IRCConnection $connection, $parameters, IRCInboundMessage $message)
@@ -208,7 +208,7 @@ class Bot_ChuckwallaChatClientModel extends ChuckwallaBaseModel implements Agavi
 				}
 			}
 
-			$identity->setRealname(implode(array_slice($msg->params, 7), ' '));
+			$identity->setRealname(utf8_encode(substr(implode(array_slice($msg->params, 7), ' '), 0, 250)));
 
 			$identity->save();
 			$user->save();
@@ -286,20 +286,6 @@ class Bot_ChuckwallaChatClientModel extends ChuckwallaBaseModel implements Agavi
 			$handler->bind(IRCSOcket::ACTION_READ, $x++, array(IRCProtocol::MESSAGE_JOIN => '##', IRCProtocol::MESSAGE_PART => '##'), array(array($this, 'onUserJoined')));
 
 		}
-
-/*
-		$this->ircConn->registerActionHandler(SMARTIRC_TYPE_LOGIN, '', $this, 'onConnected');
-
-		// this is for our own user tracking
-		$this->ircConn->registerActionHandler(SMARTIRC_TYPE_TOPIC, '', $this, 'onChannelTopic');
-		$this->ircConn->registerActionHandler(SMARTIRC_TYPE_NAME, '', $this, 'onChannelUserList');
-		$this->ircConn->registerActionHandler(SMARTIRC_TYPE_WHO, '', $this, 'onChannelWho');
-
-		$this->ircConn->registerActionHandler(SMARTIRC_TYPE_QUIT, '', $this, 'onUserQuit');
-
-		$this->ircConn->registerActionHandler(SMARTIRC_TYPE_JOIN | SMARTIRC_TYPE_PART, '', $this, 'onUserJoined');
-*/
-//		$this->ircConn->registerActionHandler(SMARTIRC_TYPE_CHANNEL, '', $this, 'onMessage');
 	}
 
 	public function getConnection()
@@ -323,9 +309,11 @@ class Bot_ChuckwallaChatClientModel extends ChuckwallaBaseModel implements Agavi
 
 	public function executeConnectCommands()
 	{
-		$this->join('#testkaos');
-//		$this->ircConn->message(SMARTIRC_TYPE_QUERY, 'NickServ', 'IDENTIFY AgaviBot test0r');
-//		$this->ircConn->message(SMARTIRC_TYPE_QUERY, 'NickServ', 'IDENTIFY r0ck3t33r');
+		if(isset($this->connectionConfig['channels']) && is_array($this->connectionConfig['channels'])) {
+			foreach($this->connectionConfig['channels'] as $channel) {
+				$this->join($channel);
+			}
+		}
 	}
 
 	public function who($channel)
@@ -345,7 +333,6 @@ class Bot_ChuckwallaChatClientModel extends ChuckwallaBaseModel implements Agavi
 
 	public function message($target, $message)
 	{
-		echo "sending message $message to $target\n\n";
 		$this->ircConn->getDefaultHandler()->send(new IRCOutboundMessage(IRCProtocol::MESSAGE_PRIVMSG, array($target, $message)));
 	}
 

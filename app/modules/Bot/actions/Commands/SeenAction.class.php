@@ -4,7 +4,6 @@ class Bot_SeenAction extends ChuckwallaBaseAction
 {
 	public function executeRead(AgaviRequestDataHolder $rd)
 	{
-		echo "seen\n\n\n";
 		$nick = $rd->getParameter('nickname');
 		$this->setAttribute('nickname', $nick);
 

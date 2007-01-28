@@ -8,12 +8,12 @@
 		<usermode>0</usermode>
 		<username>mee</username>
 		<channels>
-			<channel>#testkaos</channel>
+			<channel>#agavi</channel>
 		</channels>
 		<debug>15</debug><!-- SMARTIRC_DEBUG_NOTICE | SMARTIRC_DEBUG_CONNECTION | SMARTIRC_DEBUG_SOCKET -->
 	</configuration>
 	
-	<configuration environment="development-dominik">
+	<configuration environment="development-1dominik">
 		<hostname>venus.elysiumhq.com</hostname>
 		<port>7000</port>
 		<channels>
