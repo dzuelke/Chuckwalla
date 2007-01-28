@@ -9,7 +9,6 @@ class Web_AccountAction extends ChuckwallaWebBaseAction
 	
 	 public function executeWrite(AgaviRequestDataHolder $rd)
 	 {
-				print_r($_SERVER);die();
 		$user = $this->getContext()->getUser();
 		$propelUser = $user->getPropelUser();
 		$propelUser->fromArray($rd->getParameters(), BasePeer::TYPE_FIELDNAME);
