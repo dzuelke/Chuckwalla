@@ -19,7 +19,7 @@ class IRCServer extends IRCUser {
 	
 	public function setPort ($port) {
 		
-		if (is_int($port) && $port >= 0 && $port < 65536) {
+		if (is_numeric($port) && $port >= 0 && $port < 65536) {
 			
 			$this->port = $port;
 			
