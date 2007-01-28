@@ -55,22 +55,24 @@ class IRCOutboundMessage extends IRCMessage {
 		
 	}
 	
-	public function format () {
-		
-		$value = '';
+	protected function formatValue () {
 		
 		if (is_array($this->value)) {
 			
-			$value = implode(' ', array_slice($this->value, 0, -1)) . ' :' . end($this->value);
+			return implode(' ', array_slice($this->value, 0, -1)) . ' :' . end($this->value);
 			
 		}
 		else {
 			
-			$value = $this->value;
+			return $this->value;
 			
 		}
 		
-		return $this->command . ' ' . $value;
+	}
+	
+	public function format () {
+		
+		return $this->command . ' ' . $this->formatValue();
 		
 	}
 	

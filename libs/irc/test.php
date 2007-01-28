@@ -6,7 +6,7 @@ require './lib/IRC.php';
 
 function omgfish (IRCConnection $connection, $parameters, IRCPeerInboundMessage $message) {
 	
-	$connection->getDefaultHandler()->send(new IRCOutboundMessage('PRIVMSG', array($message->getUser()->getNickname(), 'omg fish')));
+	$connection->getDefaultHandler()->send(new IRCPeerOutboundMessage('PRIVMSG', $message->getUser(), 'omg fish'));
 	
 }
 
