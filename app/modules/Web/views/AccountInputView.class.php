@@ -15,9 +15,10 @@ class Web_AccountInputView extends ChuckwallaWebBaseView
 
 	public function executeJson(AgaviRequestDataHolder $rd)
 	{
-		//parent::setupJson($rd);
-		$this->clearDecorator();
-		die('json');
+		parent::setupJson($rd);
+		$user = $this->getContext()->getUser()->getPropelUser();
+		$this->setAttribute('user', $user);
+		$this->getResponse()->setParameter('json', array('foo' => 'bar'));
 	}
 }
 

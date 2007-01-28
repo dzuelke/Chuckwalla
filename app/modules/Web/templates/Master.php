@@ -27,10 +27,13 @@
 			// Lets Add Ajax Submission by all forms with the class ajaxForm!
 			document.getElementsByClassName('ajaxForm').each( function (el) { 
 				Event.observe(el, 'submit', function (e) {
-					
+					var d = new Date();
+					var time = d.getTime();
+					var formVars = Form.serialize(el);
+					console.log(formVars);
 					new Ajax.Request(el.action, {
 				  		method: 'post',
-				  		parameters: Form.serialize(el),
+				  		parameters: formVars,
 				  		onSuccess: function(transport, json) {
 				    		console.log(transport);
 							//console.log(json);
