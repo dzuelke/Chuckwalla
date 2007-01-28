@@ -2,6 +2,21 @@
 
 class ChuckwallaIrcbotResponse extends AgaviResponse
 {
+	/**
+	 * The target of the response (either a channel or user)
+	 */
+	protected $target;
+
+	public function setTarget($target)
+	{
+		$this->target = $target;
+	}
+
+	public function getTarget()
+	{
+		return $this->target;
+	}
+
 	public function setRedirect($to)
 	{
 	}
@@ -16,6 +31,9 @@ class ChuckwallaIrcbotResponse extends AgaviResponse
 	 */
 	public function merge(AgaviResponse $otherResponse)
 	{
+		if(!$this->getTarget() && $otherResponse->getTarget()) {
+			$this->setTarget($otherResponse->getTarget());
+		}
 	}
 	
 	/**
@@ -39,6 +57,11 @@ class ChuckwallaIrcbotResponse extends AgaviResponse
 	 */
 	public function send(AgaviOutputType $outputType = null)
 	{
+		if($this->content) {
+			// only try to send something when there is content to send
+			$ircClient = $this->getContext()->getModel('ChuckwallaChatClient', 'Bot');
+			$ircClient->message($this->target, $this->content);
+		}
 	}
 	
 }

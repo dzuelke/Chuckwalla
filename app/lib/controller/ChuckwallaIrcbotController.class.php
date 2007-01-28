@@ -15,8 +15,23 @@ SMARTIRC_TYPE_CHANNEL | SMARTIRC_TYPE_JOIN | SMARTIRC_TYPE_ACTION | SMARTIRC_TYP
 		$chatModel->connectLoop();
 	}
 
+	protected function doDispatch($data)
+	{
+		$requestData = array(
+			'user' => $data->user,
+			'channel' => $data->channel,
+			'message' => $data->message,
+		);
+
+		$this->getContext()->getRequest()->clearParameters();
+		$this->getContext()->getRequest()->setAttribute('irc_request', $requestData, 'org.agavi.Chuckwalla.irc_params');
+		parent::dispatch();
+	}
+
 	public function logHandler($irc, $data)
 	{
+		echo "myHANDLE\n\n\n\n\n";
+		$this->doDispatch($data);
 		$msg = $this->getContext()->getModel('ChuckwallaChatClient', 'Bot')->splitIrcMessage($data->rawmessage);
 		var_dump($msg);
 
