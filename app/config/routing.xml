@@ -4,7 +4,7 @@
 		<routes>
 			
 			<!-- if requested via Prototype, we send back JSON instead of HTML -->
-			<route pattern="^XMLHttpRequest$" source="_SERVER[HTTP_X_REQUESTED_WITH]" output_type="json" />
+			<route pattern="^XMLHttpRequest$" source="_SERVER[HTTP_X_REQUESTED_WITH]" stop="false" output_type="json" />
 			
 			<!-- all URLs ending on /feed trigger Atom output -->
 			<route pattern="/feed$" stop="false" cut="true" output_type="atom" />
