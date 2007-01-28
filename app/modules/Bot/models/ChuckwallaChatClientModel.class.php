@@ -30,17 +30,24 @@ class Bot_ChuckwallaChatClientModel extends ChuckwallaBaseModel implements Agavi
 	protected function addUserToChannel($channel, $user)
 	{
 		if(!isset($this->channelNickMap[$channel][$user->getId()])) {
-			$linkObj = $this->getContext()->getModel('ChuckwallaChannelNick');
-			$linkObj->setChannelId($this->getAndCreateChannel($channel)->getId());
-			$linkObj->setNickId($user->getId());
+			if(!$this->getContext()->getModel('ChuckwallaChannelNickPeer')->retrieveByPK($this->getAndCreateChannel($channel)->getId(), $user->getId())) {
+				$linkObj = $this->getContext()->getModel('ChuckwallaChannelNick');
+				$linkObj->setChannelId($this->getAndCreateChannel($channel)->getId());
+				$linkObj->setNickId($user->getId());
+				$linkObj->save();
+			}
 			$this->channelNickMap[$channel][$user->getId()] = $user;
 		}
 	}
 
 	protected function removeUserFromChannel($channel, $user)
 	{
-		if(isset($this->channelNickMap[$channel][$user->id])) {
-			unset($this->channelNickMap[$channel][$user->id]);
+		if(isset($this->channelNickMap[$channel][$user->getId()])) {
+			unset($this->channelNickMap[$channel][$user->getId()]);
+			
+			if($linkObj = $this->getContext()->getModel('ChuckwallaChannelNickPeer')->retrieveByPK($this->getAndCreateChannel($channel)->getId(), $user->getId())) {
+				$linkObj->delete();
+			}
 		}
 	}
 
@@ -88,6 +95,18 @@ class Bot_ChuckwallaChatClientModel extends ChuckwallaBaseModel implements Agavi
 			foreach($msg->params as $channel) {
 				$this->removeUserFromChannel($channel, $user);
 			}
+			$c = new Criteria();
+			$c->add(ChuckwallaChannelNickPeer::NICK_ID, $user->getId());
+			$isInMoreChans = $this->getContext()->getModel('ChuckwallaChannelNickPeer')->doSelect($c);
+			if(!count($isInMoreChans)) {
+				// the user parted the last channel we're in, so lets flag him offline
+				$identity = $user->getOrCreateIrcIdentity();
+				$identity->setIsOnline(false);
+				$identity->setLastQuitMessage(isset($msg->params[1]) ? $msg->params[1] : '');
+				$identity->setLastQuitTime(time());
+				$identity->save();
+				$user->save();
+			}
 		}
 	}
 
@@ -107,7 +126,14 @@ class Bot_ChuckwallaChatClientModel extends ChuckwallaBaseModel implements Agavi
 					if($nick[0] == '*' || $nick[0] == '@' || $nick[0] == '%' || $nick[0] == '+') {
 						$nick = substr($nick, 1);
 					}
-					$this->addUserToChannel($channel, $this->getAndCreateUser($nick));
+
+					$user = $this->getAndCreateUser($nick);
+					$identity = $user->getOrCreateIrcIdentity();
+					if(!$identity->getIsOnline()) {
+						$identity->setIsOnline(true);
+						$identity->save();
+					}
+					$this->addUserToChannel($channel, $user);
 				}
 			}
 		} elseif($data->rawmessageex[1] == 366 /*RPL_ENDOFNAMES*/) {
@@ -144,6 +170,7 @@ class Bot_ChuckwallaChatClientModel extends ChuckwallaBaseModel implements Agavi
 			$c = new Criteria();
 			$c->add(ChuckwallaChannelNickPeer::CHANNEL_ID, $channelObj->getId());
 			$channelNicks = $user->getChannelNicks($c);
+
 			if(!$channelNicks) {
 				$channelNick = $this->getContext()->getModel('ChuckwallaChannelNick');
 				$channelNick->setChannel($channelObj);
@@ -152,6 +179,7 @@ class Bot_ChuckwallaChatClientModel extends ChuckwallaBaseModel implements Agavi
 				$channelNick = $channelNicks[0];
 			}
 
+			$identity->setIsOnline(true);
 			$identity->setIdent($data->rawmessageex[4]);
 			$identity->setHost($data->rawmessageex[5]);
 			$identity->setServer($data->rawmessageex[6]);
@@ -185,11 +213,28 @@ class Bot_ChuckwallaChatClientModel extends ChuckwallaBaseModel implements Agavi
 			$identity->save();
 			$user->save();
 			if($channel != '*') {
-				$channelNick->save();
 				$this->addUserToChannel($channel, $user);
 			}
 		}
 	}
+
+	public function onUserQuit($irc, $data)
+	{
+		$msg = $this->splitIrcMessage($data->rawmessage);
+		$nick = $this->getNickFromPrefix($msg->prefix);
+		$user = $this->getAndCreateUser($nick);
+		$identity = $user->getOrCreateIrcIdentity();
+		$identity->setIsOnline(false);
+		$identity->setLastQuitMessage(isset($msg->params[0]) ? $msg->params[0] : '');
+		$identity->setLastQuitTime(time());
+		// lets clear the channel associations
+		$c = new Criteria();
+		$c->add(ChuckwallaChannelNickPeer::NICK_ID, $user->getId());
+		$this->getContext()->getModel('ChuckwallaChannelNickPeer')->doDelete($c);
+		$identity->save();
+		$user->save();
+	}
+
 
 	public function onMessage($irc, $data)
 	{
@@ -214,7 +259,9 @@ class Bot_ChuckwallaChatClientModel extends ChuckwallaBaseModel implements Agavi
 		$this->ircConn->registerActionHandler(SMARTIRC_TYPE_NAME, '', $this, 'onChannelUserList');
 		$this->ircConn->registerActionHandler(SMARTIRC_TYPE_WHO, '', $this, 'onChannelWho');
 
-//		$this->ircConn->registerActionHandler(SMARTIRC_TYPE_JOIN | SMARTIRC_TYPE_PART, '', $this, 'onUserJoined');
+		$this->ircConn->registerActionHandler(SMARTIRC_TYPE_QUIT, '', $this, 'onUserQuit');
+
+		$this->ircConn->registerActionHandler(SMARTIRC_TYPE_JOIN | SMARTIRC_TYPE_PART, '', $this, 'onUserJoined');
 
 //		$this->ircConn->registerActionHandler(SMARTIRC_TYPE_CHANNEL, '', $this, 'onMessage');
 
@@ -263,6 +310,12 @@ class Bot_ChuckwallaChatClientModel extends ChuckwallaBaseModel implements Agavi
 	public function part($channel, $reason)
 	{
 		$this->ircConn->part((array) $channel, $reason);
+	}
+
+	public function message($target, $message)
+	{
+		echo "sending message $message to $target\n\n";
+		$this->ircConn->message(SMARTIRC_TYPE_QUERY, $target, $message);
 	}
 
 	public function splitIrcMessage($buf)
