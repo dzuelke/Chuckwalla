@@ -208,7 +208,9 @@ class Bot_ChuckwallaChatClientModel extends ChuckwallaBaseModel implements Agavi
 				}
 			}
 
-			$identity->setRealname(utf8_encode(substr(implode(array_slice($msg->params, 7), ' '), 0, 250)));
+// TODO: check why this still causes encoding problems
+//			$identity->setRealname(utf8_encode(substr(implode(array_slice($msg->params, 7), ' '), 0, 250)));
+			$identity->setRealname('');
 
 			$identity->save();
 			$user->save();
