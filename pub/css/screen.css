@@ -83,12 +83,23 @@ body {
 	background-color: #E5EDF7;
 }
 
-#sidebar li div { 
+#sidebar ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+#sidebar ul > li {
+	margin: 0;
+	padding: 1em;
+}
+
+#sidebar ul > li > ul > li div { 
 	background-color: #A0B1C9;
 	color: #FFF;
 	font-weight: bold;
 	font-size: 1.2em;
-	height:200%;
+	line-height:200%;
 }
 #sidebar .toggleNames .channel {
 	background-image:url(../images/icons/bullet_arrow_up.png);
