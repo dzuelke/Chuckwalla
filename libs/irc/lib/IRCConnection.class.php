@@ -40,7 +40,7 @@ class IRCConnection {
 		$this->serverPeer = new $parameters['classes.server_peer']($this);
 		
 		$this->clientPeer = new $parameters['classes.client_peer']($this);
-		$this->clientPeer->set($self);
+		$this->clientPeer->set($this->self);
 		
 		$this->parameters = $parameters;
 		
