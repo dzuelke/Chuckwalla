@@ -32,10 +32,14 @@
 	</configuration>
 
 
-	<!--  -->
-	<!-- <configuration environment="production"> -->
-	<!-- </configuration> -->
-	<!--  -->
+	<configuration environment="production">
+		<databases default="propel">
+			<database name="propel" class="AgaviPropelDatabase">
+				<parameter name="config">%core.config_dir%/chuckwalla-conf.php</parameter>
+			</database>
+		</databases>
+	</configuration>
+
 	<!-- <configuration environment="testing"> -->
 	<!-- </configuration> -->
 </configurations>

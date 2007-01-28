@@ -10,3 +10,12 @@ The Name
 The Agavi framework is originally based on the Mojavi Framework. Since Agave plants grow in the Mojave desert, it was only logical to pick an animal that lives in the Mojave desert as an inspiration for the project name.
 We are not sure, but being a vegetarian, the Chuckwalla lizard (Sauromalus obesus obesus) likely enjoys eating Agave plants a lot. At least we think he does. He's a rather nice chap anyway, as you can see here: http://www.nps.gov/archive/moja/mojaanlz.htm
 
+
+The Project
+-----------
+
+Since we found such a cool name for it, the project will be actively maintained in the future as a spin-off of the Agavi framework.
+
+The goal is to provide open source projects with proper, searchable, live updating IRC logs to leverage the instrument of chat groups as a support resource.
+
+Planned features include full control over the bot via the web interface, RSS feeds, fulltext search, memo sending and receiving, RSS feeds for memos, bot channel features such as !seen, !google etc.

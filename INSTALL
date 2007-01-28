@@ -1,0 +1,12 @@
+Edit chuckwalla-conf.php and enter your database credentials.
+
+Import dev/sql/schema.sql into the database.
+
+Copy index.php-dist and ircbot.php-dist to non-"-dist" variants.
+
+Edit your connection information in app/modules/Bot/config/connection.xml
+
+Run ircbot.php from inside pub/
+
+Call index.php in your browser. Currently not finished there, but try index.php/channel/%23channelname/live?since=1
+
