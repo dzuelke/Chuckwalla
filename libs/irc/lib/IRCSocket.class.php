@@ -150,11 +150,11 @@ class IRCSocket {
 		
 	}
 	
-	public function send ($buffer) {
+	public function send ($buffer, $parameters = array()) {
 		
 		fwrite($this->socket, $buffer . "\n");
 		
-		$this->executeHandlers(self::ACTION_WRITE, array('buffer' => $buffer));
+		$this->executeHandlers(self::ACTION_WRITE, array_merge($parameters, array('buffer' => $buffer)));
 		
 	}
 	

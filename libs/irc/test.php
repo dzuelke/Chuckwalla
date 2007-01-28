@@ -10,6 +10,18 @@ function omgfish (IRCConnection $connection, $parameters, IRCPeerInboundMessage 
 	
 }
 
+function quickout (IRCConnection $connection, $parameters, IRCInboundMessage $message) {
+	
+	echo $message->getBuffer()->getRawBuffer() . "\n";
+	
+}
+
+function quickin (IRCConnection $connection, $parameters) {
+	
+	echo $parameters['buffer'] . "\n";
+	
+}
+
 $parameters = array(
 	'server.hostname' => 'irc.freenode.net',
 	'server.port' => 6667,
@@ -25,7 +37,9 @@ $parameters = array(
 $irc = new IRCConnection($parameters);
 
 $ph = $irc->getDefaultHandler();
-$ph->bind(IRCSocket::ACTION_READ, 'identifier', array(IRCProtocol::MESSAGE_PRIVMSG => '#fish#i'), array('omgfish'));
+$ph->bind(IRCSocket::ACTION_READ, 'phish', array(IRCProtocol::MESSAGE_PRIVMSG => '#fish#i'), array('omgfish'));
+$ph->bind(IRCSocket::ACTION_READ, 'output', array('*' => '##'), array('quickout'));
+$ph->bind(IRCSocket::ACTION_WRITE, 'input', array('*' => '##'), array('quickin'));
 
 $irc->getSocket()->setNonBlocking(true);
 $irc->getSocket()->connect();

@@ -12,13 +12,7 @@ class IRCProtocolHandler extends IRCHandler {
 	public function __construct () {
 		
 		$this->bind(IRCSocket::ACTION_OPEN, '_handle_open', array(), array(array($this, 'handleOpen')));
-		$this->bind(IRCSocket::ACTION_READ, '_handle_stdout', array('*' => '##'), array(array($this, 'handleRead')));
-		
-	}
-	
-	public function handleRead (IRCConnection $connection, $parameters, IRCInboundMessage $message) {
-		
-		echo $message->getBuffer()->getRawBuffer() . "\n";
+		$this->bind(IRCSocket::ACTION_READ, '_handle_ping', array(IRCProtocol::SERVER_MESSAGE_PING => '##'), array(array($this, 'handlePing')));
 		
 	}
 	
@@ -37,6 +31,15 @@ class IRCProtocolHandler extends IRCHandler {
 		
 		$this->bind(IRCSocket::ACTION_READ, '_handle_nick_error', array(IRCProtocol::ERROR_NICKNAMEINUSE => '##'), array(array($this, 'handleNickError')));
 		$this->bind(IRCSocket::ACTION_READ, '_handle_welcome', array(IRCProtocol::REPLY_WELCOME => '##'), array(array($this, 'handleWelcome')));
+		
+	}
+	
+	public function handlePing (IRCConnection $connection, $parameters, IRCInboundMessage $message) {
+		
+		$out = new IRCOutboundMessage('PING');
+		$out->setRawValue($message->getValue());
+		
+		$this->send($out);
 		
 	}
 	
@@ -126,7 +129,7 @@ class IRCProtocolHandler extends IRCHandler {
 	
 	public function send (IRCOutboundMessage $message) {
 		
-		return $this->getSocket()->send($message->format());
+		return $this->getSocket()->send($message->format(), array('message' => $message));
 		
 	}
 	
@@ -159,7 +162,8 @@ class IRCProtocolHandler extends IRCHandler {
 				
 			case IRCSocket::ACTION_WRITE:
 				foreach ($this->callbacks[$action] as $callbacks) {
-					if (isset($callbacks['limits'][$parameters['message']->getCommand()]) && preg_match($callbacks['limits'][$parameters['message']->getCommand()], $parameters['message']->getValue())) {
+					if ((isset($callbacks['limits'][$parameters['message']->getCommand()]) && preg_match($callbacks['limits'][$parameters['message']->getCommand()], $parameters['message']->formatValue())) ||
+						(isset($callbacks['limits']['*']) && preg_match($callbacks['limits']['*'], $parameters['message']->formatValue()))) {
 						foreach ($callbacks['callbacks'] as $callback) {
 							call_user_func($callback, $this->getConnection(), $parameters);
 						}

@@ -55,7 +55,7 @@ class IRCOutboundMessage extends IRCMessage {
 		
 	}
 	
-	protected function formatValue () {
+	public function formatValue () {
 		
 		if (is_array($this->value)) {
 			
