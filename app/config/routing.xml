@@ -19,4 +19,15 @@
 			<route pattern="^/$" module="%actions.default_module%" action="%actions.default_action%" />
 		</routes>
 	</configuration>
+
+	<configuration context="ircbot">
+		<route pattern="^!" module="Bot">
+			<route pattern="^seen(\s+{nickname:[^\s]+})" action="Commands.Seen" />
+		</route>
+
+		<!-- prevent the 404 -->
+		<route pattern="" module="Bot" action="Commands.NoOp" />
+
+	</configuration>
+
 </configurations>
