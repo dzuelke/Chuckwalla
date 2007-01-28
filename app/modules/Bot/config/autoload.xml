@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<configurations>
+	<configuration>
+		<autoloads>
+			<autoload name="ChuckwallaBotBaseView">%core.module_dir%/Bot/lib/view/ChuckwallaBotBaseView.class.php</autoload>
+		</autoloads>
+	</configuration>
+</configurations>
