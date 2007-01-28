@@ -18,7 +18,7 @@ class Web_AccountInputView extends ChuckwallaWebBaseView
 		parent::setupJson($rd);
 		$user = $this->getContext()->getUser()->getPropelUser();
 		$this->setAttribute('user', $user);
-		$this->getResponse()->setParameter('json', array('foo' => 'bar'));
+		$this->setAttribute('updated', true);
 	}
 }
 

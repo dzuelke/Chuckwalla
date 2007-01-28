@@ -9,24 +9,8 @@
 	<link rel="stylesheet" type="text/css" media="print" href="css/print.css" />
 	<script src="js/prototype.js" type="text/javascript"></script>
 	<script src="js/scriptaculous/scriptaculous.js" type="text/javascript"></script>
-	<script type="text/javascript">
-		function onload() {
-			// Toggle Rooms and people lists
-			document.getElementsByClassName('toggles').each( function (el) { 
-				toggleHeader = el.getElementsByClassName('toggleHeader')[0];
-				toggleItem = el.getElementsByClassName('toggleItem')[0];
-				Event.observe(toggleHeader, 'click', function (e) { 
-					toggleItem.toggle(); 
-					el.toggleClassName('toggleNames');
-				})
-			 });
-			// Toggle Room Titles
-			Event.observe($('roomTitle'), 'click', function  (e) {
-				$('roomTitle').toggleClassName('fullview');
-				$('messages').style.top = $('roomTitle').getHeight()+'px';
-			});
-		}
-	</script>
+	<script src="js/eventSelectors.js" type="text/javascript"></script>
+	<script src="js/chuckwalla.js" type="text/javascript"></script>
 </head>
 
 <body>

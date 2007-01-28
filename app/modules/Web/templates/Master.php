@@ -10,40 +10,8 @@
 	<link rel="stylesheet" type="text/css" media="print" href="css/print.css?ver=1" />
 	<script src="js/prototype.js" type="text/javascript"></script>
 	<script src="js/scriptaculous/scriptaculous.js" type="text/javascript"></script>
-	<script type="text/javascript">
-		function onload() {
-			// Toggle Rooms and people lists
-			document.getElementsByClassName('toggles').each( function (el) { 
-				toggleHeader = el.getElementsByClassName('toggleHeader')[0];
-				toggleItem = el.getElementsByClassName('toggleItem')[0];
-				Event.observe(toggleHeader, 'click', function (e) { toggleItem.toggle(); el.toggleClassName('toggleNames');})
-			 });
-			// Toggle Room Titles
-			if ($('roomTitle'))
-				Event.observe($('roomTitle'), 'click', function  (e) {Event.element(e).toggleClassName('fullview');});
-			// Lets highlight all flash messages
-			document.getElementsByClassName('flash').each( function (el) { new Effect.Highlight(el,{duration: 1});});
-			
-			// Lets Add Ajax Submission by all forms with the class ajaxForm!
-			document.getElementsByClassName('ajaxForm').each( function (el) { 
-				Event.observe(el, 'submit', function (e) {
-					var d = new Date();
-					var time = d.getTime();
-					var formVars = Form.serialize(el);
-					console.log(formVars);
-					new Ajax.Request(el.action, {
-				  		method: 'post',
-				  		parameters: formVars,
-				  		onSuccess: function(transport, json) {
-				    		console.log(transport);
-							//console.log(json);
-				  		}
-					});
-					Event.stop(e);
-				});
-			});
-		}
-	</script>
+	<script src="js/eventSelectors.js" type="text/javascript"></script>
+	<script src="js/chuckwalla.js" type="text/javascript"></script>
 </head>
 <body>
 	<div id="header">
