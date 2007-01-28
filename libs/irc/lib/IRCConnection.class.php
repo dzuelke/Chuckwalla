@@ -64,9 +64,9 @@ class IRCConnection {
 		
 	}
 	
-	public function getParameter ($name) {
+	public function getParameter ($name, $default = '') {
 		
-		return $this->hasParameter($name) ? $this->parameters[$name] : '';
+		return $this->hasParameter($name) ? $this->parameters[$name] : $default;
 		
 	}
 	
