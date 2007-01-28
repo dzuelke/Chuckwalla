@@ -22,7 +22,7 @@
 		<?php else: ?>
 						<li><a href="#">2 new memos</a></li>
 						<li><a href="<?php echo $ro->gen('account'); ?>">My Account</a></li>
-						<li><a href="<?php echo $ro->gen('login.logout'); ?>">Logout</a></li>
+						<li><a href="<?php echo $ro->gen('login').'/logout'; ?>">Logout</a></li>
 		<?php endif; ?>
 					</ul>
 				</div>

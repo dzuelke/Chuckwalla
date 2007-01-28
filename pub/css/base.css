@@ -1,15 +1,13 @@
+/* http://developer.yahoo.com/yui/reset/ */
 html, body,div,dl,dt,dd,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td{margin:0;padding:0;}
 fieldset,img{border:0;}
 address,caption,cite,code,dfn,em,strong,th,var{font-style:normal;font-weight:normal;}
 h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}
-
-/* do we use? */
+ol,ul {list-style:none;}
 table{border-collapse:collapse;border-spacing:0;}
 caption,th {text-align:left;}
-ol,ul {list-style:none;}
 q:before,q:after{content:'';}
 abbr,acronym {border:0;}
-/* if not get rid :)*/
 
 body {
 	background-color:#FFFFFF;
@@ -60,24 +58,4 @@ h3 {
 
 .highlight {
 	background-color:#FFFFCC;
-}
-
-.bigger {
-	font-size:1.2em;
-}
-
-.red {
-	color:#CC0000;
-}
-.blue {
-	color:#0066CC;
-}
-.green {
-	color:#339900;
-}
-
-.transparent50 {
-	filter:alpha(opacity=50);
-	-moz-opacity:0.5;
-	opacity: 0.5;
 }

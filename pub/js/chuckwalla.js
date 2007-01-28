@@ -1,16 +1,4 @@
 var Rules = {
-  // Toggle Rooms and people lists
-  '.toggles': function(el) {
-    	toggleHeader = el.getElementsByClassName('toggleHeader')[0];
-		toggleItem = el.getElementsByClassName('toggleItem')[0];
-		Event.observe(toggleHeader, 'click', function (e) { toggleItem.toggle(); el.toggleClassName('toggleNames');});
-  },
-
-  // Toggle Room Titles
-  '#roomTitle:click' : function(el, event) {
-    el.toggleClassName('fullview');
-  },
-
 
   // Lets highlight all flash messages
   '.flash' : function(el) {

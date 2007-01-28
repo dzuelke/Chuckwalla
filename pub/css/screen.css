@@ -15,12 +15,11 @@ body {
 
 #menu {
 	position:absolute;
-	right:0;
+	right:0em;
 	float: right;
+	line-height:0em;
 }
 #menu ul {
-	list-style: none;
-	padding: 0.5em;
 }
 #menu li {
 	float:left;
