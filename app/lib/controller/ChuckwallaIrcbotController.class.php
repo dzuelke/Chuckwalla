@@ -12,7 +12,6 @@ class ChuckwallaIrcbotController extends AgaviController
 		$handler->bind(IRCSOcket::ACTION_READ, $x++, array('*' => '##'), array(array($this, 'onLog'), array($this, 'onData')));
 
 		$chatModel->connectLoop();
-		echo "connect end";
 	}
 
 	protected function doDispatch($message)
@@ -56,13 +55,16 @@ class ChuckwallaIrcbotController extends AgaviController
 		if(isset($typeMap[$msg->command])) {
 			if($msg->params[0] != 'AUTH' && $msg->params[0] != $ircClient->getConnection()->getClient()->getNickname()) {
 				// don't log notices directed at us
-				$logEntry = $this->getContext()->getModel('ChuckwallaMessageLog');
-				$logEntry->setType($typeMap[$msg->command]);
-				$logEntry->setNick($ircClient->getAndCreateUser($ircClient->getNickFromPrefix($msg->prefix)));
-				$logEntry->setChannel($ircClient->getAndCreateChannel($msg->params[0]));
-				$logEntry->setMessage(isset($msg->params[1]) ? utf8_encode($msg->params[1]) : '');
-				$logEntry->setMessageDate(time());
-				$logEntry->save();
+				if(!isset($msg->params[1][0]) || $msg->params[1][0] != chr(1)) {
+					// don't log ctcp as well
+					$logEntry = $this->getContext()->getModel('ChuckwallaMessageLog');
+					$logEntry->setType($typeMap[$msg->command]);
+					$logEntry->setNick($ircClient->getAndCreateUser($ircClient->getNickFromPrefix($msg->prefix)));
+					$logEntry->setChannel($ircClient->getAndCreateChannel($msg->params[0]));
+					$logEntry->setMessage(isset($msg->params[1]) ? utf8_encode($msg->params[1]) : '');
+					$logEntry->setMessageDate(time());
+					$logEntry->save();
+				}
 			}
 		}
 	}
