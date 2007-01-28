@@ -220,7 +220,7 @@ class Bot_ChuckwallaChatClientModel extends ChuckwallaBaseModel implements Agavi
 
 	public function onUserQuit(IRCConnection $connection, $parameters, IRCInboundMessage $message)
 	{
-		$msg = $this->splitIrcMessage($data->rawmessage);
+		$msg = $this->splitIrcMessage($message->getBuffer()->getRawBuffer());
 		$nick = $this->getNickFromPrefix($msg->prefix);
 		$user = $this->getAndCreateUser($nick);
 		$identity = $user->getOrCreateIrcIdentity();
