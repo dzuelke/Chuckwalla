@@ -6,46 +6,72 @@ class ChuckwallaIrcbotController extends AgaviController
 	{
 		$chatModel = $this->getContext()->getModel('ChuckwallaChatClient', 'Bot');
 
-		$chatModel->getConnection()->registerActionHandler(
-SMARTIRC_TYPE_CHANNEL | SMARTIRC_TYPE_JOIN | SMARTIRC_TYPE_ACTION | SMARTIRC_TYPE_TOPICCHANGE | SMARTIRC_TYPE_NICKCHANGE | SMARTIRC_TYPE_KICK | SMARTIRC_TYPE_QUIT | /*SMARTIRC_TYPE_MODECHANGE | */ SMARTIRC_TYPE_PART | SMARTIRC_TYPE_TOPIC,
-#SMARTIRC_TYPE_NOTICE,
+		$handler = $chatModel->getConnection()->getDefaultHandler();
 
-		'', $this, 'logHandler');
+		$x = 100;
+		$handler->bind(IRCSOcket::ACTION_READ, $x++, array('*' => '##'), array(array($this, 'onLog'), array($this, 'onData')));
 
 		$chatModel->connectLoop();
+		echo "connect end";
 	}
 
-	protected function doDispatch($data)
+	protected function doDispatch($message)
 	{
 		$requestData = array(
-			'user' => $data->user,
-			'channel' => $data->channel,
-			'message' => $data->message,
+			'user' => null,
+			'channel' => null,
+			'message' => null,
 		);
+
+		$ircClient = $this->getContext()->getModel('ChuckwallaChatClient', 'Bot');
+		$msg = $ircClient->splitIrcMessage($message->getBuffer()->getRawBuffer());
+		if($msg->command == IRCProtocol::MESSAGE_NOTICE) {
+			$requestData['user'] = $ircClient->getNickFromPrefix($msg->prefix);
+			$requestData['message'] = $msg->params[1];
+		} elseif($msg->command == IRCProtocol::MESSAGE_PRIVMSG) {
+			$requestData['user'] = $ircClient->getNickFromPrefix($msg->prefix);
+			$requestData['channel'] = $msg->params[0];
+			$requestData['message'] = $msg->params[1];
+		}
+		
 
 		$this->getContext()->getRequest()->clearParameters();
 		$this->getContext()->getRequest()->setAttribute('irc_request', $requestData, 'org.agavi.Chuckwalla.irc_params');
 		parent::dispatch();
 	}
 
-	public function logHandler($irc, $data)
+	public function onLog(IRCConnection $connection, $parameters, IRCInboundMessage $message)
 	{
-		echo "myHANDLE\n\n\n\n\n";
-		$this->doDispatch($data);
-		$msg = $this->getContext()->getModel('ChuckwallaChatClient', 'Bot')->splitIrcMessage($data->rawmessage);
-		var_dump($msg);
+		static $typeMap = array(
+			IRCProtocol::MESSAGE_PRIVMSG => 1,
+			IRCProtocol::MESSAGE_NOTICE => 20,
+			IRCProtocol::MESSAGE_JOIN => 30,
+			IRCProtocol::MESSAGE_PART => 40,
+			IRCProtocol::MESSAGE_QUIT => 50,
+		);
 
-		$type = $data->type;
-		$channel = $data->channel !== null ? $data->channel : $data->rawmessageex[2];
-//		var_dump($data->rawmessageex[2]);
-		if($type == SMARTIRC_TYPE_NOTICE) {
-//			var_dump($data);
-		} elseif($type == SMARTIRC_TYPE_JOIN) {
+		$ircClient = $this->getContext()->getModel('ChuckwallaChatClient', 'Bot');
+		$msg = $ircClient->splitIrcMessage($message->getBuffer()->getRawBuffer());
+
+		if(isset($typeMap[$msg->command])) {
+			if($msg->params[0] != 'AUTH' && $msg->params[0] != $ircClient->getConnection()->getClient()->getNickname()) {
+				// don't log notices directed at us
+				$logEntry = $this->getContext()->getModel('ChuckwallaMessageLog');
+				$logEntry->setType($typeMap[$msg->command]);
+				$logEntry->setNick($ircClient->getAndCreateUser($ircClient->getNickFromPrefix($msg->prefix)));
+				$logEntry->setChannel($ircClient->getAndCreateChannel($msg->params[0]));
+				$logEntry->setMessage(isset($msg->params[1]) ? utf8_encode($msg->params[1]) : '');
+				$logEntry->setMessageDate(time());
+				$logEntry->save();
+			}
 		}
-
-//var_dump(gettype($irc));
-//var_dump($data);
 	}
+
+	public function onData(IRCConnection $connection, $parameters, IRCInboundMessage $message)
+	{
+		$this->doDispatch($message);
+	}
+
 
 
 }
