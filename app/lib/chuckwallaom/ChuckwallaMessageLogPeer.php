@@ -19,5 +19,17 @@ require 'chuckwallaom/om/ChuckwallaBaseMessageLogPeer.php';
  * @package    chuckwallaom
  */
 class ChuckwallaMessageLogPeer extends ChuckwallaBaseMessageLogPeer {
+	public function retrieveSince($lastMessageId = null)
+	{
+		$c = new Criteria();
+		if($lastMessageId !== null) {
+			$c->add(ChuckwallaMessageLogPeer::ID, $lastMessageId, Criteria::GREATER_THAN);
+			$c->addAscendingOrderByColumn(ChuckwallaMessageLogPeer::ID);
+		} else {
+			$c->addDescendingOrderByColumn(ChuckwallaMessageLogPeer::ID);
+			$c->setLimit(1);
+		}
 
+		return $this->doSelect($c);
+	}
 } // ChuckwallaMessageLogPeer
