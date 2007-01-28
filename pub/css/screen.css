@@ -132,6 +132,9 @@ body {
 	background-color: #FFF;
 }
 
+#messages tr {
+	border-bottom:1px solid #EEE;
+}
 
 #messages tr.highlight {
 	background-color:#FFC;
@@ -147,6 +150,7 @@ body {
 }
 
 #messages td.name {
+	border-right:1px solid #EEE;
 	font-weight: bold;
 	text-align: right;
 }
@@ -168,11 +172,15 @@ body {
 }
 
 #messages tr.event td.message, #messages tr.event td.name {
-	font-style: bold;
+	font-weight: bold;
+}
+
+#messages tr.event td.message {
+	color: #666;
 }
 
 #messages td.time {
-	font-size:80%;
+	font-size:70%;
 	color: #999;
 }
 

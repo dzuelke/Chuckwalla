@@ -8,22 +8,20 @@
 			<td class="time">00:16</td>
 		</tr>
 		<tr>
-			<td class="name"><a href="info">kaos|work</a></td>
+			<td class="name" rowspan="2"><a href="info">kaos|work</a></td>
 			<td class="message">oh, and it would be cool if there was an easy way injecting my own code in every receive</td>
 			<td class="time">00:28</td>
 		</tr>
 		<tr>
-			<td class="name"><a href="info">kaos|work</a></td>
 			<td class="message">or something which gets called in a regular timeframe</td>
 			<td class="time">00:29</td>
 		</tr>
 		<tr>
-			<td class="name"><a href="info">impl</a></td>
+			<td class="name" rowspan="2"><a href="info">impl</a></td>
 			<td class="message">timers</td>
 			<td class="time">00:29</td>
 		</tr>
 		<tr class="action">
-			<td class="name"><a href="info">impl</a></td>
 			<td class="message">got it</td>
 			<td class="time">00:29</td>
 		</tr>
@@ -48,22 +46,20 @@
 			<td class="time">00:23</td>
 		</tr>
 		<tr>
-			<td class="name"><a href="info">kaos|work</a></td>
+			<td class="name" rowspan="2"><a href="info">kaos|work</a></td>
 			<td class="message">oh, and it would be cool if there was an easy way injecting my own code in every receive</td>
 			<td class="time">00:28</td>
 		</tr>
 		<tr>
-			<td class="name"><a href="info">kaos|work</a></td>
 			<td class="message">or something which gets called in a regular timeframe</td>
 			<td class="time">00:29</td>
 		</tr>
 		<tr>
-			<td class="name"><a href="info">impl</a></td>
+			<td class="name" rowspan="2"><a href="info">impl</a></td>
 			<td class="message">timers</td>
 			<td class="time">00:29</td>
 		</tr>
 		<tr>
-			<td class="name"><a href="info">impl</a></td>
 			<td class="message">got it</td>
 			<td class="time">00:29</td>
 		</tr>
@@ -83,22 +79,20 @@
 			<td class="time">00:16</td>
 		</tr>
 		<tr>
-			<td class="name"><a href="info">kaos|work</a></td>
+			<td class="name" rowspan="2"><a href="info">kaos|work</a></td>
 			<td class="message">oh, and it would be cool if there was an easy way injecting my own code in every receive</td>
 			<td class="time">00:28</td>
 		</tr>
 		<tr>
-			<td class="name"><a href="info">kaos|work</a></td>
 			<td class="message">or something which gets called in a regular timeframe</td>
 			<td class="time">00:29</td>
 		</tr>
 		<tr>
-			<td class="name"><a href="info">impl</a></td>
+			<td class="name" rowspan="2"><a href="info">impl</a></td>
 			<td class="message">timers</td>
 			<td class="time">00:29</td>
 		</tr>
 		<tr>
-			<td class="name"><a href="info">impl</a></td>
 			<td class="message">got it</td>
 			<td class="time">00:29</td>
 		</tr>
@@ -118,22 +112,20 @@
 			<td class="time">00:16</td>
 		</tr>
 		<tr>
-			<td class="name"><a href="info">kaos|work</a></td>
+			<td class="name" rowspan="2"><a href="info">kaos|work</a></td>
 			<td class="message">oh, and it would be cool if there was an easy way injecting my own code in every receive</td>
 			<td class="time">00:28</td>
 		</tr>
 		<tr>
-			<td class="name"><a href="info">kaos|work</a></td>
 			<td class="message">or something which gets called in a regular timeframe</td>
 			<td class="time">00:29</td>
 		</tr>
 		<tr>
-			<td class="name"><a href="info">impl</a></td>
+			<td class="name" rowspan="2"><a href="info">impl</a></td>
 			<td class="message">timers</td>
 			<td class="time">00:29</td>
 		</tr>
 		<tr>
-			<td class="name"><a href="info">impl</a></td>
 			<td class="message">got it</td>
 			<td class="time">00:29</td>
 		</tr>
