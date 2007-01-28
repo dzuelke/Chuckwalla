@@ -7,7 +7,7 @@ class Web_LoginAction extends ChuckwallaWebBaseAction
 		try {
 			$this->getContext()->getUser()->login($rd->getParameter('email'), $rd->getParameter('password'));
 		} catch(Exception $e) {
-			return 'Error';
+			return 'Input';
 		}
 		return 'Success';
 	}

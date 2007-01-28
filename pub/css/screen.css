@@ -94,6 +94,7 @@ body {
 	font-style: italic;
 	color:#666;
 	line-height:1.5;
+	background-image: url(../images/carpet.gif);
 }
 
 #roomTitle.fullview {
@@ -107,17 +108,17 @@ body {
 #core {
 	position: absolute;
 	top: 0em;
-	bottom: 0;
+	bottom: 1.9em;
 	left: 15em;
 	right: 0em;
-	overflow:auto;
+	background: #FFFFFF;
 }
 /* End Center / Core */
 
 /* Messages Block */
 #messages {
 	position: absolute;
-	bottom:1.6em;
+	bottom:0em;
 	top:2.5em; /* 3 / 1.2 */
 	left: 0em;
 	right: 0em;
