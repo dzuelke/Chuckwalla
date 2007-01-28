@@ -23,6 +23,8 @@ class IRCServerPeer implements IRCIPeer {
 			
 		}
 		
+		return $server;
+		
 	}
 	
 	public function remove ($hostname) {

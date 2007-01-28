@@ -35,6 +35,8 @@ class IRCClientPeer implements IRCIPeer {
 			
 		}
 		
+		return $client;
+		
 	}
 	
 	public function change ($nickname, $client) {
