@@ -9,11 +9,11 @@
 			<!-- all URLs ending on /feed trigger Atom output -->
 			<route pattern="/feed$" stop="false" cut="true" output_type="atom" />
 
-			<route name="account" pattern="^/account" module="%actions.default_module%" action="account"/>
+			<route name="account" pattern="^/account" module="Web" action="Account"/>
 
-			<route name="login" pattern="^/login" module="%actions.login_module%" action="%actions.login_action%">
+			<route name="login" pattern="^/login" module="Web" action="%actions.login_action%">
 				<routes>
-					<route name="logout" pattern="^/logout" module="%actions.login_module%" action="Logout" />
+					<route name="logout" pattern="^/logout" module="Web" action="Logout" />
 				</routes>
 			</route>
 			<route pattern="^/$" module="%actions.default_module%" action="%actions.default_action%" />
