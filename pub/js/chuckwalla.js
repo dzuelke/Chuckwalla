@@ -23,10 +23,12 @@ var Rules = {
 	Event.stop(event);
   },
 
+  // Displays UserInfo in a lightbox rather than an new window
   '.userinfo:click' : function(el, event) {
 		if (!el.id)
 			el = el.parentNode;
 		var userid = el.id.split('-')[1];
+			$('lightbox-content').innerHTML = 'bing';
 		new Ajax.Request('/info',{
 			method: 'post',
 			parameters: 'user='+userid,
@@ -37,13 +39,15 @@ var Rules = {
 				$('overlay').show();	
 		  	}	
 		});
+		Event.stop(event);
    },
 
+	// Lets people close a lightbox!
 	'#lightbox-close:click' : function(el, event) {
 		$('lightbox-content').innerHTML = '';
 		$('lightbox').hide();
 		$('overlay').hide();
-		Event.stop(e);	
+		Event.stop(event);	
    }
 
 }

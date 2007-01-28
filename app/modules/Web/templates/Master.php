@@ -18,11 +18,11 @@
 				<div id="menu">
 					<ul>
 		<?php if(!$us->isAuthenticated()): ?>
-						<li><a href="<?php echo $ro->gen('login'); ?>">Login</a></li>
+						<li><a href="<?php echo $ro->gen('account.login'); ?>">Login</a></li>
 		<?php else: ?>
 						<li><a href="#">2 new memos</a></li>
 						<li><a href="<?php echo $ro->gen('account'); ?>">My Account</a></li>
-						<li><a href="<?php echo $ro->gen('login').'/logout'; ?>">Logout</a></li>
+						<li><a href="<?php echo $ro->gen('account.logout'); ?>">Logout</a></li>
 		<?php endif; ?>
 					</ul>
 				</div>
