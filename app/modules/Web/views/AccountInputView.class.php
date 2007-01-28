@@ -12,6 +12,11 @@ class Web_AccountInputView extends ChuckwallaWebBaseView
 		$updated = ($rd->getParameter('updated')) ? true : false;
 		$this->setAttribute('updated', $updated);
 	}
+
+	public function executeJson(AgaviRequestDataHolder $rd)
+	{
+		die('ok');
+	}
 }
 
 ?>

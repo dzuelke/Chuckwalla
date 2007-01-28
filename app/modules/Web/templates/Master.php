@@ -23,6 +23,21 @@
 				Event.observe($('roomTitle'), 'click', function  (e) {Event.element(e).toggleClassName('fullview');});
 			// Lets highlight all flash messages
 			document.getElementsByClassName('flash').each( function (el) { new Effect.Highlight(el,{duration: 1});});
+			
+			// Lets Add Ajax Submission by all forms with the class ajaxForm!
+			document.getElementsByClassName('ajaxForm').each( function (el) { 
+				Event.observe(el, 'submit', function (e) {
+					new Ajax.Request(el.action, {
+				  		method: 'post',
+				  		parameters: Form.serialize(el),
+				  		onSuccess: function(transport, json) {
+				    		console.log(transport);
+							console.log(json);
+				  		}
+					});
+					Event.stop(e);
+				});
+			});
 		}
 	</script>
 </head>

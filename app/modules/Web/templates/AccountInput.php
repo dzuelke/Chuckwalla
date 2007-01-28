@@ -1,5 +1,5 @@
 <?php $user = $t['user']; ?>
-<form method="post" action="<?php echo $ro->gen('account'); ?>">
+<form method="post" action="<?php echo $ro->gen('account'); ?>" class="ajaxForm">
 <fieldset>
 <legend class="icon" style="background-image:url('images/icons/user_edit.png')">Account Management</legend>
 <?php if ($t['updated']): ?><div class="flash">Details Updated</div><?php endif;?>
