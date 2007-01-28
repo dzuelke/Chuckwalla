@@ -16,7 +16,11 @@
 			
 			<autoload name="ChuckwallaWebResponse">%core.lib_dir%/response/ChuckwallaWebResponse.class.php</autoload>
 			<autoload name="ChuckwallaWebUser">%core.lib_dir%/user/ChuckwallaWebUser.class.php</autoload>
-			
+
+			<autoload name="IRCConnection">%core.libs_dir%/irc/lib/IRC.php</autoload>
+
+
+
 		</autoloads>
 	</configuration>
 </configurations>

@@ -59,6 +59,16 @@ abstract class ChuckwallaBaseNick extends BaseObject implements Persistent, Agav
 	private $lastChannelNickCriteria = null;
 
 	/**
+	 * @var        array ChuckwallaMessageLog[] Collection to store aggregation of ChuckwallaMessageLog objects.
+	 */
+	protected $collMessageLogs;
+
+	/**
+	 * @var        Criteria The criteria used to select the current contents of collMessageLogs.
+	 */
+	private $lastMessageLogCriteria = null;
+
+	/**
 	 * Flag to prevent endless save loop, if this object is referenced
 	 * by another object which falls in this transaction.
 	 * @var        boolean
@@ -307,6 +317,14 @@ abstract class ChuckwallaBaseNick extends BaseObject implements Persistent, Agav
 				}
 			}
 
+			if ($this->collMessageLogs !== null) {
+				foreach ($this->collMessageLogs as $referrerFK) {
+					if (!$referrerFK->isDeleted()) {
+						$affectedRows += $referrerFK->save($con);
+					}
+				}
+			}
+
 			$this->alreadyInSave = false;
 		}
 		return $affectedRows;
@@ -391,6 +409,14 @@ abstract class ChuckwallaBaseNick extends BaseObject implements Persistent, Agav
 
 				if ($this->collChannelNicks !== null) {
 					foreach ($this->collChannelNicks as $referrerFK) {
+						if (!$referrerFK->validate($columns)) {
+							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
+						}
+					}
+				}
+
+				if ($this->collMessageLogs !== null) {
+					foreach ($this->collMessageLogs as $referrerFK) {
 						if (!$referrerFK->validate($columns)) {
 							$failureMap = array_merge($failureMap, $referrerFK->getValidationFailures());
 						}
@@ -608,6 +634,12 @@ abstract class ChuckwallaBaseNick extends BaseObject implements Persistent, Agav
 			foreach ($this->getChannelNicks() as $relObj) {
 				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
 				$copyObj->addChannelNick($relObj->copy($deepCopy));
+			}
+			}
+
+			foreach ($this->getMessageLogs() as $relObj) {
+				if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+				$copyObj->addMessageLog($relObj->copy($deepCopy));
 			}
 			}
 
@@ -861,6 +893,164 @@ abstract class ChuckwallaBaseNick extends BaseObject implements Persistent, Agav
 		$this->lastChannelNickCriteria = $criteria;
 
 		return $this->collChannelNicks;
+	}
+
+	/**
+	 * Temporary storage of collMessageLogs to save a possible db hit in
+	 * the event objects are add to the collection, but the
+	 * complete collection is never requested.
+	 *
+	 * @return     void
+	 * @deprecated - This method will be removed in 2.0 since arrays
+	 *				are automatically initialized in the addMessageLogs() method.
+	 * @see        addMessageLogs()
+	 */
+	public function initMessageLogs()
+	{
+		if ($this->collMessageLogs === null) {
+			$this->collMessageLogs = array();
+		}
+	}
+
+	/**
+	 * Gets an array of  objects which contain a foreign key that references this object.
+	 *
+	 * If this collection has already been initialized with an identical Criteria, it returns the collection.
+	 * Otherwise if this ChuckwallaNick has previously been saved, it will retrieve
+	 * related MessageLogs from storage. If this ChuckwallaNick is new, it will return
+	 * an empty collection or the current collection, the criteria is ignored on a new object.
+	 *
+	 * @param      PDO $con
+	 * @param      Criteria $criteria
+	 * @return     array []
+	 * @throws     PropelException
+	 */
+	public function getMessageLogs($criteria = null, PDO $con = null)
+	{
+		
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collMessageLogs === null) {
+			if ($this->isNew()) {
+			   $this->collMessageLogs = array();
+			} else {
+
+				$criteria->add(ChuckwallaMessageLogPeer::NICK_ID, $this->getId());
+
+				ChuckwallaMessageLogPeer::addSelectColumns($criteria);
+				$this->collMessageLogs = ChuckwallaMessageLogPeer::doSelect($criteria, $con);
+			}
+		} else {
+			// criteria has no effect for a new object
+			if (!$this->isNew()) {
+				// the following code is to determine if a new query is
+				// called for.  If the criteria is the same as the last
+				// one, just return the collection.
+
+
+				$criteria->add(ChuckwallaMessageLogPeer::NICK_ID, $this->getId());
+
+				ChuckwallaMessageLogPeer::addSelectColumns($criteria);
+				if (!isset($this->lastMessageLogCriteria) || !$this->lastMessageLogCriteria->equals($criteria)) {
+					$this->collMessageLogs = ChuckwallaMessageLogPeer::doSelect($criteria, $con);
+				}
+			}
+		}
+		$this->lastMessageLogCriteria = $criteria;
+		return $this->collMessageLogs;
+	}
+
+	/**
+	 * Returns the number of related MessageLogs.
+	 *
+	 * @param      Criteria $criteria
+	 * @param      boolean $distinct
+	 * @param      PDO $con
+	 * @throws     PropelException
+	 */
+	public function countMessageLogs($criteria = null, $distinct = false, PDO $con = null)
+	{
+		
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		$criteria->add(ChuckwallaMessageLogPeer::NICK_ID, $this->getId());
+
+		return ChuckwallaMessageLogPeer::doCount($criteria, $distinct, $con);
+	}
+
+	/**
+	 * Method called to associate a ChuckwallaMessageLog object to this object
+	 * through the ChuckwallaMessageLog foreign key attribute.
+	 *
+	 * @param      ChuckwallaMessageLog $l ChuckwallaMessageLog
+	 * @return     void
+	 * @throws     PropelException
+	 */
+	public function addMessageLog(ChuckwallaMessageLog $l)
+	{
+		$this->collMessageLogs = (array) $this->collMessageLogs;
+		array_push($this->collMessageLogs, $l);
+		$l->setNick($this);
+	}
+
+
+	/**
+	 * If this collection has already been initialized with
+	 * an identical criteria, it returns the collection.
+	 * Otherwise if this Nick is new, it will return
+	 * an empty collection; or if this Nick has previously
+	 * been saved, it will retrieve related MessageLogs from storage.
+	 *
+	 * This method is protected by default in order to keep the public
+	 * api reasonable.  You can provide public methods for those you
+	 * actually need in Nick.
+	 */
+	public function getMessageLogsJoinChannel($criteria = null, $con = null)
+	{
+		
+		if ($criteria === null) {
+			$criteria = new Criteria();
+		}
+		elseif ($criteria instanceof Criteria)
+		{
+			$criteria = clone $criteria;
+		}
+
+		if ($this->collMessageLogs === null) {
+			if ($this->isNew()) {
+				$this->collMessageLogs = array();
+			} else {
+
+				$criteria->add(ChuckwallaMessageLogPeer::NICK_ID, $this->getId());
+
+				$this->collMessageLogs = ChuckwallaMessageLogPeer::doSelectJoinChannel($criteria, $con);
+			}
+		} else {
+			// the following code is to determine if a new query is
+			// called for.  If the criteria is the same as the last
+			// one, just return the collection.
+
+			$criteria->add(ChuckwallaMessageLogPeer::NICK_ID, $this->getId());
+
+			if (!isset($this->lastMessageLogCriteria) || !$this->lastMessageLogCriteria->equals($criteria)) {
+				$this->collMessageLogs = ChuckwallaMessageLogPeer::doSelectJoinChannel($criteria, $con);
+			}
+		}
+		$this->lastMessageLogCriteria = $criteria;
+
+		return $this->collMessageLogs;
 	}
 
 } // ChuckwallaBaseNick

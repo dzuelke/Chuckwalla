@@ -794,6 +794,9 @@ $obj2->initialize(self::$context);
 			// invalidate objects in ChuckwallaChannelNickPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
 			ChuckwallaChannelNickPeer::clearInstancePool();
 
+			// invalidate objects in ChuckwallaMessageLogPeer instance pool, since one or more of them may be deleted by ON DELETE CASCADE rule.
+			ChuckwallaMessageLogPeer::clearInstancePool();
+
 			$con->commit();
 			return $affectedRows;
 		} catch (PropelException $e) {

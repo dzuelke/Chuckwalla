@@ -1,7 +1,5 @@
 <?php
 
-include(dirname(__FILE__) . '/ChuckwallaIrcModel.class.php');
-
 class Bot_ChuckwallaChatClientModel extends ChuckwallaBaseModel implements AgaviISingletonModel 
 {
 	protected $knownNicks = array();

@@ -63,4 +63,18 @@
 		<column name="reply_to" required="true" type="VARCHAR" size="255" />
 	</table>
 
+	<table name="message_log">
+		<column name="id" required="true" primaryKey="true" autoIncrement="true" type="INTEGER" />
+		<column name="type" required="true" type="INTEGER" />
+		<column name="nick_id" required="true" type="INTEGER" />
+		<column name="channel_id" required="true" type="INTEGER" />
+		<column name="message" required="true" type="LONGVARCHAR" />
+		<foreign-key foreignTable="channel" onDelete="CASCADE">
+			<reference local="channel_id" foreign="id" />
+		</foreign-key>
+		<foreign-key foreignTable="nick" onDelete="CASCADE">
+			<reference local="nick_id" foreign="id" />
+		</foreign-key>
+	</table>
+
 </database>

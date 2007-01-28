@@ -126,5 +126,32 @@ CREATE TABLE `commands`
 	PRIMARY KEY (`id`)
 )Type=InnoDB;
 
+#-----------------------------------------------------------------------------
+#-- message_log
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `message_log`;
+
+
+CREATE TABLE `message_log`
+(
+	`id` INTEGER  NOT NULL AUTO_INCREMENT,
+	`type` INTEGER  NOT NULL,
+	`nick_id` INTEGER  NOT NULL,
+	`channel_id` INTEGER  NOT NULL,
+	`message` TEXT  NOT NULL,
+	PRIMARY KEY (`id`),
+	INDEX `message_log_FI_1` (`channel_id`),
+	CONSTRAINT `message_log_FK_1`
+		FOREIGN KEY (`channel_id`)
+		REFERENCES `channel` (`id`)
+		ON DELETE CASCADE,
+	INDEX `message_log_FI_2` (`nick_id`),
+	CONSTRAINT `message_log_FK_2`
+		FOREIGN KEY (`nick_id`)
+		REFERENCES `nick` (`id`)
+		ON DELETE CASCADE
+)Type=InnoDB;
+
 # This restores the fkey checks, after having unset them earlier
 SET FOREIGN_KEY_CHECKS = 1;
