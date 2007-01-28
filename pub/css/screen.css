@@ -61,23 +61,52 @@ body {
 	margin: 0;
 	padding: 0;
 	list-style: none;
+	font-weight: bold;
 }
 
 #sidebar ul > li {
-	margin: 0;
-	padding: 1em;
+	margin: 0 0 0.1em 0;
+	clear:right;
 }
 
-#sidebar ul > li > ul > li div { 
+#sidebar > ul > li > div { 
 	background-color: #A0B1C9;
+	background-color: #2E76D9;
 	color: #FFF;
-	font-weight: bold;
 	font-size: 1.2em;
 	line-height:200%;
+	padding-left:2em;
+	background-image:url(../images/icons/comments.png);
+	background-repeat:no-repeat;
+	background-position:0.5em center;
 }
-#sidebar .toggleNames .channel {
-	background-image:url(../images/icons/bullet_arrow_up.png);
+
+#sidebar ul ul {
+	margin: 0 1em;
 }
+
+#sidebar ul ul li {
+	background-image:url(../images/icons/user.png);
+	background-repeat:no-repeat;
+	background-position:0.5em center;
+	padding-left: 2em;
+	line-height:150%;
+	clear:right;
+}
+
+#sidebar ul ul li.op {
+	background-image:url(../images/icons/user_orange.png);
+}
+
+#sidebar ul ul li.voice {
+	background-image:url(../images/icons/user_comment.png);
+}
+
+#sidebar ul ul li a {
+	float: right;
+	margin: 0 0.2em;
+}
+
 /* End Sidebar Block */
 
 /* Room Title Block */
