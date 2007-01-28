@@ -7,6 +7,7 @@ class ChuckwallaWebBaseView extends ChuckwallaBaseView
 		// layout "standard" in output type "html"
 		$this->loadLayout('standard');
 		$this->setAttribute('_contentType', $this->container->getOutputType()->getParameter('Content-Type'));
+		$this->setAttribute('_title', 'Home');
 	}
 	
 	public function setupJson(AgaviRequestDataHolder $rd)

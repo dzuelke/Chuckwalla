@@ -9,13 +9,19 @@
 			<!-- all URLs ending on /feed trigger Atom output -->
 			<route pattern="/feed$" stop="false" cut="true" output_type="atom" />
 
-			<route name="account" pattern="^/account" module="Web" action="Account"/>
-
-			<route name="login" pattern="^/login" module="Web" action="%actions.login_action%">
-				<routes>
-					<route name="logout" pattern="^/logout" module="Web" action="Logout" />
-				</routes>
+			<route name="channel" pattern="^/channel" module="Web">
+				<route name="channels" pattern="^s(/{channel:\w+})?$" action="Channels.List">
+					<default for="channel"></default>
+				</route>
+				<route name=".logs" pattern="^/(channel:\w+)/logs" action="Channels.Logs" />
+				<route name=".live" pattern="^/(channel:.+)/live$" action="Channels.Live" />
 			</route>
+
+			<route name="account" pattern="^/account" module="Web" action="Account">
+				<route name=".login" pattern="^/login$" action="%actions.login_action%" />
+				<route name=".logout" pattern="^/logout$" action="Logout" />
+			</route>
+			
 			<route pattern="^/$" module="%actions.default_module%" action="%actions.default_action%" />
 		</routes>
 	</configuration>
