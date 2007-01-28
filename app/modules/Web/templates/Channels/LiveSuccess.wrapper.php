@@ -2,6 +2,6 @@
 <div id="watermark" class="transparent50"></div>
 <div id="messages">
 	<table border="0" cellspacing="0" cellpadding="0">
-<?php echo $r['wrapped']; ?>
+<?php echo $slots['wrapped']; ?>
 	</table>
 </div>
