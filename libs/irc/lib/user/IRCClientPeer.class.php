@@ -37,6 +37,13 @@ class IRCClientPeer implements IRCIPeer {
 		
 	}
 	
+	public function change ($nickname, $client) {
+		
+		$this->removeByNickname($nickname);
+		$this->set($client);
+		
+	}
+	
 	public function remove ($nickname) {
 		
 		return $this->removeByNickname($nickname);
