@@ -1,12 +1,17 @@
+body {
+	background-image: url(../images/carpet.gif);
+}
+
 /* Header */
 #header {
 	position: absolute;
-	top: 0px;
-	height: 4.9em;
-	width: 100%;
-	background:#FFFFFF url(../images/carpet.gif) scroll left bottom;
+	top: 0;
+	left:0;
+	right:0;
+	line-height: 2.9em;
+	height: 2.9em;
 	text-align:left;
-	border-bottom: 0.1em solid #787878;
+	border-bottom: 0.1em solid #DDD;
 	z-index: 10;
 }
 
@@ -29,7 +34,7 @@
 	margin:0em 1em 0em 0em;
 }
 #menu a {
-	background:#8C8C8C url(../images/button_carpet.gif) repeat-x scroll left center;
+	background:#8C8C8C;
 	border-color:#808080;
 	border-style:none solid;
 	border-width:medium 0.1em;
@@ -60,8 +65,8 @@
 /* Content Block */
 #content {
 	position:absolute;
-	top:5em;
-	bottom:0em;
+	top:3em;
+	bottom:0;
 	left:0em;
 	right: 0em;
 }
@@ -73,15 +78,17 @@
 	top:0em;
 	bottom:2em;
 	left:0em;
-	width:9.9em;
-	border-right: 0.1em solid;
+	width:14.9em;
+	border-right: 0.1em solid #DDD;
+	background-color: #E5EDF7;
 }
 
-#sidebar .channel { 
-	background-image:url(../images/icons/bullet_arrow_down.png);
-	background-position: left center;
-	background-repeat: no-repeat;
-	padding-left: 1em;
+#sidebar li div { 
+	background-color: #A0B1C9;
+	color: #FFF;
+	font-weight: bold;
+	font-size: 1.2em;
+	height:200%;
 }
 #sidebar .toggleNames .channel {
 	background-image:url(../images/icons/bullet_arrow_up.png);
@@ -91,20 +98,17 @@
 /* Room Title Block */
 #roomTitle {
 	position:absolute;
-	z-index: 10;
 	top:0em;
-	height: 1.2em;
+	padding:0 2em;
+	height: 3em;
 	left:0em;
 	right: 0em;
 	overflow: hidden; 
-	padding: 0.1em;
-	background-image:url(../images/icons/bullet_arrow_down.png);
-	background-position: right top;
-	background-repeat: no-repeat;
-	background-color: grey;
-	color: white;
-	font-size: 1.1em;
 	z-index: 10;
+	text-align: center;
+	font-style: italic;
+	color:#666;
+	line-height:1.5;
 }
 
 #roomTitle.fullview {
@@ -118,8 +122,8 @@
 #core {
 	position: absolute;
 	top: 0em;
-	bottom: 2em;
-	left: 10em;
+	bottom: 0;
+	left: 15em;
 	right: 0em;
 	overflow:auto;
 }
@@ -128,62 +132,79 @@
 /* Messages Block */
 #messages {
 	position: absolute;
-	top: 1.9em;
-	bottom: 2em;
+	bottom:1.6em;
+	top:2.5em; /* 3 / 1.2 */
 	left: 0em;
 	right: 0em;
-	overflow:auto;	
-}
-#messages dl { 
-	display: block;  
-	border-bottom: 0.06em solid;
-	min-height: 1.1em;
-	overflow: auto;
-	background: #FFFFFF;
-}
-
-#messages dt {
-	float: left;
-}
-#messages dd { 
-	float: left;
-	width:84%; 
-	padding-left: 1%;
-}
-
-#messages dt.timestamp { width: 5%; }
-#messages dt.name { width: 10%; overflow: hidden;}
-#messages .name:after { content: ': '; }
-
-#messages dl.highlight {
-	background-color:#FFFFCC;
-} 
-/* End Messages Block */
-
-/* Logo */
-#logo {
-	position: absolute;
-	height: 30em;
-	bottom: 1.8em;
-	right: 0em; 
+	overflow:auto;
+	font-size:120%;
+	line-height:1.2em;
 	background-image: url(../images/agavi.png);
 	background-position: right bottom;
+	background-attachment: fixed;
 	background-repeat: no-repeat;
-	width: 20em;
+	background-color: #FFF;
 }
-/* End Logo */
+
+
+#messages tr.highlight {
+	background-color:#FFC;
+}
+
+#messages tr.event {
+	background-color: #E5EDF7;
+}
+
+#messages td {
+	padding: 0.1em 0.2em;
+	vertical-align: top;
+}
+
+#messages td.name {
+	font-weight: bold;
+	text-align: right;
+}
+
+#messages tr.self td.name a {
+	color: #900;
+}
+
+#messages td.name:after {
+	content: ': ';
+}
+
+#messages tr.action td.name:after, #messages tr.event td.name:after {
+	content: '';
+}
+
+#messages tr.action td.message, #messages tr.action td.name {
+	font-style: italic;
+}
+
+#messages tr.event td.message, #messages tr.event td.name {
+	font-style: bold;
+}
+
+#messages td.time {
+	font-size:80%;
+	color: #999;
+}
+
+/* End Messages Block */
 
 /* Footer */
 #footer { 
 	position: absolute; 
 	height: 1.9em;
-	bottom: 0em;
-	right: 0em;
-	display:block;
-	width: 100%;
-	border-top: 0.1em solid #787878;
-	background:#FFFFFF url(../images/carpet.gif) scroll left bottom;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	border-top: 0.1em solid #DDD;
+	line-height:1.9em;
+	color:#AAA;
+	text-align:center;
 }
+
 /* End Footer */
 
 /* Forms */
