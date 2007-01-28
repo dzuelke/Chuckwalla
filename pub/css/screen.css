@@ -147,6 +147,8 @@ body {
 	right: 0em;
 	background: #FFFFFF;
 }
+
+#core404 h1 {line-height: 2em;}
 /* End Center / Core */
 
 /* Messages Block */
